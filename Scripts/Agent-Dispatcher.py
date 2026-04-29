@@ -4,8 +4,11 @@ import subprocess
 import yaml
 
 # Configurations
-INBOX_DIR = "../State-and-Tasks/Inbox/"
-ROLE_PROMPTS_DIR = "../Role-Prompts/"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+OBSIDIAN_DIR = os.path.dirname(os.path.dirname(SCRIPT_DIR))
+
+INBOX_DIR = os.path.join(OBSIDIAN_DIR, "State-and-Tasks", "Inbox")
+ROLE_PROMPTS_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), "Role-Prompts")
 
 # Role to Prompt Mapping
 ROLE_MAP = {

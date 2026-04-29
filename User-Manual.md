@@ -1,41 +1,40 @@
-# 📖 AI Engine: User Manual
+# 📖 Core KMS Brain: User Manual
 
-Welcome to the AI Engine. This generic framework turns any language model (via `gemini-cli`) into an autonomous team of software engineers.
+Welcome to the AI Engine User Manual. This document explains how the Multi-Agent Engine functions and how you can interact with it across any of your projects.
 
-## 1. Quick Start: Your First Idea
-To kick off the pipeline, you need to provide the Orchestrator with an Idea Pitch.
-1. Navigate to `00-AI-Engine/State-and-Tasks/Inbox/Templates/`.
-2. Copy `Template-00-Idea-Pitch.md` and save it to `Inbox/Idea-MyNewFeature.md`.
-3. Fill out the sections: Feature Name, Expected Behavior (BDD), and Target Microservices.
-4. Let the automated Dispatcher take over (or run `gemini-cli` manually with the Orchestrator prompt).
+## 1. Core Principles of the Engine
+The engine is driven by a sequential pipeline:
+1. **Idea Pitch**: You write a raw idea.
+2. **Orchestrator**: Breaks the idea into a Master Plan.
+3. **Architect**: Designs the technical blueprint or metadata schema.
+4. **Developer**: Writes the code or templates.
+5. **QA**: Validates behavior using BDD specifications.
+6. **DevOps**: Generates CI/CD or deployment scripts.
+7. **DocMaintainer**: Wires the final output into the Obsidian Knowledge Graph and preserves session history.
 
-## 2. Secrets & Tokens Management
-The Engine requires access to secrets (like GitHub tokens) to push code or trigger CI/CD pipelines.
-**CRITICAL RULE**: Never store secrets in Markdown files within this vault.
-Instead, the DevOps and Developer agents are programmed to strictly read from your **System Environment Variables**.
+## 2. Using the Engine in a Project
+Because this `core-kms-brain` is a Git Submodule, you will not write your Idea Pitches inside this repository! 
 
-**How to set this up:**
-Before running the `Agent-Dispatcher.py` or manually running `gemini-cli`, ensure your terminal has the necessary environment variables exported:
-- **Windows (PowerShell)**: `$env:GITHUB_TOKEN="your_token_here"`
-- **Linux/Mac (Bash)**: `export GITHUB_TOKEN="your_token_here"`
+**To launch a task:**
+1. Navigate to the root of your wrapper `obsidian-brain` repository.
+2. Open `State-and-Tasks/Inbox/`.
+3. Create a new markdown file using the `Template-00-Idea-Pitch.md`.
+4. Run the Python dispatcher:
+   ```bash
+   python core-kms-brain/Scripts/Agent-Dispatcher.py
+   ```
+5. The dispatcher will dynamically detect your active project variables and begin routing the task through the agents.
 
-The AI will generate scripts (e.g., `deploy.sh`) that use `$GITHUB_TOKEN` to authenticate dynamically.
+## 3. Modifying the Engine
+If you find that an AI Agent is consistently making a mistake, you should update its Prompt!
+1. Open the specific prompt in `core-kms-brain/Role-Prompts/`.
+2. Add your new behavioral rule (e.g., "Always use `snake_case` for Dataview fields").
+3. Commit and push the change to the `core-kms-brain` GitHub repository.
+4. Go to your other projects and run `git submodule update --remote` to instantly upgrade their AI Engine!
 
-## 3. Repo State Persistence (History)
-While the central `00-AI-Engine` manages active tasks in its `Inbox/`, it is critical to preserve the historical context of what happens *within* each microservice.
-- Every microservice repository has its own local `AI-Session-State.md` file (e.g., `../config-server/AI-Session-State.md`).
-- At the end of every pipeline loop, the **DocMaintainer Agent** automatically appends a summary of the completed task to the specific microservice's local state file.
-- This ensures that if you switch from `config-server` to `safe-socket` and back, the Engine retains the full historical context of that specific repository!
-
-## 4. The Autonomous Dispatcher
-The `Agent-Dispatcher.py` script is the beating heart of the Engine.
-It reads the `Inbox/` directory, checks the `role` and `status` of each file, and automatically executes `gemini-cli` with the correct Role Prompt.
-- **Run Manually**: `python 00-AI-Engine/Scripts/Agent-Dispatcher.py`
-- **Run Automatically**: Attach the script to a CRON job or Windows Task Scheduler to run every hour.
-
-## 4. Portability: Moving to a New Project
-This Engine is entirely decoupled from your specific code. If you want to use it on a new project:
-1. Copy the entire `00-AI-Engine/` folder to the new project's Obsidian Vault.
-2. Open `Context-Interface/Project-Variables.md`.
-3. Update the `ecosystem_name` and the paths pointing to your local Architecture and Coding rules.
-4. The Engine will instantly adapt to the new ruleset.
+## 4. Initializing a New Project
+If you have created an empty `obsidian-brain` project and cloned this Core as a submodule, you can automatically set up the wrapper environment by running:
+```bash
+python core-kms-brain/Scripts/Init-New-Brain.py "My-New-Project-Name"
+```
+This script will instantly generate the empty `Inbox/`, `Project-Variables.md`, and `AI-Session-State.md` at the root of your project, completely ready for your first Idea Pitch!

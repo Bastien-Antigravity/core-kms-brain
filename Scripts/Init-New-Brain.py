@@ -5,10 +5,12 @@ import sys
 def init_brain(ecosystem_name):
     print(f"Initializing new AI Brain for: {ecosystem_name}")
     
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    project_vars_path = os.path.join(base_dir, "Context-Interface", "Project-Variables.md")
-    inbox_dir = os.path.join(base_dir, "State-and-Tasks", "Inbox")
-    session_state_path = os.path.join(base_dir, "State-and-Tasks", "AI-Session-State.md")
+    core_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    wrapper_dir = os.path.dirname(core_dir)
+    
+    project_vars_path = os.path.join(wrapper_dir, "Project-Variables.md")
+    inbox_dir = os.path.join(wrapper_dir, "State-and-Tasks", "Inbox")
+    session_state_path = os.path.join(wrapper_dir, "State-and-Tasks", "AI-Session-State.md")
     
     # 1. Update Project Variables
     try:

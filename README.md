@@ -1,29 +1,25 @@
-# 🤖 The AI Engine ("Core-Brain")
+# 🧠 Core KMS Brain (Stateless AI Engine)
 
-Welcome to the fully portable, autonomous AI Engine. This folder contains the underlying logic, roles, and automation scripts that turn any LLM (via `gemini-cli`) into a specialized "Team of Agents".
+Welcome to the **Core KMS Brain**. This repository is Tier 1 of the 3-Tier Knowledge Management Architecture. 
 
-## 1. Portability (How to embed this Engine)
-This Engine is strictly decoupled from the project it operates on. To drop this Engine into a new project:
-1. Copy this `00-AI-Engine` folder into your new Obsidian vault.
-2. Open `Context-Interface/Project-Variables.md`.
-3. Update the `ecosystem_name` and the paths to your local architecture rules and MOCs.
-All Agent Prompts will automatically read these variables and adapt to the new project.
+This repository is a **100% Stateless AI Engine**. It acts as the global, portable "Operating System" that drives your AI agents across any Obsidian project.
 
-## 2. The Roles
-The Engine splits complex work into specialized roles, located in `Role-Prompts/`:
-1. **Orchestrator**: Researches the codebase and splits Ideas into specific `Task.md` files.
-2. **Architect**: Designs the system interfaces and checks them against Global Rules.
-3. **QA**: Uses Behavior-Driven Development (BDD) to write `Test-Spec.md` expectations.
-4. **Developer**: Writes the actual code to make the QA specs pass.
-5. **DevOps**: Handles CI/CD, Docker, and environment configuration.
-6. **DocMaintainer**: Organizes the Knowledge Graph, tags, and closes the loop.
+## 🏗️ Architecture & Behavior
 
-## 3. Automation (The Dispatcher)
-You do not need to manually chat with each agent. The Engine includes an autonomous dispatcher.
-1. Run `python Scripts/Agent-Dispatcher.py` (You can attach this to Windows Task Scheduler to run hourly).
-2. The Dispatcher reads `State-and-Tasks/Inbox/`.
-3. It maps pending tasks to the correct Agent Prompt and automatically runs `gemini-cli`.
-4. The output is captured, and the task is moved down the pipeline autonomously.
+This engine uses a Multi-Agent pipeline (Orchestrator → Architect → Developer → QA → DevOps → DocMaintainer) to autonomously write code, design metadata, and enforce standards based on an Idea Pitch.
 
-## 4. Workflows
-Read `Workflows/Workflow-Idea-to-Exploitation.md` to see exactly how context is handed off between agents using strict Markdown templates.
+**Why is it Stateless?**
+This repository does *not* contain your project ideas, your specific variables, or your active tasks. 
+It only contains the logic:
+- `Scripts/`: The Python scripts (`Agent-Dispatcher.py` and `Init-New-Brain.py`) that run the automation.
+- `Role-Prompts/`: The pure instructions for the AI agents.
+- `Workflows/`: The markdown rules defining how the agents interact with each other and with Git.
+
+## 🔗 How it connects to your Project
+
+You do not work inside this repository directly. Instead, this repository is designed to be injected as a **Git Submodule** into a wrapper `obsidian-brain` repository.
+
+When the `Agent-Dispatcher.py` runs, it dynamically searches the parent wrapper directory to find the `Project-Variables.md` and the active `State-and-Tasks/Inbox/`. 
+This guarantees that you can globally update the AI Prompts on GitHub, pull them to any of your projects, and never experience a Git merge conflict!
+
+For detailed instructions on how to use the Engine, please read the **[[User-Manual.md]]**.
