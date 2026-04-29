@@ -1,7 +1,7 @@
 ---
 ecosystem_name: "Test-AI-Engine"
-architecture_rules_path: "02-Project-Architecture/Global-Architecture-Rules.md"
-coding_standards_path: "03-Project-Coding/00-Coding-Style-Guide.md"
+architecture_rules_path: "tech-stack-brain/02-Project-Architecture/Global-Architecture-Rules.md"
+coding_standards_path: "tech-stack-brain/03-Project-Coding/00-Coding-Style-Guide.md"
 master_moc_path: "00-Master-MOC.md"
 ---
 
