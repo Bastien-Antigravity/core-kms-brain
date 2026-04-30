@@ -1,16 +1,23 @@
-import os
-import glob
-import sys
+#!/usr/bin/env python
+# coding:utf-8
 
-def init_brain(ecosystem_name):
+from os.path import dirname as osPathDirname, abspath as osPathAbspath, join as osPathJoin, basename as osPathBasename
+from glob import glob as globGlob
+from sys import argv as sysArgv, exit as sysExit
+from os import remove as osRemove
+from typing import List
+
+# -----------------------------------------------------------------------------------------------
+
+def init_brain(ecosystem_name: str) -> None:
     print(f"Initializing new AI Brain for: {ecosystem_name}")
     
-    core_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    wrapper_dir = os.path.dirname(core_dir)
+    core_dir = osPathDirname(osPathDirname(osPathAbspath(__file__)))
+    wrapper_dir = osPathDirname(core_dir)
     
-    project_vars_path = os.path.join(wrapper_dir, "Project-Variables.md")
-    inbox_dir = os.path.join(wrapper_dir, "state-and-tasks", "Inbox")
-    session_state_path = os.path.join(wrapper_dir, "state-and-tasks", "AI-Session-State.md")
+    project_vars_path = osPathJoin(wrapper_dir, "Project-Variables.md")
+    inbox_dir = osPathJoin(wrapper_dir, "state-and-tasks", "Inbox")
+    session_state_path = osPathJoin(wrapper_dir, "AI-Session-State.md")
     
     # 1. Update Project Variables
     try:
@@ -28,9 +35,9 @@ def init_brain(ecosystem_name):
 
     # 2. Clear Inbox (except Templates)
     try:
-        for file in glob.glob(os.path.join(inbox_dir, "*.md")):
-            os.remove(file)
-            print(f"[-] Deleted old task: {os.path.basename(file)}")
+        for file in globGlob(osPathJoin(inbox_dir, "*.md")):
+            osRemove(file)
+            print(f"[-] Deleted old task: {osPathBasename(file)}")
     except Exception as e:
         print(f"[!] Error clearing Inbox: {e}")
 
@@ -44,8 +51,10 @@ def init_brain(ecosystem_name):
         
     print("\n[SUCCESS] Brain successfully initialized! You can now write your Idea Pitch.")
 
+# -----------------------------------------------------------------------------------------------
+
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
+    if len(sysArgv) < 2:
         print("Usage: python Init-New-Brain.py <New-Ecosystem-Name>")
-        sys.exit(1)
-    init_brain(sys.argv[1])
+        sysExit(1)
+    init_brain(sysArgv[1])

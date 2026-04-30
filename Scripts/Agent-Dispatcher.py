@@ -1,14 +1,19 @@
-import os
-import glob
-import subprocess
-import yaml
+#!/usr/bin/env python
+# coding:utf-8
+
+from os.path import dirname as osPathDirname, abspath as osPathAbspath, join as osPathJoin
+from glob import glob as globGlob
+from subprocess import run as subprocessRun, CalledProcessError as subprocessCalledProcessError
+from typing import Optional, Dict, Any
+
+# -----------------------------------------------------------------------------------------------
 
 # Configurations
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-OBSIDIAN_DIR = os.path.dirname(os.path.dirname(SCRIPT_DIR))
+SCRIPT_DIR = osPathDirname(osPathAbspath(__file__))
+OBSIDIAN_DIR = osPathDirname(osPathDirname(SCRIPT_DIR))
 
-INBOX_DIR = os.path.join(OBSIDIAN_DIR, "state-and-tasks", "Inbox")
-ROLE_PROMPTS_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), "Role-Prompts")
+INBOX_DIR = osPathJoin(OBSIDIAN_DIR, "state-and-tasks", "Inbox")
+ROLE_PROMPTS_DIR = osPathJoin(osPathDirname(SCRIPT_DIR), "Role-Prompts")
 
 # Role to Prompt Mapping
 ROLE_MAP = {
@@ -20,7 +25,12 @@ ROLE_MAP = {
     "docmaintainer": "06-DocMaintainer/Prompt-DocMaintainer.md"
 }
 
-def parse_frontmatter(file_path):
+# -----------------------------------------------------------------------------------------------
+
+def parse_frontmatter(file_path: str) -> Optional[Dict[str, Any]]:
+    # Late import for specialized library
+    from yaml import safe_load as yamlSafeLoad
+
     with open(file_path, 'r', encoding='utf-8') as f:
         content = f.read()
         
@@ -28,14 +38,16 @@ def parse_frontmatter(file_path):
         parts = content.split('---', 2)
         if len(parts) >= 3:
             try:
-                frontmatter = yaml.safe_load(parts[1])
+                frontmatter = yamlSafeLoad(parts[1])
                 return frontmatter
             except Exception as e:
                 print(f"Error parsing YAML in {file_path}: {e}")
     return None
 
-def process_inbox():
-    task_files = glob.glob(os.path.join(INBOX_DIR, "*.md"))
+# -----------------------------------------------------------------------------------------------
+
+def process_inbox() -> None:
+    task_files = globGlob(osPathJoin(INBOX_DIR, "*.md"))
     
     for task_file in task_files:
         if "Template" in task_file:
@@ -51,7 +63,7 @@ def process_inbox():
         if status == 'pending' and role in ROLE_MAP:
             print(f"[*] Processing {task_file} for role: {role}")
             
-            prompt_file = os.path.join(ROLE_PROMPTS_DIR, ROLE_MAP[role])
+            prompt_file = osPathJoin(ROLE_PROMPTS_DIR, ROLE_MAP[role])
             
             # Construct gemini-cli command
             cmd = [
@@ -64,14 +76,16 @@ def process_inbox():
             
             try:
                 # Execute the CLI (Uncomment to actually run)
-                # result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+                # result = subprocessRun(cmd, capture_output=True, text=True, check=True)
                 # print(f"    Success! Output captured.")
                 # TODO: Parse output, append to files, and update frontmatter to next role.
                 pass
-            except subprocess.CalledProcessError as e:
+            except subprocessCalledProcessError as e:
                 print(f"    Error running CLI: {e.stderr}")
         elif status == 'completed':
             print(f"[-] Skipping completed task: {task_file}")
+
+# -----------------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
     print("Starting Agent Dispatcher...")
