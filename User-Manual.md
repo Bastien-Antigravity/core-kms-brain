@@ -17,7 +17,7 @@ Because this `core-kms-brain` is a Git Submodule, you will not write your Idea P
 
 **To launch a task:**
 1. Navigate to the root of your wrapper `obsidian-brain` repository.
-2. Open `State-and-Tasks/Inbox/`.
+2. Open `state-and-tasks/Inbox/`.
 3. Create a new markdown file using the `Template-00-Idea-Pitch.md`.
 4. Run the Python dispatcher:
    ```bash

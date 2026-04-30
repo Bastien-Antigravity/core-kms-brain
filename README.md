@@ -19,7 +19,7 @@ It only contains the logic:
 
 You do not work inside this repository directly. Instead, this repository is designed to be injected as a **Git Submodule** into a wrapper `obsidian-brain` repository.
 
-When the `Agent-Dispatcher.py` runs, it dynamically searches the parent wrapper directory to find the `Project-Variables.md` and the active `State-and-Tasks/Inbox/`. 
+When the `Agent-Dispatcher.py` runs, it dynamically searches the parent wrapper directory to find the `Project-Variables.md` and the active `state-and-tasks/Inbox/`. 
 This guarantees that you can globally update the AI Prompts on GitHub, pull them to any of your projects, and never experience a Git merge conflict!
 
 For detailed instructions on how to use the Engine, please read the **[[User-Manual.md]]**.

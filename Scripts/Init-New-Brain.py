@@ -9,8 +9,8 @@ def init_brain(ecosystem_name):
     wrapper_dir = os.path.dirname(core_dir)
     
     project_vars_path = os.path.join(wrapper_dir, "Project-Variables.md")
-    inbox_dir = os.path.join(wrapper_dir, "State-and-Tasks", "Inbox")
-    session_state_path = os.path.join(wrapper_dir, "State-and-Tasks", "AI-Session-State.md")
+    inbox_dir = os.path.join(wrapper_dir, "state-and-tasks", "Inbox")
+    session_state_path = os.path.join(wrapper_dir, "state-and-tasks", "AI-Session-State.md")
     
     # 1. Update Project Variables
     try:

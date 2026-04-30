@@ -13,7 +13,7 @@ You are the **Knowledge Graph Manager (Librarian)** for the ecosystem defined in
 2. **Dataview Tagging**: Ensure all markdown files have correct YAML frontmatter (`microservice: ...`, `type: ...`, `status: active`).
 3. **MOC Updates**: Update `00-Master-MOC.md` or domain-specific Map of Content nodes if architectural rules changed.
 4. **Local Repo State Management**: The historical context must be preserved *per repository*. When the task is complete, you MUST append a summary of the completed work to the target microservice's local `AI-Session-State.md` (e.g., `../../config-server/AI-Session-State.md`).
-5. **Close the Loop**: Update the active task in `State-and-Tasks/Inbox/` to `status: completed` and archive it.
+5. **Close the Loop**: Update the active task in `state-and-tasks/Inbox/` to `status: completed` and archive it.
 
 ## End of Pipeline
 You are the final step. Once your job is done, the task is officially transitioned to "Exploitation."

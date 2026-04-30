@@ -19,7 +19,7 @@ Always restore the last known context to ensure I'm aware of the current state a
 
 ## 2. Requesting New Features or Bug Fixes
 To keep the chat clean and the logic structured, use the **Inbox** folder.
-1. Create a new `.md` file in `00-AI-Engine/State-and-Tasks/Inbox/`.
+1. Create a new `.md` file in `00-AI-Engine/state-and-tasks/Inbox/`.
 2. Use the `[[Template-AI-Task]]` to fill in requirements.
 3. Tag the file with `type: task` and `status: active`.
 4. **Command**: *"Antigravity, please execute the task in [[Inbox/Your-New-Task]]."*
@@ -47,7 +47,7 @@ When a task is complete, the AI must automatically:
 ## ⚡ Quick-Start Magic Prompt
 Copy and paste this at the start of any new session to perfectly orient the AI:
 
-> *"Restore session state from **[[00-AI-Engine/State-and-Tasks/AI-Session-State]]** and read the ecosystem map in **[[00-Master-MOC]]**. Follow the standardized loop in **[[Daily-AI-Playbook]]**."*
+> *"Restore session state from **[[00-AI-Engine/state-and-tasks/AI-Session-State]]** and read the ecosystem map in **[[00-Master-MOC]]**. Follow the standardized loop in **[[Daily-AI-Playbook]]**."*
 
 ---
 > [!TIP] Use the Beacons!
