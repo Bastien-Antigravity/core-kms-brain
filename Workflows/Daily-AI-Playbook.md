@@ -12,17 +12,28 @@ tags:
 
 This document defines the standardized operational loop for working with the Antigravity AI assistant.
 
-## 1. Starting the Session (Morning)
-Always restore the last known context to ensure I'm aware of the current state and pending bugs.
-- **Command**: *"Restore session state"*
-- **Reference**: [[AI-Session-State]]
+## 1. Starting the Session (The Ritual)
+Always restore context and **Audit** the environment to prevent drift.
+1. **Restore State**: Read [[AI-Session-State]] and [[AI-Project-DNA]].
+2. **Audit Environment**: Run `git branch --show-current` and check `VERSION.txt`. Verify they match the session state.
+3. **Spec Specialist Rule**: If starting a new feature, you MUST transition to the **Spec Specialist** role and draft a BDD spec in `business-bdd-brain/02-Behavior-Specs/`.
 
-## 2. Requesting New Features or Bug Fixes
-To keep the chat clean and the logic structured, use the **Inbox** folder.
-1. Create a new `.md` file in `00-AI-Engine/state-and-tasks/Inbox/`.
-2. Use the `[[Template-AI-Task]]` to fill in requirements.
-3. Tag the file with `type: task` and `status: active`.
-4. **Command**: *"Antigravity, please execute the task in [[Inbox/Your-New-Task]]."*
+2. **Spec Phase**: Draft/Update a `.md` file in `business-bdd-brain/02-Behavior-Specs/[repo-name]/`.
+3. **Purger Gate (The "Straight-to-Goal" Check)**: Activate **Mister Straight-to-Goal** to review the spec and implementation plan. Propose removals or simplifications before coding starts.
+4. **Status Check**: AI must not implement until the file header contains `status: approved`.
+
+... [Previous steps 3-5 remain active] ...
+
+---
+
+## ⚡ Quick-Start Magic Prompt
+Copy and paste this at the start of any new session to perfectly orient the AI:
+
+> *"1. Read the ecosystem map in **[[00-Master-MOC]]**."*
+> *"2. Load project constraints from **[[AI-Project-DNA]]**."*
+> *"3. Restore session state from **[[AI-Session-State]]**."*
+> *"4. **Audit**: Run `git branch --show-current` and check `VERSION.txt` to verify environment matches state."*
+> *"5. **Spec Gate**: Before implementing any feature, act as a **Spec Specialist** to draft/find a Gherkin spec in `business-bdd-brain/02-Behavior-Specs/` and obtain my approval."*
 
 ## 3. The Development Loop (Execution)
 When I am coding, I must follow these mandatory steps:
@@ -41,6 +52,12 @@ When a task is complete, the AI must automatically:
 1. **Sync READMEs**: Update any microservice `README.md` impacted by code changes.
 2. **Update Session-State**: Log the latest local progress in the repo-specific `AI-Session-State.md`.
 3. **Bridge to Brain**: Update the `00-Master-MOC` or any Architecture node if a new system-wide rule is discovered.
+
+## 6. The Wisdom Feedback Loop (Maintenance)
+To keep the "Experience Ledger" alive, we use a post-session ritual:
+1. **Extraction**: At the end of every significant task, the AI asks: *"Did we learn a universal lesson today?"*
+2. **Recording**: If yes, the AI updates the relevant log in `tech-stack-brain/05-Role-Wisdom/`.
+3. **Pruning**: Once a month, the AI performs a "Knowledge Compression" to remove redundant or outdated wisdom.
 
 ---
 
