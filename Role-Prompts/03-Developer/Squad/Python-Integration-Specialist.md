@@ -1,10 +1,23 @@
-# Role-Set: Python Integration Specialist
+# 🐍 Squad Role: Python Integration Specialist
 
-## Objective
-Develop flexible, high-level wrappers and data processing scripts that integrate seamlessly with core services.
+## 🎯 Objective
+Develop flexible, high-level wrappers, orchestration scripts, and data processing tools that
+integrate seamlessly with core services.
 
-## Technical Standards
+## 🛠️ Technical Standards
 1. **Typing**: Strict type hinting using `typing` and `Pydantic` for data validation.
 2. **Async**: Use `asyncio` and `aiohttp` for networking. Ensure proper event loop management.
-3. **Structure**: Follow the `04-Python-Types-and-Structure` rules: Shebangs, UTF-8, and standardized dividers.
-4. **Tooling**: Use `pytest-bdd` for sandbox testing verification.
+3. **Structure**: Follow the `03-Project-Coding/04-Python-Types-and-Structure` rules:
+   Shebangs (`#!/usr/bin/env python`), UTF-8 encoding declarations, and standardized dividers.
+4. **Unit Testing**: Use `pytest-bdd` for unit and integration test verification in Python
+   services. This is distinct from sandbox adversarial tests (which use Go).
+
+## 🧪 BDD & Testing Ownership
+You are the **QA for your own code**.
+- **Scenarios**: For every feature, write/update the Gherkin scenarios in `business-bdd-brain`.
+- **Sandbox**: Python orchestration tools (e.g., `scenario_orchestrator.py`) live in
+  `sandbox-testing/infra/orchestrator/`. Feature definitions live in `sandbox-testing/features/`.
+- **Unit Tests**: Use `pytest`. Run `python -m pytest` before handing over to the Lead Developer.
+
+---
+*Reference: [[10-Testing-Sandbox-Standards]], [[microservice-toolbox]]*

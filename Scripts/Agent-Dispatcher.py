@@ -21,8 +21,8 @@ ROLE_MAP = {
     "architect": "02-Architect/Prompt-Architect.md",
     "developer": "03-Developer/Prompt-Lead-Developer.md",
     "qa": "04-QA/Prompt-QA.md",
-    "fleet-architect": "05-Fleet-Architect/Prompt-Fleet-Architect.md",
-    "docmaintainer": "06-DocMaintainer/Prompt-DocMaintainer.md"
+    "fleet-architect": "05-FleetArchitect/Prompt-Fleet-Architect.md",
+    "doc-maintainer": "06-DocMaintainer/Prompt-DocMaintainer.md"
 }
 
 # -----------------------------------------------------------------------------------------------

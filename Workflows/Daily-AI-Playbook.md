@@ -59,7 +59,7 @@ When a task is complete, the AI must automatically:
 ## 6. The Wisdom Feedback Loop (Maintenance)
 To keep the "Experience Ledger" alive, we use a post-session ritual:
 1. **Extraction**: At the end of every significant task, the AI asks: *"Did we learn a universal lesson today?"*
-2. **Recording**: If yes, the AI updates the relevant log in `tech-stack-brain/05-Role-Wisdom/`.
+2. **Recording**: If yes, the AI updates the relevant log in `tech-stack-brain/06-Role-Wisdom/`.
 3. **Pruning**: Once a month, the AI performs a "Knowledge Compression" to remove redundant or outdated wisdom.
 
 ---

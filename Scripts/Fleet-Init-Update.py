@@ -42,6 +42,11 @@ def update_fleet():
             print(f"  [!] Skipping {name}: Path does not exist ({path})")
             continue
 
+        kms_path = path / "core-kms-brain"
+        if not kms_path.exists():
+            print(f"  [!] Warning {name}: core-kms-brain submodule MISSING. AI-Init will be broken.")
+            # We still write it, but the warning is critical for QA.
+
         init_file = path / "AI-Init.md"
         content = TEMPLATE.format(repo_name=name)
         
