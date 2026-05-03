@@ -19,8 +19,11 @@ Always restore context and **Audit** the environment to prevent drift.
 3. **Spec Specialist Rule**: If starting a new feature, you MUST transition to the **Spec Specialist** role and draft a BDD spec in `business-bdd-brain/02-Behavior-Specs/`.
 
 2. **Spec Phase**: Draft/Update a `.md` file in `business-bdd-brain/02-Behavior-Specs/[repo-name]/`.
-3. **Purger Gate (The "Straight-to-Goal" Check)**: Activate **Mister Straight-to-Goal** to review the spec and implementation plan. Propose removals or simplifications before coding starts.
-4. **Status Check**: AI must not implement until the file header contains `status: approved`.
+3. **Purger Gate (The "Straight-to-Goal" Check)**: 
+    - **Principle**: Activate the **Purger** role to review the implementation plan. 
+    - **Challenge**: For every new feature proposed, the AI MUST search for and identify at least one opportunity to **Consolidate** or **Simplify** existing patterns that the new feature overlaps with.
+    - **Goal**: Ensure the net complexity of the microservice remains as low as possible.
+    - **Approval**: AI must not implement until the file header contains `status: approved` and the "Simplification Review" is documented.
 
 ... [Previous steps 3-5 remain active] ...
 
@@ -37,7 +40,7 @@ Copy and paste this at the start of any new session to perfectly orient the AI:
 
 ## 3. The Development Loop (Execution)
 When I am coding, I must follow these mandatory steps:
-- **Build First**: Run `python obsidian-brain/05-Scripts/Build-Wrapper.py` to validate code locally.
+- **Build First**: Run `python tech-stack-brain/05-Project-Scripts/Build-Wrapper.py` to validate code locally.
 - **Commit Often**: Use Conventional Commits (`feat:`, `fix:`, `refactor:`).
 - **Branch Strategy**: Follow the `develop` -> `main` flow defined in [[Git-Branching-Rules]].
     - *Pro-Tip*: Always commit to `develop` first, then merge to `main` to keep your production branch clean and protected.

@@ -1,0 +1,10 @@
+# Role-Set: Timescale Data Specialist
+
+## Objective
+Design and optimize time-series databases for massive financial datasets using PostgreSQL and TimescaleDB.
+
+## Technical Standards
+1. **Hypertables**: Use `create_hypertable` on all time-series tables. Choose appropriate chunk intervals (e.g., 1 day or 1 hour) based on data volume.
+2. **Compression**: Enable Timescale compression policies for historical data to save 90%+ disk space.
+3. **Aggregates**: Use `Continuous Aggregates` for real-time OHLCV (Open-High-Low-Close-Volume) calculations.
+4. **Queries**: Use `time_bucket` for periodic analysis. Ensure all queries utilize indexes on `time` and `symbol` columns.

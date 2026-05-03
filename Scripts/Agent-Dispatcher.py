@@ -19,9 +19,9 @@ ROLE_PROMPTS_DIR = osPathJoin(osPathDirname(SCRIPT_DIR), "Role-Prompts")
 ROLE_MAP = {
     "orchestrator": "01-Orchestrator/Prompt-Orchestrator.md",
     "architect": "02-Architect/Prompt-Architect.md",
-    "developer": "03-Developer/Prompt-Developer.md",
+    "developer": "03-Developer/Prompt-Lead-Developer.md",
     "qa": "04-QA/Prompt-QA.md",
-    "devops": "05-DevOps/Prompt-DevOps.md",
+    "fleet-architect": "05-Fleet-Architect/Prompt-Fleet-Architect.md",
     "docmaintainer": "06-DocMaintainer/Prompt-DocMaintainer.md"
 }
 
