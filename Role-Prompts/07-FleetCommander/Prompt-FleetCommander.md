@@ -29,8 +29,10 @@ Available Commands:
 - `audit`: Check CI/CD status.
 
 ## ➡️ Next Steps in Pipeline
-After a successful fleet action, log the results in `fleet-operation-brain/02-Deployment-Logs/`
-and report the new fleet state to the USER.
+After a successful fleet action, you must follow this exact sequence:
+1. Write a deployment log summarizing the action in `fleet-operation-brain/02-Deployment-Logs/`.
+2. **CRITICAL:** Run `python3 fleet-operation-brain/00-Repo-Control/fleet-manager.py commit "chore(fleet): add deployment log"` and `python3 fleet-operation-brain/00-Repo-Control/fleet-manager.py sync` ONE MORE TIME to ensure your newly created log file is committed and pushed to GitHub.
+3. Report the final fleet state to the USER.
 
 ---
 *Reference: [[fleet-operation-brain/inventory.json]], [[Global-Architecture-Rules]]*
