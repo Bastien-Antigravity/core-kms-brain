@@ -11,7 +11,6 @@ This engine uses a Multi-Agent pipeline (Orchestrator → Architect → Develope
 **Why is it Stateless?**
 This repository does *not* contain your project ideas, your specific variables, or your active tasks. 
 It only contains the logic:
-- `Scripts/`: The Python scripts (`Agent-Dispatcher.py` and `Init-New-Brain.py`) that run the automation.
 - `Role-Prompts/`: The pure instructions for the AI agents.
 - `Workflows/`: The markdown rules defining how the agents interact with each other and with Git.
 
@@ -19,7 +18,7 @@ It only contains the logic:
 
 You do not work inside this repository directly. Instead, this repository is designed to be injected as a **Git Submodule** into a wrapper `obsidian-brain` repository.
 
-When the `Agent-Dispatcher.py` runs, it dynamically searches the parent wrapper directory to find the `Project-Variables.md` and the active `state-and-tasks/Inbox/`. 
+When your Gemini CLI Subagents run (initialized via `20-Scripts/start_squad.py`), they use an MCP Server to dynamically read the parent wrapper directory to find the `Project-Variables.md` and the active `10-State-and-Tasks/Inbox/`. 
 This guarantees that you can globally update the AI Prompts on GitHub, pull them to any of your projects, and never experience a Git merge conflict!
 
 For detailed instructions on how to use the Engine, please read the **[[User-Manual.md]]**.

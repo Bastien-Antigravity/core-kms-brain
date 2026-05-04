@@ -16,9 +16,9 @@ This document defines the standardized operational loop for working with the Ant
 Always restore context and **Audit** the environment to prevent drift.
 1. **Restore State**: Read [[AI-Session-State]] and [[AI-Project-DNA]].
 2. **Audit Environment**: Run `git branch --show-current` and check `VERSION.txt`. Verify they match the session state.
-3. **Spec Specialist Rule**: If starting a new feature, you MUST transition to the **Spec Specialist** role and draft a BDD spec in `business-bdd-brain/02-Behavior-Specs/`.
+3. **Spec Specialist Rule**: If starting a new feature, you MUST transition to the **Spec Specialist** role and draft a BDD spec in `02-Business-BDD/02-Behavior-Specs/`.
 
-2. **Spec Phase**: Draft/Update a `.md` file in `business-bdd-brain/02-Behavior-Specs/[repo-name]/`.
+2. **Spec Phase**: Draft/Update a `.md` file in `02-Business-BDD/02-Behavior-Specs/[repo-name]/`.
 3. **Purger Gate (The "Straight-to-Goal" Check)**: 
     - **Principle**: Activate the **Purger** role to review the implementation plan. 
     - **Challenge**: For every new feature proposed, the AI MUST search for and identify at least one opportunity to **Consolidate** or **Simplify** existing patterns that the new feature overlaps with.
@@ -28,7 +28,7 @@ Always restore context and **Audit** the environment to prevent drift.
 ## 2. AI Handover Protocol (State Machine)
 To prevent context loss and AI drift when switching roles, you MUST use the Inbox files as a state machine.
 - When finishing your task as one role, DO NOT rely on conversational memory for the next role.
-- Open the relevant task file in `state-and-tasks/Inbox/`.
+- Open the relevant task file in `10-State-and-Tasks/Inbox/`.
 - Update the YAML frontmatter: change `status: active` to `status: pending` and set `role: <next_role>`.
 - The `Agent-Dispatcher.py` script will parse this frontmatter to seamlessly hand over the context.
 
@@ -41,11 +41,11 @@ Copy and paste this at the start of any new session to perfectly orient the AI:
 > *"2. Load project constraints from **[[AI-Project-DNA]]**."*
 > *"3. Restore session state from **[[AI-Session-State]]**."*
 > *"4. **Audit**: Run `git branch --show-current` and check `VERSION.txt` to verify environment matches state."*
-> *"5. **Spec Gate**: Before implementing any feature, act as a **Spec Specialist** to draft/find a Gherkin spec in `business-bdd-brain/02-Behavior-Specs/` and obtain my approval."*
+> *"5. **Spec Gate**: Before implementing any feature, act as a **Spec Specialist** to draft/find a Gherkin spec in `02-Business-BDD/02-Behavior-Specs/` and obtain my approval."*
 
 ## 3. The Development Loop (Execution)
 When I am coding, I must follow these mandatory steps:
-- **Build First**: Run `python tech-stack-brain/05-Project-Scripts/Build-Wrapper.py` to validate code locally.
+- **Build First**: Run `python 03-Tech-Stack/05-Project-Scripts/Build-Wrapper.py` to validate code locally.
 - **Commit Often**: Use Conventional Commits (`feat:`, `fix:`, `refactor:`).
 - **Branch Strategy**: Follow the `develop` -> `main` flow defined in [[Git-Branching-Rules]].
     - *Pro-Tip*: Always commit to `develop` first, then merge to `main` to keep your production branch clean and protected.
@@ -65,7 +65,7 @@ When a task is complete, the AI must automatically:
 ## 6. The Wisdom Feedback Loop (Maintenance)
 To keep the "Experience Ledger" alive, we use a post-session ritual:
 1. **Extraction**: At the end of every significant task, the AI asks: *"Did we learn a universal lesson today?"*
-2. **Recording**: If yes, the AI updates the relevant log in `tech-stack-brain/06-Role-Wisdom/`.
+2. **Recording**: If yes, the AI updates the relevant log in `03-Tech-Stack/06-Role-Wisdom/`.
 3. **Pruning**: Once a month, the AI performs a "Knowledge Compression" to remove redundant or outdated wisdom.
 
 ---
@@ -73,7 +73,7 @@ To keep the "Experience Ledger" alive, we use a post-session ritual:
 ## ⚡ Quick-Start Magic Prompt
 Copy and paste this at the start of any new session to perfectly orient the AI:
 
-> *"Restore session state from **[[00-AI-Engine/state-and-tasks/AI-Session-State]]** and read the ecosystem map in **[[00-Master-MOC]]**. Follow the standardized loop in **[[Daily-AI-Playbook]]**."*
+> *"Restore session state from **[[00-AI-Engine/10-State-and-Tasks/AI-Session-State]]** and read the ecosystem map in **[[00-Master-MOC]]**. Follow the standardized loop in **[[Daily-AI-Playbook]]**."*
 
 ---
 > [!TIP] Use the Beacons!

@@ -4,9 +4,9 @@
 
 ## 🗂️ Context Injection (MANDATORY)
 Before beginning, you MUST read:
-- `tech-stack-brain/02-Project-Architecture/Global-Architecture-Rules.md`
-- `tech-stack-brain/README.md` (Master MOC)
-- `tech-stack-brain/02-Project-Architecture/10-Testing-Sandbox-Standards.md`
+- `03-Tech-Stack/02-Project-Architecture/Global-Architecture-Rules.md`
+- `03-Tech-Stack/README.md` (Master MOC)
+- `03-Tech-Stack/02-Project-Architecture/10-Testing-Sandbox-Standards.md`
 - `Project-Variables.md`
 
 ## 🎯 Primary Objective
@@ -19,19 +19,19 @@ intake raw ideas, score their complexity, and route them to the correct downstre
    target microservice before making a plan.
 2. **Complexity Scoring & Routing**:
    - **Score 1–2 (Small/Simple)**: Use **Fast-Track Routing**. Bypass Master Plan and
-     Architect phases. Fill out `state-and-tasks/Inbox/Templates/Template-Fast-Track.md`
+     Architect phases. Fill out `10-State-and-Tasks/Inbox/Templates/Template-Fast-Track.md`
      and hand directly to the **Developer**.
    - **Score 3+ (Complex)**: Use the **Standard Pipeline**. Decompose the task and generate
      a Master Plan for the **Architect**.
 3. **Sub-Task Spawning**: If an idea touches multiple microservices, spawn multiple task files
    (e.g., `Task-01A-Config.md`, `Task-01B-Log.md`) to allow the Dispatcher to route them.
 4. **Labs Routing** *(Mode 2 only)*: If `MODE-MANUAL.md` has `active_mode: Free-Labs`,
-   route Score 1–2 ideas to `rapid-prototyping-brain/01-Experiment-Index/` using the
-   experiment template in `rapid-prototyping-brain/03-Templates/Template-Experiment.md`.
+   route Score 1–2 ideas to `04-Rapid-Prototyping/01-Experiment-Index/` using the
+   experiment template in `04-Rapid-Prototyping/03-Templates/Template-Experiment.md`.
 5. **Output Generation**:
-   - Fast-Track: `state-and-tasks/Inbox/Fast-Track-[Name].md`
-   - Standard: `state-and-tasks/Inbox/Master-Plan-[Name].md`
-   - Labs: `rapid-prototyping-brain/01-Experiment-Index/EXP-[Name].md`
+   - Fast-Track: `10-State-and-Tasks/Inbox/Fast-Track-[Name].md`
+   - Standard: `10-State-and-Tasks/Inbox/Master-Plan-[Name].md`
+   - Labs: `04-Rapid-Prototyping/01-Experiment-Index/EXP-[Name].md`
 
 ## 🤝 Collaboration Protocol
 - **Input**: Raw idea from the USER.

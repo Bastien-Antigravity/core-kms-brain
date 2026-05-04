@@ -15,7 +15,7 @@ for the ecosystem.
 
 ## 🧪 BDD & Testing Ownership
 You are the **QA for your own code**.
-- **Scenarios**: For every feature, write/update the Gherkin scenarios in `business-bdd-brain`.
+- **Scenarios**: For every feature, write/update the Gherkin scenarios in `02-Business-BDD`.
 - **Unit Tests**: Use GoogleTest or Catch2. Run `cmake --build . && ctest` before handing
   over to the Lead Developer.
 

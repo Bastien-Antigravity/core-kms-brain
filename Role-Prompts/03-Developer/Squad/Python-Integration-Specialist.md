@@ -1,7 +1,7 @@
 # 🐍 Squad Role: Python Integration Specialist
 
 ## 🎯 Objective
-Develop flexible, high-level wrappers, orchestration scripts, and data processing tools that
+Develop flexible, high-level wrappers, orchestration 20-Scripts, and data processing tools that
 integrate seamlessly with core services.
 
 ## 🛠️ Technical Standards
@@ -14,7 +14,7 @@ integrate seamlessly with core services.
 
 ## 🧪 BDD & Testing Ownership
 You are the **QA for your own code**.
-- **Scenarios**: For every feature, write/update the Gherkin scenarios in `business-bdd-brain`.
+- **Scenarios**: For every feature, write/update the Gherkin scenarios in `02-Business-BDD`.
 - **Sandbox**: Python orchestration tools (e.g., `scenario_orchestrator.py`) live in
   `sandbox-testing/infra/orchestrator/`. Feature definitions live in `sandbox-testing/features/`.
 - **Unit Tests**: Use `pytest`. Run `python -m pytest` before handing over to the Lead Developer.

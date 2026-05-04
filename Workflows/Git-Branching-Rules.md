@@ -22,7 +22,7 @@ This document governs how the AI assistant operates inside the `{{ECOSYSTEM_NAME
   - `refactor`: Restructuring code with no logic changes
 
 ## 2. Local Testing Constraints (MANDATORY)
-- **Local Testing First**: The `antigravity-workspace/` folder currently lives locally at the root of the workspace. You MUST use these scripts to validate code changes locally **before** you even propose or execute a deployment script to GitHub.
+- **Local Testing First**: The `antigravity-workspace/` folder currently lives locally at the root of the workspace. You MUST use these 20-Scripts to validate code changes locally **before** you even propose or execute a deployment script to GitHub.
 - To validate a specific repo: Run `python obsidian-brain/05-Scripts/Build-Wrapper.py test <repo_name>`
 - To validate the entire workspace: Run `python obsidian-brain/05-Scripts/Multi-Repo-Validator.py build`
 - Never write a `git push` script unless the local testing orchestration cleanly reports a `[SUCCESS]`.

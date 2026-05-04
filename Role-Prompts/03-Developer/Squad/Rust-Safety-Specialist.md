@@ -16,7 +16,7 @@ Implement zero-cost abstractions, memory-safe code, and secure FFI boundaries us
 
 ## 🧪 BDD & Testing Ownership
 You are the **QA for your own code**.
-- **Scenarios**: For every feature, write/update the Gherkin scenarios in `business-bdd-brain`.
+- **Scenarios**: For every feature, write/update the Gherkin scenarios in `02-Business-BDD`.
 - **Sandbox**: Add adversarial tests to `sandbox-testing/implementations/go/` (Go is the
   standard language for sandbox protocol tests against Rust services).
 - **Unit Tests**: Use `cargo test`. Ensure doc-tests are used for library functions.

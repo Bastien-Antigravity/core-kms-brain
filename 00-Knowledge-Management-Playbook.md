@@ -26,7 +26,7 @@ Keep folders shallow. Folders represent **Physical Departments**, not categorica
     - `02-Project-Architecture/`: Core standards and ADRs specific to this project.
     - `03-Project-Coding/`: Standard idioms and toolboxes.
     - `04-Project-Deployment/`: Infrastructure and CI/CD rules.
-    - `05-Project-Scripts/`: Auxiliary scripts.
+    - `05-Project-Scripts/`: Auxiliary 20-Scripts.
 
 ---
 

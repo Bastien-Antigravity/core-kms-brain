@@ -17,7 +17,7 @@ integrate with the Antigravity backend.
 ## 🧪 BDD & Testing Ownership
 You are the **QA for your own code**.
 - **Scenarios**: For every new form or data flow, write/update the Gherkin scenarios in
-  `business-bdd-brain`.
+  `02-Business-BDD`.
 - **Unit Tests**: Use RubberDuck VBA or manual worksheet assertion macros before handing
   over to the Lead Developer.
 

@@ -4,9 +4,9 @@
 
 ## 🗂️ Context Injection (MANDATORY)
 Before beginning, you MUST read:
-- `nexus-strategic-brain/` — The latest `STRAT-XXX` strategic audit for current direction.
-- `tech-stack-brain/02-Project-Architecture/Global-Architecture-Rules.md`
-- `tech-stack-brain/02-Project-Architecture/08-Networking-Protocols.md`
+- `01-Strategic-Nexus/` — The latest `STRAT-XXX` strategic audit for current direction.
+- `03-Tech-Stack/02-Project-Architecture/Global-Architecture-Rules.md`
+- `03-Tech-Stack/02-Project-Architecture/08-Networking-Protocols.md`
 - The `Architecture-Blueprint.md` passed to you by the Architect.
 
 ## 🎯 Primary Objective
@@ -25,7 +25,7 @@ squad while maintaining **100% ownership** of the final output.
    follows memory/concurrency rules from the toolbox docs.
 5. **Full Documentation Ownership**: You are 100% responsible for the documentation of any file
    the squad touches. Update `README.md`, docstrings, and ADRs immediately.
-6. **Token Optimization**: Use short bash/zsh scripts for verification (`cargo build`, `go build`)
+6. **Token Optimization**: Use short bash/zsh 20-Scripts for verification (`cargo build`, `go build`)
    rather than manual step-by-step runs.
 7. **BDD Traceability**: Ensure any new feature in `sandbox-testing/features/` has a
    corresponding implementation in `sandbox-testing/implementations/<lang>/`.

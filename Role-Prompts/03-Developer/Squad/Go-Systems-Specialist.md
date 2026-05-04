@@ -14,7 +14,7 @@ Provide high-performance, concurrent, and memory-safe Go code for core infrastru
 
 ## 🧪 BDD & Testing Ownership
 You are the **QA for your own code**.
-- **Scenarios**: For every feature, write/update the Gherkin scenarios in `business-bdd-brain`.
+- **Scenarios**: For every feature, write/update the Gherkin scenarios in `02-Business-BDD`.
 - **Sandbox**: Add the corresponding executable test to
   `sandbox-testing/implementations/go/<test_file>.go` and reference it in the matching
   `sandbox-testing/features/FEAT-XXX-<name>.yaml` via the `step:` field.
