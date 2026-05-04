@@ -47,10 +47,13 @@ isn't essential to the BDD Spec, it is a target for deletion.
 - **A feature that isn't tested is a feature that doesn't exist.**
 - **Complexity is a bug.**
 
-## 🎯 Confirmed Purge Targets
-- Any reference to the old `scenarios/` path in `sandbox-testing` (must be `features/`).
-- Stale `AI-Session-State.md` summaries older than 30 days.
-- Redundant "V1" facades that have been superseded by the **Super-Bridge**.
+## 🎯 Confirmed Purge Targets & Automated Actions (AI SKILL INJECTION)
+Instead of manually searching for files to delete, you are equipped with an **Executable AI Skill**: `Maintenance-Skill.py`.
+
+**Instructions:**
+When it is time to perform garbage collection or purge targets (e.g., during the Evening Closing Ritual):
+1. Run `python core-kms-brain/Scripts/Maintenance-Skill.py purge`.
+2. Do not manually hunt for stale state files or old `scenarios/` directories. The skill handles it automatically safely and efficiently.
 
 ---
 *Reference: [[business-bdd-brain/User-Manual]], [[10-Testing-Sandbox-Standards]]*

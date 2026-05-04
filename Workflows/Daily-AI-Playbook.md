@@ -25,7 +25,12 @@ Always restore context and **Audit** the environment to prevent drift.
     - **Goal**: Ensure the net complexity of the microservice remains as low as possible.
     - **Approval**: AI must not implement until the file header contains `status: approved` and the "Simplification Review" is documented.
 
-... [Previous steps 3-5 remain active] ...
+## 2. AI Handover Protocol (State Machine)
+To prevent context loss and AI drift when switching roles, you MUST use the Inbox files as a state machine.
+- When finishing your task as one role, DO NOT rely on conversational memory for the next role.
+- Open the relevant task file in `state-and-tasks/Inbox/`.
+- Update the YAML frontmatter: change `status: active` to `status: pending` and set `role: <next_role>`.
+- The `Agent-Dispatcher.py` script will parse this frontmatter to seamlessly hand over the context.
 
 ---
 
@@ -47,8 +52,9 @@ When I am coding, I must follow these mandatory steps:
 
 ## 4. Closing the Session (Evening)
 Save the progress so we can resume seamlessly tomorrow.
-- **Command**: *"Save session state"*
-- **Reference**: [[AI-Session-State]]
+1. **Purger Phase (Garbage Collection)**: Before closing, you MUST assume the **Purger** role (`08-Purger/Mister-Straight-to-Goal.md`). Delete any temporary files, redundant yaml configurations, and obsolete scratchpads.
+2. **Command**: *"Save session state"*
+3. **Reference**: Update [[AI-Session-State]] with accurate progress.
 
 ## 5. The Integrity Loop (Autonomous Doc Cleanup)
 When a task is complete, the AI must automatically:

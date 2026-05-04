@@ -61,27 +61,20 @@ def process_inbox() -> None:
         role = frontmatter.get('role')
         
         if status == 'pending' and role in ROLE_MAP:
-            print(f"[*] Processing {task_file} for role: {role}")
+            print(f"[*] Simulating handover for {task_file} (Role: {role})")
             
-            prompt_file = osPathJoin(ROLE_PROMPTS_DIR, ROLE_MAP[role])
-            
-            # Construct gemini-cli command
-            cmd = [
-                "gemini-cli",
-                "--system-prompt-file", prompt_file,
-                "--file", task_file
-            ]
-            
-            print(f"    Running: {' '.join(cmd)}")
-            
+            # Simulated handover: read file, replace 'status: pending' with 'status: active'
             try:
-                # Execute the CLI (Uncomment to actually run)
-                # result = subprocessRun(cmd, capture_output=True, text=True, check=True)
-                # print(f"    Success! Output captured.")
-                # TODO: Parse output, append to files, and update frontmatter to next role.
-                pass
-            except subprocessCalledProcessError as e:
-                print(f"    Error running CLI: {e.stderr}")
+                with open(task_file, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                
+                new_content = content.replace('status: pending', 'status: active', 1)
+                
+                with open(task_file, 'w', encoding='utf-8') as f:
+                    f.write(new_content)
+                print(f"    Handover complete. Status updated to 'active'.")
+            except Exception as e:
+                print(f"    Error updating status: {e}")
         elif status == 'completed':
             print(f"[-] Skipping completed task: {task_file}")
 
