@@ -1,3 +1,9 @@
+---
+microservice: obsidian-brain
+type: kms
+status: active
+---
+
 # 🧠 Core KMS Brain (Stateless AI Engine)
 
 Welcome to the **Core KMS Brain**. This repository is Tier 1 of the 3-Tier Knowledge Management Architecture. 

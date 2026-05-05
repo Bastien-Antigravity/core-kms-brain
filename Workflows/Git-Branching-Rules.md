@@ -1,3 +1,9 @@
+---
+microservice: obsidian-brain
+type: kms
+status: active
+---
+
 # AI Workflow & Orchestration Guidelines 🚀 `Status: Active`
 
 This document governs how the AI assistant operates inside the `{{ECOSYSTEM_NAME}}` polyrepo ecosystem. AI agents must enforce these operational rules precisely.

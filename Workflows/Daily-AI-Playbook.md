@@ -1,4 +1,4 @@
----
+--- 
 title: "Daily AI Playbook"
 type: architecture
 status: active

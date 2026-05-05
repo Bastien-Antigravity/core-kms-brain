@@ -1,3 +1,9 @@
+---
+microservice: obsidian-brain
+type: kms
+status: active
+---
+
 # 🛰️ Role 05: Fleet Architect (DevOps)
 
 > "The guardian of the pipeline and the pulse of the environment."

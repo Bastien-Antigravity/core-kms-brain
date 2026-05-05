@@ -1,4 +1,4 @@
----
+--- 
 title: "5-Dimensional Knowledge Management Playbook"
 type: architecture
 status: active

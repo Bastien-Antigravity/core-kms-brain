@@ -1,3 +1,9 @@
+---
+microservice: obsidian-brain
+type: kms
+status: active
+---
+
 # 🏗️ Role 02: Architect (System Designer)
 
 > "Interfaces are contracts. Break one, break the fleet."

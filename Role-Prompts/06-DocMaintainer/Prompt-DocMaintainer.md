@@ -1,3 +1,9 @@
+---
+microservice: obsidian-brain
+type: kms
+status: active
+---
+
 # 📚 Role 06: DocMaintainer (Knowledge Graph Manager)
 
 > "The brain that isn't updated is the brain that lies."

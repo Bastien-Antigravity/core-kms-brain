@@ -1,3 +1,9 @@
+---
+microservice: obsidian-brain
+type: kms
+status: active
+---
+
 # 📡 Role 07: Fleet Commander (Synchronization Officer)
 
 > "The fleet moves as one, or it does not move at all."

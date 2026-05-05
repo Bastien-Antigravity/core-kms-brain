@@ -1,3 +1,9 @@
+---
+microservice: obsidian-brain
+type: kms
+status: active
+---
+
 # 🦀 Squad Role: Rust Safety Specialist
 
 ## 🎯 Objective

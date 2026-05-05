@@ -1,4 +1,4 @@
----
+--- 
 title: "Obsidian App Configuration Guide"
 type: architecture
 status: active

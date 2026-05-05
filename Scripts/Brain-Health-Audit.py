@@ -20,7 +20,7 @@ from typing import List, Set, Dict
 
 # Configurations
 SCRIPT_DIR = Path(__file__).resolve().parent
-VAULT_ROOT = SCRIPT_DIR.parents[1]
+VAULT_ROOT = SCRIPT_DIR.parents[2]
 IGNORE_DIRS = {".git", ".obsidian", "state-and-tasks/Inbox/Templates"}
 
 # Mandatory YAML fields
@@ -73,7 +73,17 @@ class BrainSentinel:
     def audit(self):
         """Runs the validation rules."""
         all_names = {self._get_clean_name(f) for f in self.files}
+        all_relative_paths = {str(f.relative_to(self.root).with_suffix('')) for f in self.files}
         
+        # Discover all files on disk (including non-md) for link validation
+        all_files_on_disk = set()
+        for root, dirs, files in os.walk(self.root):
+            dirs[:] = [d for d in dirs if d not in IGNORE_DIRS]
+            for file in files:
+                rel_path = str(Path(root).relative_to(self.root) / file)
+                all_files_on_disk.add(rel_path)
+                all_files_on_disk.add(file) # Allow linking by filename only
+
         for file_path in self.files:
             name = self._get_clean_name(file_path)
             
@@ -82,8 +92,28 @@ class BrainSentinel:
             
             # 2. Check Broken Links
             for link in self.link_map[name]:
-                if link not in all_names:
-                    self.errors["broken_links"].append(f"{name} -> [[{link}]]")
+                # Check if it's a markdown file (name or rel path)
+                if link in all_names or link in all_relative_paths:
+                    continue
+                
+                # Check if it's an exact file on disk (with extension)
+                if link in all_files_on_disk:
+                    continue
+                
+                # Check if adding .md makes it valid
+                if f"{link}.md" in all_files_on_disk:
+                    continue
+
+                # Check if adding .canvas makes it valid
+                if f"{link}.canvas" in all_files_on_disk:
+                    continue
+
+                # Also check if it's a stem of a path-like link
+                link_stem = Path(link).stem
+                if link_stem in all_names:
+                    continue
+
+                self.errors["broken_links"].append(f"{name} -> [[{link}]]")
             
             # 3. Check Orphans
             if name not in self.incoming_links or len(self.incoming_links[name]) == 0:

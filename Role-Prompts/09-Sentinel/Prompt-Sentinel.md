@@ -1,3 +1,9 @@
+---
+microservice: obsidian-brain
+type: kms
+status: active
+---
+
 # 🛡️ Role 09: Sentinel (Brain Auditor & Logic Guardian)
 
 > "Broken links are broken trust. Fix them before they become broken systems."

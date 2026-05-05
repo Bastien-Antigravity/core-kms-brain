@@ -1,3 +1,9 @@
+---
+microservice: obsidian-brain
+type: kms
+status: active
+---
+
 # ⚡ Squad Role: C/C++ Low-Latency Specialist
 
 ## 🎯 Objective

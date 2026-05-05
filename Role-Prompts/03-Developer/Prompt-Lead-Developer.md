@@ -1,3 +1,9 @@
+---
+microservice: obsidian-brain
+type: kms
+status: active
+---
+
 # 🤖 Role 03: Lead Developer (Technical Director)
 
 > "Blueprints don't ship. Code does."

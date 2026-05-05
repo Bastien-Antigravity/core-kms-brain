@@ -1,3 +1,9 @@
+---
+microservice: obsidian-brain
+type: kms
+status: active
+---
+
 # 🎭 Role 01: Orchestrator (Pipeline Director)
 
 > "A good plan routes itself. A great plan knows when to shortcut."
