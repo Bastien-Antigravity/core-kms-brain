@@ -22,9 +22,19 @@ from sys import argv as sysArgv
 
 # ### CONFIGURATIONS ###
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-# core-kms-brain/Scripts -> parent is core-kms-brain -> parent is root
-WORKSPACE_DIR = SCRIPT_DIR.parents[1]
+def _find_workspace_root() -> Path:
+    """
+    Walk up from this script's location until we find the workspace root.
+    """
+    current = Path(__file__).resolve().parent
+    for parent in [current] + list(current.parents):
+        if (parent / "Bastien-Antigravity.code-workspace").exists():
+            return parent
+        if (parent / "obsidian-brain").is_dir() and (parent / "fleet-operation-brain").is_dir():
+            return parent
+    return Path(__file__).resolve().parents[1]
+
+WORKSPACE_DIR = _find_workspace_root()
 
 # -----------------------------------------------------------------------------------------------
 

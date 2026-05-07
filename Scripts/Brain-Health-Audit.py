@@ -30,9 +30,21 @@ if sysStdout.encoding != 'utf-8':
 
 # ### CONFIGURATIONS ###
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-# core-kms-brain/Scripts -> parent is core-kms-brain -> parent is root
-WORKSPACE_ROOT = SCRIPT_DIR.parents[1]
+def _find_workspace_root() -> Path:
+    """
+    Walk up from this script's location until we find the workspace root.
+    Works whether the script lives in core-kms-brain/Scripts/ (standalone)
+    or obsidian-brain/07-Core-KMS/Scripts/ (submodule).
+    """
+    current = Path(__file__).resolve().parent
+    for parent in [current] + list(current.parents):
+        if (parent / "Bastien-Antigravity.code-workspace").exists():
+            return parent
+        if (parent / "obsidian-brain").is_dir() and (parent / "fleet-operation-brain").is_dir():
+            return parent
+    return Path(__file__).resolve().parents[1]
+
+WORKSPACE_ROOT = _find_workspace_root()
 VAULT_ROOT = WORKSPACE_ROOT / "obsidian-brain"
 
 IGNORE_DIRS = {".git", ".obsidian", "state-and-tasks/Inbox/Templates"}

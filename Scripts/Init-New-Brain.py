@@ -22,15 +22,26 @@ from sys import argv as sysArgv, exit as sysExit
 
 # -----------------------------------------------------------------------------------------------
 
+def _find_workspace_root() -> str:
+    """
+    Walk up from this script's location until we find the workspace root.
+    """
+    current = osPathDirname(osPathAbspath(__file__))
+    while current != osPathDirname(current):
+        if osPathExists(osPathJoin(current, "Bastien-Antigravity.code-workspace")):
+            return current
+        if osPathExists(osPathJoin(current, "obsidian-brain")) and osPathExists(osPathJoin(current, "fleet-operation-brain")):
+            return current
+        current = osPathDirname(current)
+    return osPathDirname(osPathDirname(osPathAbspath(__file__)))
+
 def init_brain(ecosystem_name: str) -> None:
     """
     Performs the initialization sequence for a fresh brain ecosystem.
     """
     print("Initializing new AI Brain for: {0}".format(ecosystem_name))
     
-    # core-kms-brain/Scripts -> parent is core-kms-brain -> parent is root
-    core_dir = osPathDirname(osPathDirname(osPathAbspath(__file__)))
-    wrapper_dir = osPathDirname(core_dir)
+    wrapper_dir = _find_workspace_root()
     
     # Corrected paths for the actual Bastien-Antigravity structure
     obsidian_dir = osPathJoin(wrapper_dir, "obsidian-brain")

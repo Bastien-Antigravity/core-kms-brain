@@ -22,14 +22,25 @@ from typing import Optional, Dict, Any
 
 # ### CONFIGURATIONS ###
 
-SCRIPT_DIR = osPathDirname(osPathAbspath(__file__))
-# core-kms-brain/Scripts -> parent is core-kms-brain -> parent is root
-WORKSPACE_ROOT = osPathDirname(osPathDirname(SCRIPT_DIR))
+def _find_workspace_root() -> str:
+    """
+    Walk up from this script's location until we find the workspace root.
+    """
+    current = osPathDirname(osPathAbspath(__file__))
+    while current != osPathDirname(current):
+        if osPathExists(osPathJoin(current, "Bastien-Antigravity.code-workspace")):
+            return current
+        if osPathExists(osPathJoin(current, "obsidian-brain")) and osPathExists(osPathJoin(current, "fleet-operation-brain")):
+            return current
+        current = osPathDirname(current)
+    return osPathDirname(osPathDirname(osPathAbspath(__file__)))
+
+WORKSPACE_ROOT = _find_workspace_root()
 
 # Path to the obsidian vault
 OBSIDIAN_DIR = osPathJoin(WORKSPACE_ROOT, "obsidian-brain")
 INBOX_DIR = osPathJoin(OBSIDIAN_DIR, "10-State-and-Tasks", "Inbox")
-ROLE_PROMPTS_DIR = osPathJoin(osPathDirname(SCRIPT_DIR), "Role-Prompts")
+ROLE_PROMPTS_DIR = osPathJoin(WORKSPACE_ROOT, "core-kms-brain", "Role-Prompts")
 
 # Role to Prompt Mapping
 ROLE_MAP = {
