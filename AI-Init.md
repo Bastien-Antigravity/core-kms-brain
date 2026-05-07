@@ -1,3 +1,9 @@
+---
+microservice: core-kms-brain
+type: governance
+status: active
+---
+
 # ⚡ AI Initialization: core-kms-brain
 
 > [!IMPORTANT] MANDATORY INITIALIZATION

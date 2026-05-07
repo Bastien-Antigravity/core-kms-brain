@@ -45,7 +45,13 @@ WORKSPACE_ROOT = _find_workspace_root()
 # Path to the inventory (fleet-operation-brain is a sibling of core-kms-brain)
 INVENTORY_PATH = WORKSPACE_ROOT / "fleet-operation-brain" / "00-Repo-Control" / "inventory.json"
 
-TEMPLATE = """# ⚡ AI Initialization: {repo_name}
+TEMPLATE = """---
+microservice: {repo_name}
+type: governance
+status: active
+---
+
+# ⚡ AI Initialization: {repo_name}
 
 > [!IMPORTANT] MANDATORY INITIALIZATION
 > Copy and paste this prompt when starting a new session in this repository:
