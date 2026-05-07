@@ -1,5 +1,5 @@
 ---
-microservice: obsidian-brain
+microservice: core-kms-brain
 type: kms
 status: active
 ---

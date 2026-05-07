@@ -2,7 +2,7 @@
 title: "Daily AI Playbook"
 type: architecture
 status: active
-microservice: ecosystem-wide
+microservice: core-kms-brain
 tags:
   - ai/workflow
   - ai/playbook
@@ -37,7 +37,7 @@ To prevent context loss and AI drift when switching roles, you MUST use the Inbo
 ## ⚡ Quick-Start Magic Prompt
 Copy and paste this at the start of any new session to perfectly orient the AI:
 
-> *"1. Read the ecosystem map in **[[00-Master-MOC]]**."*
+> *"1. Read the ecosystem map in **[[Ecosystem-Map-MOC]]**."*
 > *"2. Load project constraints from **[[AI-Project-DNA]]**."*
 > *"3. Restore session state from **[[AI-Session-State]]**."*
 > *"4. **Audit**: Run `git branch --show-current` and check `VERSION.txt` to verify environment matches state."*
@@ -45,7 +45,7 @@ Copy and paste this at the start of any new session to perfectly orient the AI:
 
 ## 3. The Development Loop (Execution)
 When I am coding, I must follow these mandatory steps:
-- **Build First**: Run `python 03-Tech-Stack/05-Project-Scripts/Build-Wrapper.py` to validate code locally.
+- **Build First**: Run `python tech-stack-brain/05-Project-Scripts/Build-Wrapper.py` to validate code locally.
 - **Commit Often**: Use Conventional Commits (`feat:`, `fix:`, `refactor:`).
 - **Branch Strategy**: Follow the `develop` -> `main` flow defined in [[Git-Branching-Rules]].
     - *Pro-Tip*: Always commit to `develop` first, then merge to `main` to keep your production branch clean and protected.
@@ -60,20 +60,13 @@ Save the progress so we can resume seamlessly tomorrow.
 When a task is complete, the AI must automatically:
 1. **Sync READMEs**: Update any microservice `README.md` impacted by code changes.
 2. **Update Session-State**: Log the latest local progress in the repo-specific `AI-Session-State.md`.
-3. **Bridge to Brain**: Update the `00-Master-MOC` or any Architecture node if a new system-wide rule is discovered.
+3. **Bridge to Brain**: Update the `Ecosystem-Map-MOC` or any Architecture node if a new system-wide rule is discovered.
 
 ## 6. The Wisdom Feedback Loop (Maintenance)
 To keep the "Experience Ledger" alive, we use a post-session ritual:
 1. **Extraction**: At the end of every significant task, the AI asks: *"Did we learn a universal lesson today?"*
-2. **Recording**: If yes, the AI updates the relevant log in `03-Tech-Stack/06-Role-Wisdom/`.
+2. **Recording**: If yes, the AI updates the relevant `Wisdom-Log.md` in the agent's `Role-Prompts/` folder (e.g., `core-kms-brain/Role-Prompts/02-Architect/Wisdom-Log.md`).
 3. **Pruning**: Once a month, the AI performs a "Knowledge Compression" to remove redundant or outdated wisdom.
-
----
-
-## ⚡ Quick-Start Magic Prompt
-Copy and paste this at the start of any new session to perfectly orient the AI:
-
-> *"Restore session state from **[[00-AI-Engine/10-State-and-Tasks/AI-Session-State]]** and read the ecosystem map in **[[00-Master-MOC]]**. Follow the standardized loop in **[[Daily-AI-Playbook]]**."*
 
 ---
 > [!TIP] Use the Beacons!

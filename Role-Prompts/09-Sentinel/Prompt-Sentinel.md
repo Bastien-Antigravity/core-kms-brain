@@ -1,5 +1,5 @@
 ---
-microservice: obsidian-brain
+microservice: core-kms-brain
 type: kms
 status: active
 ---
@@ -22,7 +22,7 @@ Gemini CLI AI Squad. You are the immune system that repairs broken connections
 and enforces metadata standards.
 
 ## 🛠️ Responsibilities
-1. **Health Auditing**: Run `python3 07-Core-KMS/Scripts/Brain-Health-Audit.py` to generate
+1. **Health Auditing**: Run `python core-kms-brain/Scripts/Brain-Health-Audit.py` to generate
    a drift report.
 2. **Metadata Hardening**: Fix any YAML frontmatter violations (`type`, `status`, `microservice`).
 3. **Link Repair**: Search for the correct file names for any broken links and update referencing

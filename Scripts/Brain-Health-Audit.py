@@ -9,18 +9,32 @@ DATA FLOW:
 2. Parses frontmatter and extracts internal [[Links]].
 3. Identifies orphans (files with no incoming links) and broken links.
 4. Generates a "Coherence Report".
+
+KEY PARAMETERS:
+- VAULT_ROOT: The target directory for auditing.
+- IGNORE_DIRS: Folders to skip during the scan.
 """
 
-import os
-import re
+from sys import argv as sysArgv, exit as sysExit, stdout as sysStdout
+from os import walk as osWalk
+from re import findall as reFindall
 from pathlib import Path
 from typing import List, Set, Dict
 
-# -----------------------------------------------------------------------------------------------
+# Standardize terminal output encoding for Windows
+if sysStdout.encoding != 'utf-8':
+    try:
+        sysStdout.reconfigure(encoding='utf-8')
+    except (AttributeError, Exception):
+        pass
 
-# Configurations
+# ### CONFIGURATIONS ###
+
 SCRIPT_DIR = Path(__file__).resolve().parent
-VAULT_ROOT = SCRIPT_DIR.parents[2]
+# core-kms-brain/Scripts -> parent is core-kms-brain -> parent is root
+WORKSPACE_ROOT = SCRIPT_DIR.parents[1]
+VAULT_ROOT = WORKSPACE_ROOT / "obsidian-brain"
+
 IGNORE_DIRS = {".git", ".obsidian", "state-and-tasks/Inbox/Templates"}
 
 # Mandatory YAML fields
@@ -29,7 +43,9 @@ REQUIRED_FIELDS = ["type", "status"]
 # -----------------------------------------------------------------------------------------------
 
 class BrainSentinel:
-    def __init__(self, root: Path):
+    Name = "BrainSentinel"
+
+    def __init__(self, root: Path) -> None:
         self.root = root
         self.files: List[Path] = []
         self.link_map: Dict[str, Set[str]] = {} # file_name -> {outgoing_links}
@@ -41,12 +57,21 @@ class BrainSentinel:
             "mode_mismatch": []
         }
 
+    # -----------------------------------------------------------------------------------------------
+
     def _get_clean_name(self, path: Path) -> str:
+        """
+        Returns the stem (filename without extension) as the canonical name.
+        """
         return path.stem
 
-    def scan(self):
-        """Discovers all files and builds the relationship graph."""
-        for root, dirs, files in os.walk(self.root):
+    # -----------------------------------------------------------------------------------------------
+
+    def scan(self) -> None:
+        """
+        Discovers all files and builds the relationship graph.
+        """
+        for root, dirs, files in osWalk(self.root):
             dirs[:] = [d for d in dirs if d not in IGNORE_DIRS]
             for file in files:
                 if file.endswith(".md"):
@@ -61,27 +86,37 @@ class BrainSentinel:
                             self.incoming_links[link] = set()
                         self.incoming_links[link].add(name)
 
+    # -----------------------------------------------------------------------------------------------
+
     def _extract_links(self, path: Path) -> Set[str]:
-        """Extracts [[Link]] patterns from file content."""
+        """
+        Extracts [[Link]] patterns from file content.
+        """
         with open(path, 'r', encoding='utf-8') as f:
             content = f.read()
         
         # Regex for [[File Name]] or [[File Name|Alias]]
-        links = re.findall(r'\[\[([^|\]]+)(?:\|[^\]]*)?\]\]', content)
+        links = reFindall(r'\[\[([^|\]]+)(?:\|[^\]]*)?\]\]', content)
         return set(links)
 
-    def audit(self):
-        """Runs the validation rules."""
+    # -----------------------------------------------------------------------------------------------
+
+    def audit(self) -> None:
+        """
+        Runs the validation rules against the scanned data.
+        """
         all_names = {self._get_clean_name(f) for f in self.files}
-        all_relative_paths = {str(f.relative_to(self.root).with_suffix('')) for f in self.files}
+        all_relative_paths = {f.relative_to(self.root).with_suffix('').as_posix() for f in self.files}
         
         # Discover all files on disk (including non-md) for link validation
         all_files_on_disk = set()
-        for root, dirs, files in os.walk(self.root):
+        for root, dirs, files in osWalk(self.root):
             dirs[:] = [d for d in dirs if d not in IGNORE_DIRS]
             for file in files:
-                rel_path = str(Path(root).relative_to(self.root) / file)
-                all_files_on_disk.add(rel_path)
+                rel_path = Path(root).relative_to(self.root) / file
+                # Normalize to forward slashes for cross-platform linking
+                rel_path_posix = rel_path.as_posix()
+                all_files_on_disk.add(rel_path_posix)
                 all_files_on_disk.add(file) # Allow linking by filename only
 
         for file_path in self.files:
@@ -92,28 +127,31 @@ class BrainSentinel:
             
             # 2. Check Broken Links
             for link in self.link_map[name]:
+                # Normalize link to forward slashes
+                link_normalized = link.replace("\\", "/")
+                
                 # Check if it's a markdown file (name or rel path)
-                if link in all_names or link in all_relative_paths:
+                if link_normalized in all_names or link_normalized in all_relative_paths:
                     continue
                 
                 # Check if it's an exact file on disk (with extension)
-                if link in all_files_on_disk:
+                if link_normalized in all_files_on_disk:
                     continue
                 
                 # Check if adding .md makes it valid
-                if f"{link}.md" in all_files_on_disk:
+                if "{0}.md".format(link_normalized) in all_files_on_disk:
                     continue
 
                 # Check if adding .canvas makes it valid
-                if f"{link}.canvas" in all_files_on_disk:
+                if "{0}.canvas".format(link_normalized) in all_files_on_disk:
                     continue
 
                 # Also check if it's a stem of a path-like link
-                link_stem = Path(link).stem
+                link_stem = Path(link_normalized).stem
                 if link_stem in all_names:
                     continue
 
-                self.errors["broken_links"].append(f"{name} -> [[{link}]]")
+                self.errors["broken_links"].append("{0} -> [[{1}]]".format(name, link))
             
             # 3. Check Orphans
             if name not in self.incoming_links or len(self.incoming_links[name]) == 0:
@@ -121,8 +159,12 @@ class BrainSentinel:
                 if not name.endswith("-MOC") and not name == "README":
                     self.errors["orphans"].append(name)
 
-    def _check_yaml(self, path: Path):
-        """Verifies mandatory frontmatter fields."""
+    # -----------------------------------------------------------------------------------------------
+
+    def _check_yaml(self, path: Path) -> None:
+        """
+        Verifies mandatory frontmatter fields.
+        """
         with open(path, 'r', encoding='utf-8') as f:
             content = f.read()
         
@@ -141,8 +183,12 @@ class BrainSentinel:
             if f"{field}:" not in yaml_content:
                 self.errors["missing_yaml"].append(f"{name} (Missing {field})")
 
-    def report(self):
-        """Outputs the audit summary."""
+    # -----------------------------------------------------------------------------------------------
+
+    def report(self) -> None:
+        """
+        Outputs the audit summary to the terminal.
+        """
         print("\n" + "="*60)
         print("🧠 BASTIEN BRAIN SENTINEL: HEALTH REPORT")
         print("="*60)

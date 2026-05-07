@@ -1,8 +1,31 @@
-import os
-import re
+#!/usr/bin/env python
+# coding:utf-8
+"""
+ESSENTIAL PROCESS:
+Enforces mandatory YAML frontmatter (microservice, type, status) across 
+all markdown files in the Obsidian vault based on their directory location.
+
+DATA FLOW:
+1. Crawls the obsidian-brain directory for .md files.
+2. Identifies the "Zone" (folder prefix) to determine default metadata.
+3. Injects or updates the YAML frontmatter in each file.
+4. Saves the hardened content back to disk.
+
+KEY PARAMETERS:
+- ZONE_MAP: Mapping of folder names to their architectural type and status.
+- VAULT_ROOT: The target directory for hardening.
+"""
+
+from os import walk as osWalk
+from re import search as reSearch
 from pathlib import Path
 
-VAULT_ROOT = Path(__file__).resolve().parents[2]
+# ### CONFIGURATIONS ###
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+# core-kms-brain/Scripts -> parent is core-kms-brain -> parent is root
+WORKSPACE_ROOT = SCRIPT_DIR.parents[1]
+VAULT_ROOT = WORKSPACE_ROOT / "obsidian-brain"
 
 # Mapping of folder prefixes to metadata
 ZONE_MAP = {
@@ -18,11 +41,21 @@ ZONE_MAP = {
     "20-Scripts": {"type": "automation", "status": "active"},
 }
 
-def apply_hardening(file_path):
+# -----------------------------------------------------------------------------------------------
+
+def apply_hardening(file_path: Path) -> None:
+    """
+    Reads a file and ensures it has the correct YAML frontmatter for its zone.
+    """
     with open(file_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    relative_path = file_path.relative_to(VAULT_ROOT)
+    try:
+        relative_path = file_path.relative_to(VAULT_ROOT)
+    except ValueError:
+        # File is not within VAULT_ROOT
+        return
+        
     parts = relative_path.parts
     
     # Determine zone-based defaults
@@ -33,7 +66,7 @@ def apply_hardening(file_path):
     microservice = "obsidian-brain"
     if zone == "06-Microservices" and len(parts) > 1:
         # Try to extract microservice name from Hub file
-        hub_match = re.search(r"([\w-]+)-Hub", parts[-1])
+        hub_match = reSearch(r"([\w-]+)-Hub", parts[-1])
         if hub_match:
             microservice = hub_match.group(1).lower()
 
@@ -51,26 +84,35 @@ def apply_hardening(file_path):
             body = fm_parts[2]
             
             for key, val in new_frontmatter.items():
-                if f"{key}:" not in fm_content:
-                    fm_content = f"{key}: {val}\n" + fm_content
+                if "{0}:".format(key) not in fm_content:
+                    fm_content = "{0}: {1}\n".format(key, val) + fm_content
             
-            new_content = f"--- \n{fm_content.strip()}\n---{body}"
+            new_content = "--- \n{0}\n---{1}".format(fm_content.strip(), body)
         else:
             # Malformed, treat as no frontmatter for safety
-            fm_header = "\n".join([f"{k}: {v}" for k, v in new_frontmatter.items()])
-            new_content = f"---\n{fm_header}\n---\n\n{content}"
+            fm_header = "\n".join(["{0}: {1}".format(k, v) for k, v in new_frontmatter.items()])
+            new_content = "---\n{0}\n---\n\n{1}".format(fm_header, content)
     else:
         # Create new frontmatter
-        fm_header = "\n".join([f"{k}: {v}" for k, v in new_frontmatter.items()])
-        new_content = f"---\n{fm_header}\n---\n\n{content}"
+        fm_header = "\n".join(["{0}: {1}".format(k, v) for k, v in new_frontmatter.items()])
+        new_content = "---\n{0}\n---\n\n{1}".format(fm_header, content)
 
     with open(file_path, 'w', encoding='utf-8') as f:
         f.write(new_content)
 
-def main():
+# -----------------------------------------------------------------------------------------------
+
+def main() -> None:
+    """
+    Orchestrates the batch hardening process across the entire vault.
+    """
+    if not VAULT_ROOT.exists():
+        print("HardeningYAML: Vault root not found at {0}".format(VAULT_ROOT))
+        return
+
     print("[*] Starting batch YAML hardening...")
     count = 0
-    for root, dirs, files in os.walk(VAULT_ROOT):
+    for root, dirs, files in osWalk(VAULT_ROOT):
         if ".git" in root or ".obsidian" in root:
             continue
         for file in files:
@@ -78,7 +120,9 @@ def main():
                 path = Path(root) / file
                 apply_hardening(path)
                 count += 1
-    print(f"[*] Hardened {count} files.")
+    print("[*] Hardened {0} files.".format(count))
+
+# -----------------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
     main()

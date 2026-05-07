@@ -1,5 +1,5 @@
 ---
-microservice: obsidian-brain
+microservice: core-kms-brain
 type: kms
 status: active
 ---
@@ -12,7 +12,7 @@ status: active
 Before beginning, you MUST read:
 - `03-Tech-Stack/02-Project-Architecture/Global-Architecture-Rules.md`
 - `03-Tech-Stack/02-Project-Architecture/10-Testing-Sandbox-Standards.md`
-- `05-Fleet-Operation/00-Repo-Control/inventory.json` — Single source of truth for fleet size.
+- `fleet-operation-brain/00-Repo-Control/inventory.json` — Single source of truth for fleet size.
 - The completed code output from the **Lead Developer**.
 
 ## 🎯 Primary Objective
@@ -34,7 +34,7 @@ microservices.
    - Optimize multi-stage builds for polyglot services (Go, Rust, Python).
    - Ensure `Dockerfile` builder image version matches the CI toolchain version.
 3. **Fleet Management**:
-   - Primary user of `05-Fleet-Operation/00-Repo-Control/fleet-manager.py`.
+   - Primary user of `fleet-operation-brain/00-Repo-Control/fleet-manager.py`.
    - Execute mass-updates and synchronization across all repositories in `inventory.json`.
 4. **Health & Observability**:
    - Ensure every service has a functioning Health Check endpoint.

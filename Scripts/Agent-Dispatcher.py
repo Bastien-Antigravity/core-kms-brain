@@ -1,33 +1,56 @@
 #!/usr/bin/env python
 # coding:utf-8
+"""
+ESSENTIAL PROCESS:
+Monitors the 'Inbox' directory in the Obsidian Vault for pending tasks
+and automates the handover to specific AI Agent personas.
 
-from os.path import dirname as osPathDirname, abspath as osPathAbspath, join as osPathJoin
+DATA FLOW:
+1. Scans obsidian-brain/10-State-and-Tasks/Inbox for markdown files.
+2. Parses YAML frontmatter to identify tasks with 'status: pending'.
+3. Updates the status to 'active' for tasks assigned to known roles.
+4. (Simulation) Triggers the appropriate AI persona workflow.
+
+KEY PARAMETERS:
+- ROLE_MAP: Dictionary mapping agent roles to their prompt files.
+- INBOX_DIR: Target directory for incoming task definitions.
+"""
+
+from os.path import dirname as osPathDirname, abspath as osPathAbspath, join as osPathJoin, exists as osPathExists
 from glob import glob as globGlob
-from subprocess import run as subprocessRun, CalledProcessError as subprocessCalledProcessError
 from typing import Optional, Dict, Any
 
-# -----------------------------------------------------------------------------------------------
+# ### CONFIGURATIONS ###
 
-# Configurations
 SCRIPT_DIR = osPathDirname(osPathAbspath(__file__))
-OBSIDIAN_DIR = osPathDirname(osPathDirname(SCRIPT_DIR))
+# core-kms-brain/Scripts -> parent is core-kms-brain -> parent is root
+WORKSPACE_ROOT = osPathDirname(osPathDirname(SCRIPT_DIR))
 
-INBOX_DIR = osPathJoin(OBSIDIAN_DIR, "state-and-tasks", "Inbox")
+# Path to the obsidian vault
+OBSIDIAN_DIR = osPathJoin(WORKSPACE_ROOT, "obsidian-brain")
+INBOX_DIR = osPathJoin(OBSIDIAN_DIR, "10-State-and-Tasks", "Inbox")
 ROLE_PROMPTS_DIR = osPathJoin(osPathDirname(SCRIPT_DIR), "Role-Prompts")
 
 # Role to Prompt Mapping
 ROLE_MAP = {
+    "oracle": "00-Oracle/Prompt-Chronos-Oracle.md",
     "orchestrator": "01-Orchestrator/Prompt-Orchestrator.md",
     "architect": "02-Architect/Prompt-Architect.md",
     "developer": "03-Developer/Prompt-Lead-Developer.md",
     "qa": "04-QA/Prompt-QA.md",
     "fleet-architect": "05-FleetArchitect/Prompt-Fleet-Architect.md",
-    "doc-maintainer": "06-DocMaintainer/Prompt-DocMaintainer.md"
+    "doc-maintainer": "06-DocMaintainer/Prompt-DocMaintainer.md",
+    "fleet-commander": "07-FleetCommander/Prompt-FleetCommander.md",
+    "purger": "08-Purger/Mister-Straight-to-Goal.md",
+    "sentinel": "09-Sentinel/Prompt-Sentinel.md",
 }
 
 # -----------------------------------------------------------------------------------------------
 
 def parse_frontmatter(file_path: str) -> Optional[Dict[str, Any]]:
+    """
+    Parses YAML frontmatter from a markdown file using a late import.
+    """
     # Late import for specialized library
     from yaml import safe_load as yamlSafeLoad
 
@@ -41,12 +64,19 @@ def parse_frontmatter(file_path: str) -> Optional[Dict[str, Any]]:
                 frontmatter = yamlSafeLoad(parts[1])
                 return frontmatter
             except Exception as e:
-                print(f"Error parsing YAML in {file_path}: {e}")
+                print(f"AgentDispatcher: Error parsing YAML in {file_path}: {e}")
     return None
 
 # -----------------------------------------------------------------------------------------------
 
 def process_inbox() -> None:
+    """
+    Iterates through the inbox and transitions tasks from pending to active.
+    """
+    if not osPathExists(INBOX_DIR):
+        print(f"AgentDispatcher: Inbox directory not found at {INBOX_DIR}")
+        return
+
     task_files = globGlob(osPathJoin(INBOX_DIR, "*.md"))
     
     for task_file in task_files:
@@ -72,7 +102,7 @@ def process_inbox() -> None:
                 
                 with open(task_file, 'w', encoding='utf-8') as f:
                     f.write(new_content)
-                print(f"    Handover complete. Status updated to 'active'.")
+                print("    Handover complete. Status updated to 'active'.")
             except Exception as e:
                 print(f"    Error updating status: {e}")
         elif status == 'completed':

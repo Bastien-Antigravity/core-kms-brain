@@ -1,23 +1,42 @@
 #!/usr/bin/env python
 # coding:utf-8
+"""
+ESSENTIAL PROCESS:
+Resets and initializes a new AI Brain environment by updating project 
+variables, clearing the task inbox, and resetting session state.
 
+DATA FLOW:
+1. Inputs a new ecosystem name via CLI.
+2. Updates Project-Variables.md with the new name.
+3. Deletes all .md files in the Inbox folder (excluding templates).
+4. Reinitializes AI-Session-State.md with a fresh header.
+
+KEY PARAMETERS:
+- ecosystem_name: The name of the new project being initialized.
+"""
+
+from os import remove as osRemove
 from os.path import dirname as osPathDirname, abspath as osPathAbspath, join as osPathJoin, basename as osPathBasename
 from glob import glob as globGlob
 from sys import argv as sysArgv, exit as sysExit
-from os import remove as osRemove
-from typing import List
 
 # -----------------------------------------------------------------------------------------------
 
 def init_brain(ecosystem_name: str) -> None:
-    print(f"Initializing new AI Brain for: {ecosystem_name}")
+    """
+    Performs the initialization sequence for a fresh brain ecosystem.
+    """
+    print("Initializing new AI Brain for: {0}".format(ecosystem_name))
     
+    # core-kms-brain/Scripts -> parent is core-kms-brain -> parent is root
     core_dir = osPathDirname(osPathDirname(osPathAbspath(__file__)))
     wrapper_dir = osPathDirname(core_dir)
     
-    project_vars_path = osPathJoin(wrapper_dir, "Project-Variables.md")
-    inbox_dir = osPathJoin(wrapper_dir, "state-and-tasks", "Inbox")
-    session_state_path = osPathJoin(wrapper_dir, "AI-Session-State.md")
+    # Corrected paths for the actual Bastien-Antigravity structure
+    obsidian_dir = osPathJoin(wrapper_dir, "obsidian-brain")
+    project_vars_path = osPathJoin(obsidian_dir, "00-AI-Orchestration", "Project-Variables.md")
+    inbox_dir = osPathJoin(obsidian_dir, "10-State-and-Tasks", "Inbox")
+    session_state_path = osPathJoin(obsidian_dir, "00-AI-Orchestration", "AI-Session-State.md")
     
     # 1. Update Project Variables
     try:
@@ -26,20 +45,20 @@ def init_brain(ecosystem_name: str) -> None:
         with open(project_vars_path, 'w', encoding='utf-8') as f:
             for line in lines:
                 if line.startswith('ecosystem_name:'):
-                    f.write(f'ecosystem_name: "{ecosystem_name}"\n')
+                    f.write('ecosystem_name: "{0}"\n'.format(ecosystem_name))
                 else:
                     f.write(line)
         print("[-] Updated Project-Variables.md")
     except Exception as e:
-        print(f"[!] Error updating Project-Variables: {e}")
+        print("[!] Error updating Project-Variables: {0}".format(e))
 
-    # 2. Clear Inbox (except Templates)
+    # 2. Clear Inbox
     try:
         for file in globGlob(osPathJoin(inbox_dir, "*.md")):
             osRemove(file)
-            print(f"[-] Deleted old task: {osPathBasename(file)}")
+            print("[-] Deleted old task: {0}".format(osPathBasename(file)))
     except Exception as e:
-        print(f"[!] Error clearing Inbox: {e}")
+        print("[!] Error clearing Inbox: {0}".format(e))
 
     # 3. Clear Session State
     try:
@@ -47,7 +66,7 @@ def init_brain(ecosystem_name: str) -> None:
             f.write("# Central AI Session State\n\n*Brain Initialized. Ready for tasks.*")
         print("[-] Cleared AI-Session-State.md")
     except Exception as e:
-        print(f"[!] Error clearing Session State: {e}")
+        print("[!] Error clearing Session State: {0}".format(e))
         
     print("\n[SUCCESS] Brain successfully initialized! You can now write your Idea Pitch.")
 

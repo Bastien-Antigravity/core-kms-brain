@@ -1,12 +1,12 @@
 ---
-microservice: obsidian-brain
+microservice: core-kms-brain
 type: kms
 status: active
 ---
 
 # AI Workflow & Orchestration Guidelines 🚀 `Status: Active`
 
-This document governs how the AI assistant operates inside the `{{ECOSYSTEM_NAME}}` polyrepo ecosystem. AI agents must enforce these operational rules precisely.
+This document governs how the AI assistant operates inside the `Bastien-Antigravity` polyrepo ecosystem. AI agents must enforce these operational rules precisely.
 
 ## 1. Commit and Branching Rules
 - **Direct Pushes strictly forbidden**: Never push directly to `main`. If you generate a deployment script (`run_command`), the branch pipeline must strictly follow:
@@ -29,8 +29,8 @@ This document governs how the AI assistant operates inside the `{{ECOSYSTEM_NAME
 
 ## 2. Local Testing Constraints (MANDATORY)
 - **Local Testing First**: The `antigravity-workspace/` folder currently lives locally at the root of the workspace. You MUST use these 20-Scripts to validate code changes locally **before** you even propose or execute a deployment script to GitHub.
-- To validate a specific repo: Run `python obsidian-brain/05-Scripts/Build-Wrapper.py test <repo_name>`
-- To validate the entire workspace: Run `python obsidian-brain/05-Scripts/Multi-Repo-Validator.py build`
+- To validate a specific repo: Run `python tech-stack-brain/05-Project-Scripts/Build-Wrapper.py test <repo_name>`
+- To validate the entire workspace: Run `python tech-stack-brain/05-Project-Scripts/Multi-Repo-Validator.py build`
 - Never write a `git push` script unless the local testing orchestration cleanly reports a `[SUCCESS]`.
 
 ## 3. Automation and Dependencies
@@ -38,7 +38,7 @@ This document governs how the AI assistant operates inside the `{{ECOSYSTEM_NAME
 - **Artifact Generation**: Use Markdown Artifact files natively to show major implementation plans. Emphasize "Dry-Runs" for all large architectural migrations.
 
 ## 4. Universal Scripts & Local Tooling
-- Do not expect global system-tools like `curl`, `jq`, or `sed`. Rely on the `{{ECOSYSTEM_NAME}}/` tooling engine structure to orchestrate complex validation across folders.
+- Do not expect global system-tools like `curl`, `jq`, or `sed`. Rely on the `Bastien-Antigravity/` tooling engine structure to orchestrate complex validation across folders.
 ## 5. Documentation & Brain Integrity (MANDATORY)
 
 To ensure the ecosystem remains professional and the AI remains "Project Aware," the following autonomous rules apply:
