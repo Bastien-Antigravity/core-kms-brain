@@ -49,9 +49,9 @@ ROLE_MAP = {
     "architect": "02-Architect/Prompt-Architect.md",
     "developer": "03-Developer/Prompt-Lead-Developer.md",
     "qa": "04-QA/Prompt-QA.md",
-    "fleet-architect": "05-FleetArchitect/Prompt-Fleet-Architect.md",
-    "doc-maintainer": "06-DocMaintainer/Prompt-DocMaintainer.md",
-    "fleet-commander": "07-FleetCommander/Prompt-FleetCommander.md",
+    "fleetarchitect": "05-FleetArchitect/Prompt-Fleet-Architect.md",
+    "docmaintainer": "06-DocMaintainer/Prompt-DocMaintainer.md",
+    "fleetcommander": "07-FleetCommander/Prompt-FleetCommander.md",
     "purger": "08-Purger/Mister-Straight-to-Goal.md",
     "sentinel": "09-Sentinel/Prompt-Sentinel.md",
 }

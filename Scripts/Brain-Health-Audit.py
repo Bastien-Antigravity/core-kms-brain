@@ -94,9 +94,11 @@ class BrainSentinel:
                     
                     # Track incoming links
                     for link in self.link_map[name]:
-                        if link not in self.incoming_links:
-                            self.incoming_links[link] = set()
-                        self.incoming_links[link].add(name)
+                        # Resolve path-links to their stem (e.g. [[Folder/File]] -> File)
+                        link_stem = Path(link).stem
+                        if link_stem not in self.incoming_links:
+                            self.incoming_links[link_stem] = set()
+                        self.incoming_links[link_stem].add(name)
 
     # -----------------------------------------------------------------------------------------------
 
@@ -224,10 +226,42 @@ class BrainSentinel:
             print(f"  [?] {err}")
             
         print("\n" + "="*60)
-        if not any(self.errors.values()):
-            print("✨ RESULT: BRAIN IS IN PERFECT COHERENCE")
+        print("📈 SYNTHESIS VERDICT:")
+        
+        # 1. Accuracy
+        if len(self.errors['missing_yaml']) == 0:
+            print("  - Accuracy:     High (0 YAML Violations)")
+        elif len(self.errors['missing_yaml']) < 10:
+            print(f"  - Accuracy:     Moderate ({len(self.errors['missing_yaml'])} YAML Violations)")
         else:
-            print("⚠️ RESULT: DRIFT DETECTED. PLEASE RESOLVE THE ABOVE ISSUES.")
+            print(f"  - Accuracy:     Low ({len(self.errors['missing_yaml'])} YAML Violations)")
+            
+        # 2. Intelligence
+        if len(self.files) > 0:
+            link_ratio = sum(len(v) for v in self.link_map.values()) / len(self.files)
+            if link_ratio >= 1.5:
+                print(f"  - Intelligence: High ({link_ratio:.2f} links/file avg)")
+            elif link_ratio >= 1.0:
+                print(f"  - Intelligence: Moderate ({link_ratio:.2f} links/file avg)")
+            else:
+                print(f"  - Intelligence: Low ({link_ratio:.2f} links/file avg)")
+        else:
+            print("  - Intelligence: N/A (0 files)")
+            
+        # 3. Efficiency
+        total_orphans_broken = len(self.errors['orphans']) + len(self.errors['broken_links'])
+        if total_orphans_broken == 0:
+            print("  - Efficiency:   High (0 dead-ends)")
+        elif total_orphans_broken <= 20:
+            print(f"  - Efficiency:   Moderate ({total_orphans_broken} dead-ends)")
+        else:
+            print(f"  - Efficiency:   Low ({total_orphans_broken} dead-ends)")
+
+        print("-" * 60)
+        if not any(self.errors.values()):
+            print("✨ OVERALL RESULT: BRAIN IS IN PERFECT COHERENCE")
+        else:
+            print("⚠️ OVERALL RESULT: DRIFT DETECTED. PLEASE RESOLVE THE ABOVE ISSUES.")
         print("="*60 + "\n")
 
 # -----------------------------------------------------------------------------------------------
