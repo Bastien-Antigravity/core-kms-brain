@@ -17,7 +17,7 @@ To ensure the **Bastien-Antigravity** Obsidian Brain functions correctly, follow
 - **Files & Links**:
     - *Default location for new notes*: Same folder as current file.
     - *New link format*: Relative path to file (or shortest path when possible).
-    - *Use [[Wikilinks]]*: **ON**.
+    - *Use Wikilinks*: **ON**.
 - **Appearance**:
     - *Base color scheme*: Your choice (Dark Recommended).
     - *Font*: Inter (Interface), JetBrains Mono (Monospaced).

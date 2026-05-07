@@ -78,11 +78,11 @@ Use `.canvas` files to map complex relationships that text cannot convey.
 ---
 
 ## ⚗️ Dimension 5: The Conceptual (Zettelkasten Linking)
-Use bidirectional links `[[ ]]` to create an organic conceptual web.
+Use bidirectional links ` ` to create an organic conceptual web.
 
 - **The Beacon Rule**: When asking the AI for a task, link to the relevant architecture (e.g., *"Follow [[01-Facade-Pattern]]"*).
 - **Atomicity**: If a file grows beyond 200 lines, **Atomize** it into smaller nodes and link them via an MOC or parent link.
-- **Never Use Absolute Paths**: Always use `[[File Name]]` to ensure the graph stays healthy even if files move.
+- **Never Use Absolute Paths**: Always use `File Name` to ensure the graph stays healthy even if files move.
 
 ---
 
@@ -90,4 +90,4 @@ Use bidirectional links `[[ ]]` to create an organic conceptual web.
 > To add a new architecture rule:
 > 1. Create a file using `[[Template-Architecture]]`.
 > 2. Fill in the YAML.
-> 3. Link it in the **[[00-Master-MOC]]**.
+> 3. Link it in the **[[Ecosystem-Map-MOC]]**.
