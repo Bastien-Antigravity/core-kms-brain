@@ -196,6 +196,18 @@ class BrainSentinel:
         for field in REQUIRED_FIELDS:
             if f"{field}:" not in yaml_content:
                 self.errors["missing_yaml"].append(f"{name} (Missing {field})")
+        
+        # Tag Enforcement
+        if "tags:" not in yaml_content:
+            self.errors["missing_yaml"].append(f"{name} (Missing tags array)")
+        else:
+            # Check for taxonomy coverage
+            has_type = "#type/" in yaml_content
+            has_state = "#state/" in yaml_content
+            if not has_type:
+                self.errors["missing_yaml"].append(f"{name} (Missing #type/ tag)")
+            if not has_state:
+                self.errors["missing_yaml"].append(f"{name} (Missing #state/ tag)")
 
     # -----------------------------------------------------------------------------------------------
 

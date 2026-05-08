@@ -80,48 +80,55 @@ def parse_frontmatter(file_path: str) -> Optional[Dict[str, Any]]:
 
 # -----------------------------------------------------------------------------------------------
 
-def process_inbox() -> None:
+def process_vault_tasks() -> None:
     """
-    Iterates through the inbox and transitions tasks from pending to active.
+    Scans the entire vault for files with '#state/pending' tag and handles handover.
     """
-    if not osPathExists(INBOX_DIR):
-        print(f"AgentDispatcher: Inbox directory not found at {INBOX_DIR}")
-        return
-
-    task_files = globGlob(osPathJoin(INBOX_DIR, "*.md"))
+    from glob import glob as globGlob
     
-    for task_file in task_files:
-        if "Template" in task_file:
-            continue # Skip templates
-            
-        frontmatter = parse_frontmatter(task_file)
-        if not frontmatter:
+    # 1. Discover all markdown files in the vault (Discovery-Based)
+    all_files = globGlob(osPathJoin(OBSIDIAN_DIR, "**", "*.md"), recursive=True)
+    print(f"[*] Scanning {len(all_files)} files for pending tasks...")
+    
+    for task_file in all_files:
+        if ".git" in task_file or ".obsidian" in task_file:
             continue
             
-        status = frontmatter.get('status')
-        role = frontmatter.get('role')
-        
-        if status == 'pending' and role in ROLE_MAP:
-            print(f"[*] Simulating handover for {task_file} (Role: {role})")
+        # Optimization: Quick string check before heavy YAML parsing
+        try:
+            with open(task_file, 'r', encoding='utf-8') as f:
+                head = f.read(1000) # Read enough to catch YAML
+        except:
+            continue
             
-            # Simulated handover: read file, replace 'status: pending' with 'status: active'
-            try:
-                with open(task_file, 'r', encoding='utf-8') as f:
-                    content = f.read()
+        if "#state/pending" in head:
+            frontmatter = parse_frontmatter(task_file)
+            if not frontmatter:
+                continue
+            
+            role = frontmatter.get('role')
+            # Check if role is in our map or if it's explicitly tagged as a task
+            if role in ROLE_MAP:
+                print(f"[!] Pending task found: {task_file} (Role: {role})")
                 
-                new_content = content.replace('status: pending', 'status: active', 1)
-                
-                with open(task_file, 'w', encoding='utf-8') as f:
-                    f.write(new_content)
-                print("    Handover complete. Status updated to 'active'.")
-            except Exception as e:
-                print(f"    Error updating status: {e}")
-        elif status == 'completed':
-            print(f"[-] Skipping completed task: {task_file}")
+                # Update status in content
+                try:
+                    with open(task_file, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                    
+                    # Transition both the legacy field and the new tag
+                    new_content = content.replace('status: pending', 'status: active')
+                    new_content = new_content.replace('#state/pending', '#state/active')
+                    
+                    with open(task_file, 'w', encoding='utf-8') as f:
+                        f.write(new_content)
+                    print(f"    Handover complete. Transitioned to #state/active.")
+                except Exception as e:
+                    print(f"    Error updating task: {e}")
 
 # -----------------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    print("Starting Agent Dispatcher...")
-    process_inbox()
+    print("Starting Agent Dispatcher (Tag-Driven Mode)...")
+    process_vault_tasks()
     print("Run complete.")
