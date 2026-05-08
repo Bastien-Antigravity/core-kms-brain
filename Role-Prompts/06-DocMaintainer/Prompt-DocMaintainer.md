@@ -2,6 +2,10 @@
 microservice: core-kms-brain
 type: kms
 status: active
+tags:
+- '#type/guide'
+- null
+- '#state/active'
 ---
 
 # 📚 Role 06: DocMaintainer (Knowledge Graph Manager)

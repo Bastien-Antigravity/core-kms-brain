@@ -1,12 +1,14 @@
---- 
-title: "5-Dimensional Knowledge Management Playbook"
+---
+title: 5-Dimensional Knowledge Management Playbook
 type: architecture
 status: active
 microservice: ecosystem-wide
 tags:
-  - knowledge-management
-  - playbook
-  - methodology
+- playbook
+- '#state/active'
+- '#type/architecture'
+- knowledge-management
+- methodology
 ---
 
 # 📐 5-Dimensional Knowledge Management Playbook

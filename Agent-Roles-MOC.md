@@ -2,6 +2,10 @@
 microservice: agent-roles-moc
 type: moc
 status: active
+tags:
+- '#state/active'
+- null
+- '#type/moc'
 ---
 
 # Agent Roles MOC

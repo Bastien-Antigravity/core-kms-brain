@@ -1,11 +1,13 @@
---- 
-title: "Daily AI Playbook"
+---
+title: Daily AI Playbook
 type: architecture
 status: active
 microservice: core-kms-brain
 tags:
-  - ai/workflow
-  - ai/playbook
+- ai/workflow
+- ai/playbook
+- '#state/active'
+- '#type/architecture'
 ---
 
 # 📐 Daily AI Playbook

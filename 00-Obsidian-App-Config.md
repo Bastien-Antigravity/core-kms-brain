@@ -1,12 +1,14 @@
---- 
-title: "Obsidian App Configuration Guide"
+---
+title: Obsidian App Configuration Guide
 type: architecture
 status: active
 microservice: ecosystem-wide
 tags:
-  - onboarding
-  - configuration
-  - automation
+- onboarding
+- '#state/active'
+- '#type/architecture'
+- configuration
+- automation
 ---
 
 # ⚙️ Obsidian App Configuration Guide
