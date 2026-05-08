@@ -30,4 +30,4 @@ You are the **QA for your own code**.
   cross-repository workspace dependencies in `sandbox-testing/implementations/go/`.
 
 ---
-*Reference: [[10-Testing-Sandbox-Standards]], [[microservice-toolbox]]*
+*Reference: [[10-Testing-Sandbox-Standards]], [[06-Microservices/Microservice-Toolbox-Hub]]*

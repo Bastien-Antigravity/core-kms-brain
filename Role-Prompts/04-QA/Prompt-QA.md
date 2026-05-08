@@ -29,7 +29,7 @@ Development (BDD) to write strict test specifications *before* the Developer wri
    exhaustion (OOM, Slow-Loris) in your specs.
 4. **Sandbox Feature Definition**: Generate the feature YAML in `sandbox-testing/features/`
    using the `FEAT-XXX-<name>.yaml` naming convention. Each file MUST contain:
-   - `# Spec: [[02-Business-BDD/...]]` header binding it to the Business Brain.
+   - `# Spec: [[02-Business-BDD/README]]` header binding it to the Business Brain.
    - `# Implementation: implementations/<lang>/<test_file>` header.
 5. **Sandbox Implementation Skeleton**: Generate the executable test skeleton in
    `sandbox-testing/implementations/<lang>/`. This feeds the `adversarial-validation` CI gate.

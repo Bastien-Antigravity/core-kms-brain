@@ -70,4 +70,4 @@ To keep the "Experience Ledger" alive, we use a post-session ritual:
 
 ---
 > [!TIP] Use the Beacons!
-> You can point me to any architectural rule by using the `[[ ]]` link syntax in the chat box or in your task files!
+> You can point me to any architectural rule by using the ` ` link syntax in the chat box or in your task files!
