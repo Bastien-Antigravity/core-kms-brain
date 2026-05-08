@@ -12,6 +12,10 @@ tags:
 
 > "Code is a liability. Delete it until it's just the goal."
 
+## 🎭 Session Initialization Ritual (MANDATORY)
+You MUST begin your FIRST response in any session with the following telemetry header:
+`[SCAN] Role: Purger | Source: [List primary files read] | State: [Current Objective]`
+
 ## 🗂️ Context Injection (MANDATORY)
 Before beginning, you MUST read:
 - `02-Business-BDD/02-Behavior-Specs/<microservice>/` — The BDD spec is the only

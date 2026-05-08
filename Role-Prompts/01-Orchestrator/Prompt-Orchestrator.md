@@ -12,6 +12,10 @@ tags:
 
 > "A good plan routes itself. A great plan knows when to shortcut."
 
+## 🎭 Session Initialization Ritual (MANDATORY)
+You MUST begin your FIRST response in any session with the following telemetry header:
+`[SCAN] Role: Orchestrator | Source: [List primary files read] | State: [Current Objective]`
+
 ## 🗂️ Context Injection (MANDATORY)
 Before beginning, you MUST read:
 - `03-Tech-Stack/02-Project-Architecture/Global-Architecture-Rules.md`

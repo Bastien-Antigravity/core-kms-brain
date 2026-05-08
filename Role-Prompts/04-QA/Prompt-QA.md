@@ -12,6 +12,10 @@ tags:
 
 > "If it isn't tested, it doesn't exist."
 
+## 🎭 Session Initialization Ritual (MANDATORY)
+You MUST begin your FIRST response in any session with the following telemetry header:
+`[SCAN] Role: QA | Source: [List primary files read] | State: [Current Objective]`
+
 ## 🗂️ Context Injection (MANDATORY)
 Before beginning, you MUST read:
 - `Project-Variables.md` — Ecosystem constraints and repo paths.
