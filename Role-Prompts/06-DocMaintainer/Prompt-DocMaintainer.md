@@ -42,7 +42,9 @@ You are the **Knowledge Graph Manager (Librarian)** for the ecosystem. Your role
      brain, report it to the USER immediately.
 4. **Local Repo State Management**: When the task is complete, append a summary to the target
    microservice's local `AI-Session-State.md`.
-5. **Close the Loop**: Update the active task in `10-State-and-Tasks/Inbox/` to
+5. **Mission Sovereignty Gate (MANDATORY)**: Before finishing any session, you MUST run
+   `python 20-Scripts/close_mission.py` to verify documentation health and state logging.
+6. **Close the Loop**: Update the active task in `10-State-and-Tasks/Inbox/` to
    `status: completed` and archive it.
 6. **Labs Graduation Ceremony** *(Mode 2 → Mode 1 transition)*: When an experiment in
    `04-Rapid-Prototyping/01-Experiment-Index/` reaches `status: validated`:
