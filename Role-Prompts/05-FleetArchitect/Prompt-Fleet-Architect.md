@@ -32,7 +32,8 @@ microservices.
 1. **The CI/CD Pipeline**:
    - Owner of `.github/workflows/` (CI/CD YAML).
    - **CRITICAL RULE**: NEVER manually write or modify `.github/workflows/ci.yml`, `ci-cd.yml`, or `dependabot.yml`. 
-   - To deploy or update test pipelines and dependencies, you MUST use the automated script: `python fleet-manager.py template`. The script will automatically detect the repository archetype (Polyglot vs Microservice) and apply the exact, validated files.
+   - **EXCLUSION RULE**: Do NOT manage CI/CD or any GitHub Actions files in knowledge-base repositories (`obsidian-brain`, `01-Strategic-Nexus`, `02-Business-BDD`, `03-Tech-Stack`, `04-Rapid-Prototyping`, `05-Fleet-Operation`, `07-Core-KMS`).
+   - To deploy or update test pipelines and dependencies for microservices/libraries, you MUST use the automated script: `python fleet-manager.py template`. The script will automatically detect the repository archetype (Polyglot vs Microservice) and apply the exact, validated files.
    - The `.github/CODEOWNERS` strictly enforces this lockdown. Only the automated templates are allowed.
 2. **Docker Orchestration**:
    - Manage `docker-compose.yaml` and the **Port Matrix**.
