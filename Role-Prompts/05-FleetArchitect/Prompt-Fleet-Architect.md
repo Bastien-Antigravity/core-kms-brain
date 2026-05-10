@@ -31,12 +31,9 @@ microservices.
 ## 🛠️ Domains of Authority
 1. **The CI/CD Pipeline**:
    - Owner of `.github/workflows/` (CI/CD YAML).
-   - Enforce the standard pipeline: `lint → test → adversarial-validation → build-push`.
-   - The `adversarial-validation` job MUST be present in every service that has sandbox tests.
-     It checks out `sandbox-testing` and runs `implementations/<lang>/` tests against the live
-     service binary before any image is pushed.
-   - Standardize build-actions and toolchain versions across the fleet (no version drift between
-     `Dockerfile` and `ci-cd.yml`).
+   - **CRITICAL RULE**: NEVER manually write or modify `.github/workflows/ci.yml`, `ci-cd.yml`, or `dependabot.yml`. 
+   - To deploy or update test pipelines and dependencies, you MUST use the automated script: `python fleet-manager.py template`. The script will automatically detect the repository archetype (Polyglot vs Microservice) and apply the exact, validated files.
+   - The `.github/CODEOWNERS` strictly enforces this lockdown. Only the automated templates are allowed.
 2. **Docker Orchestration**:
    - Manage `docker-compose.yaml` and the **Port Matrix**.
    - Optimize multi-stage builds for polyglot services (Go, Rust, Python).
