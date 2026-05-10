@@ -44,9 +44,16 @@ def _find_workspace_root() -> Path:
     for parent in [current] + list(current.parents):
         if (parent / "Bastien-Antigravity.code-workspace").exists():
             return parent
-        if (parent / "obsidian-brain").is_dir() and (parent / "fleet-operation-brain").is_dir():
+        # Root is where obsidian-brain and docker-deployment coexist
+        if (parent / "obsidian-brain").is_dir() and (parent / "docker-deployment").is_dir():
             return parent
-    return Path(__file__).resolve().parents[1]
+            
+    # Fallback: if we are inside obsidian-brain, the root is above it
+    for parent in [current] + list(current.parents):
+        if parent.name == "obsidian-brain":
+            return parent.parent
+            
+    return Path(__file__).resolve().parents[2]
 
 WORKSPACE_ROOT = _find_workspace_root()
 VAULT_DIR = WORKSPACE_ROOT / "obsidian-brain"
@@ -174,7 +181,8 @@ def _check_inventory_portability() -> Tuple[str, List[str]]:
     """
     messages = []
     
-    inventory_path = WORKSPACE_ROOT / "fleet-operation-brain" / "00-Repo-Control" / "inventory.json"
+    # Updated path to match submodule structure
+    inventory_path = VAULT_DIR / "05-Fleet-Operation" / "00-Repo-Control" / "inventory.json"
     if not inventory_path.exists():
         messages.append("inventory.json not found — skipping portability check.")
         return "YELLOW", messages
@@ -215,7 +223,7 @@ def _check_essential_files() -> Tuple[str, List[str]]:
         ("AI-Session-State.md", VAULT_DIR / "00-AI-Orchestration" / "AI-Session-State.md"),
         ("MODE-MANUAL.md", VAULT_DIR / "00-AI-Orchestration" / "MODE-MANUAL.md"),
         ("Ecosystem-Map-MOC.md", VAULT_DIR / "Ecosystem-Map-MOC.md"),
-        ("inventory.json", WORKSPACE_ROOT / "fleet-operation-brain" / "00-Repo-Control" / "inventory.json"),
+        ("inventory.json", VAULT_DIR / "05-Fleet-Operation" / "00-Repo-Control" / "inventory.json"),
     ]
     
     missing = []
@@ -225,6 +233,7 @@ def _check_essential_files() -> Tuple[str, List[str]]:
     
     if missing:
         messages.append("Missing essential files: {0}".format(", ".join(missing)))
+        messages.append("Attempted vault path: {0}".format(VAULT_DIR))
         return "RED", messages
     
     messages.append("All {0} essential files present.".format(len(essential)))
