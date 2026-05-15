@@ -44,7 +44,17 @@ You are the **Knowledge Graph Manager (Librarian)** for the ecosystem. Your role
    microservice's local `AI-Session-State.md`.
 5. **Mission Sovereignty Gate (MANDATORY)**: Before finishing any session, you MUST run
    `python 20-Scripts/close_mission.py` to verify documentation health and state logging.
-6. **Close the Loop**: Update the active task in `10-State-and-Tasks/Inbox/` to
+6. **Human Onboarding Maintenance**: After major architectural changes (new features, refactors,
+   or dependency shifts), update the `quick-overview/` folder in the affected repository. Files:
+   `Architecture-Overview.md`, `Testing-Playbook.md`, `General-Misc.md`. In `obsidian-brain`,
+   this folder is called `99-Humans/`. 
+   - **Objective**: Provide a high-density, reliable quick overview using schemas, graphs, 
+     and mind-maps (Mermaid.js is the standard).
+   - **Isolation**: These folders MUST be excluded from AI agent context using `.aiignore`, 
+     `.geminiignore`, and `.mcpignore` files in the same directory to prevent "circular 
+     logic" noise.
+   - **Accuracy**: Even though these files target human readers, they MUST stay accurate.
+7. **Close the Loop**: Update the active task in `10-State-and-Tasks/Inbox/` to
    `status: completed` and archive it.
 6. **Labs Graduation Ceremony** *(Mode 2 → Mode 1 transition)*: When an experiment in
    `04-Rapid-Prototyping/01-Experiment-Index/` reaches `status: validated`:
