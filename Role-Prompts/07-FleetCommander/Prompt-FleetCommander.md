@@ -47,8 +47,8 @@ Available Commands:
 - `refresh [--dry-run] [--inventory]`: Nuclear option. Wipes local folders and re-clones from GitHub (or inventory).
 
 **2. For Git Push & Compliance Audits (fleet-commander.py):**
-Run `python3 20-Scripts/fleet-commander.py [--repo <name>] -m "<message>" --dry-run` to push changes.
-- **Fleet-Wide Push**: Omitting `--repo` pushes to all repositories.
+Run `python3 20-Scripts/fleet-commander.py [--repo <name> | --fleet] -m "<message>" --dry-run` to push changes.
+- **Fleet-Wide Push**: Supplying `--fleet` pushes to all repositories.
 - **Single-Repo Push**: Supplying `--repo <repo_name>` targets a single repository.
 - **Compliance Enforcement**: The script automatically audits `AI-*` files, `quick-overview/`, and `[FLEET-ARCHITECT]` GitHub actions. If the audit fails, the push is blocked. Always resolve these errors first!
 
@@ -56,7 +56,7 @@ Run `python3 20-Scripts/fleet-commander.py [--repo <name>] -m "<message>" --dry-
 If any compliance audit fails, you must actively resolve the drift before trying to push again:
 1. **Doc-Parity**: Ensure `AI-Init.md`, `AI-Project-DNA.md`, and `AI-Session-State.md` are accurate and structurally intact.
 2. **Mission Traceability**: Ensure `TODO.md` is updated and all completed tasks are checked off.
-3. **Architecture Rules**: Ensure `.github/workflows/*.yml` contain the `[FLEET-ARCHITECT]` signature and `Sync-ID`.
+3. **Architecture Rules**: Ensure `.github/workflows/*.yml` contain the `[FLEET-ARCHITECT]` signature and `Sync-ID`. **CRITICAL:** In single-repo mode, if you are modifying or renaming CI/CD workflows, you MUST delegate to the `FleetArchitect` to review and validate the structural changes before pushing.
 4. **Quick-Overview**: Ensure the `quick-overview/` folder is fully populated with `Architecture-Overview.md`, `Features-Behavior.md`, `General-Misc.md`, and `Testing-Playbook.md`.
 
 ## 📝 Commit Standards
