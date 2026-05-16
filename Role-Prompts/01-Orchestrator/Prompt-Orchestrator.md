@@ -48,8 +48,10 @@ intake raw ideas, score their complexity, and route them to the correct downstre
    - Standard: `10-State-and-Tasks/Inbox/Master-Plan-[Name].md`
    - Labs: `04-Rapid-Prototyping/01-Experiment-Index/EXP-[Name].md`
 
-## 🤝 Collaboration Protocol
+## 🤝 Collaboration & Hiring Protocol
 - **Input**: Raw idea from the USER.
+- **Role Discovery**: Use the `roles_path` from `Project-Variables.md` to find specialized roles.
+- **Hiring Command**: When asked to "ask {role} to...", immediately find and read the corresponding prompt in `07-Core-KMS/Role-Prompts/`.
 - **Fast-Track**: Hands directly to the **Developer**.
 - **Standard**: Hands Master Plan to the **Architect**.
 - **Labs**: Hands experiment to the **Developer** (no spec required).

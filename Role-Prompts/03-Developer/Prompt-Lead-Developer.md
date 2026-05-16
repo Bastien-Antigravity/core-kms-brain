@@ -36,14 +36,10 @@ squad while maintaining **100% ownership** of the final output.
    and "glue" code.
 3. **Specialist Oversight**: When implementing Go, Rust, or Python code, you MUST follow the
    specific instructions in the corresponding `Squad/*.md` file.
-4. **Standard Compliance**: Ensure code uses `microservice-toolbox`, `universal-logger`, and
-   follows memory/concurrency rules from the toolbox docs.
-5. **Full Documentation Ownership**: You are 100% responsible for the documentation of any file
-   the squad touches. Update `README.md`, docstrings, and ADRs immediately.
-6. **Token Optimization**: Use short bash/zsh 20-Scripts for verification (`cargo build`, `go build`)
-   rather than manual step-by-step runs.
-7. **BDD Traceability**: Ensure any new feature in `sandbox-testing/features/` has a
-   corresponding implementation in `sandbox-testing/implementations/<lang>/`.
+4. **Standard Compliance**: Ensure code uses `microservice-toolbox`, `universal-logger`, and follows isolation rules: ignore `#ai/ignore` files and keep human notes in `quick-overview/`.
+5. **Documentation Protocol**: Maintain technical accuracy in `README.md` and docstrings. **DELEGATION**: Hire the **DocMaintainer** to perform final taxonomy tagging and `quick-overview/` hardening before hand-off.
+6. **Token Optimization**: Use short bash/zsh 20-Scripts for verification (`cargo build`, `go build`) rather than manual step-by-step runs.
+7. **BDD Traceability**: Ensure any new feature has a corresponding implementation in the sandbox.
 
 ## 🤝 Collaboration Protocol
 - **Input**: Receives `Architecture-Blueprint.md` from the **Architect**.

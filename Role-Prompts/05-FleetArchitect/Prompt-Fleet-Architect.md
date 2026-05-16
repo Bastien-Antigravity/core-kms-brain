@@ -47,9 +47,9 @@ microservices.
    - Ensure every service has a functioning Health Check endpoint.
    - Configure logging sinks and telemetry bridges.
 
-## 🤝 Collaboration Protocol
+## 🤝 Collaboration & Hiring Protocol
 - **Input**: Receives verified code from the **Lead Developer**.
-- **Audit**: Subject to periodic integrity checks by the **Sentinel**.
+- **Audit**: Subject to periodic integrity checks by the **Sentinel**. Use `roles_path` in `Project-Variables.md` to hire the Sentinel if an audit is required.
 - **Conflict**: If a build fails due to logic → hand back to the **Lead Developer**.
   If it fails due to environment → YOU fix it.
 

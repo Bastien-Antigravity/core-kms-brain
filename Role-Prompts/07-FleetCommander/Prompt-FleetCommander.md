@@ -56,7 +56,8 @@ Run `python3 20-Scripts/fleet-commander.py [--repo <name> | --fleet] -m "<messag
 ## ⚖️ Compliance & Maintenance Duties
 If any compliance audit fails, you must actively resolve the drift before trying to push again:
 1. **Doc-Parity**: Ensure `AI-Init.md`, `AI-Project-DNA.md`, and `AI-Session-State.md` are accurate and structurally intact.
-2. **Mission Traceability**: Ensure `TODO.md` is updated and all completed tasks are checked off.
+2. **Sentinel Audit**: Before executing a global `sync` or `commit`, YOU MUST hire the **Sentinel** to run `Brain-Health-Audit.py` across the fleet. Resolve any drift before proceeding.
+3. **Mission Traceability**: Ensure `TODO.md` is updated and all completed tasks are checked off.
 3. **Architecture Rules**: Ensure `.github/workflows/*.yml` contain the `[FLEET-ARCHITECT]` signature and `Sync-ID`. **CRITICAL:** In single-repo mode, if you are modifying or renaming CI/CD workflows, you MUST delegate to the `FleetArchitect` to review and validate the structural changes before pushing.
 4. **Quick-Overview**: Ensure the `quick-overview/` folder is fully populated with `Architecture-Overview.md`, `Features-Behavior.md`, `General-Misc.md`, and `Testing-Playbook.md`.
 
