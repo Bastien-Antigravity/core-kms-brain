@@ -3,6 +3,7 @@ microservice: agent-roles-moc
 type: moc
 status: active
 tags:
+- \'#service/agent-roles-moc\'
 - '#state/active'
 - null
 - '#type/moc'

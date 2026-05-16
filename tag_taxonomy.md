@@ -33,6 +33,26 @@ This document defines the controlled vocabulary for tagging files within the Bas
 - **#domain/config**: Distributed-config, Config-server.
 - **#domain/fleet**: Fleet-manager, sub-repo orchestration.
 
+## 4. #service/ (Microservice Identity)
+- **#service/<name>**: Direct linkage to a specific repository or microservice (e.g., `#service/safe-socket`).
+
+## 5. #tech/ (Technology Stack)
+- **#tech/<name>**: Language, framework, or infrastructure tool (e.g., `#tech/go`, `#tech/docker`).
+
+## 6. #tier/ (Architectural Topology)
+- **#tier/1-gateway**: Edge layer services.
+- **#tier/2-logic**: Business logic and analysis.
+- **#tier/3-core**: Central aggregation.
+- **#tier/4-infra**: Base infrastructure.
+
+## 7. #zone/ (Governance Level)
+- **#zone/1-frozen**: Immutable behavioral specs.
+- **#zone/2-fluid**: Rapid prototypes and experiments.
+- **#zone/3-fleet**: Global CI/CD and ops.
+
+## 8. #ai/ (AI Processing Rules)
+- **#ai/ignore**: Flag for human-centric documentation that should be ignored by AI context gathering.
+
 ---
 > [!IMPORTANT]
 > The **Sentinel** (`Brain-Health-Audit.py`) enforces that every file contains at least one `#type/` and one `#state/` tag.

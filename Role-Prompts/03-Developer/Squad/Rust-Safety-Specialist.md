@@ -3,6 +3,7 @@ microservice: core-kms-brain
 type: kms
 status: active
 tags:
+- \'#service/core-kms-brain\'
 - '#type/guide'
 - null
 - '#state/active'

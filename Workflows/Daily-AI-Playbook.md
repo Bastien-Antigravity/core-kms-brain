@@ -4,6 +4,7 @@ type: architecture
 status: active
 microservice: core-kms-brain
 tags:
+- \'#service/core-kms-brain\'
 - ai/workflow
 - ai/playbook
 - '#state/active'

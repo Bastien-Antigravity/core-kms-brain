@@ -4,6 +4,7 @@ type: architecture
 status: active
 microservice: ecosystem-wide
 tags:
+- \'#service/ecosystem-wide\'
 - playbook
 - '#state/active'
 - '#type/architecture'

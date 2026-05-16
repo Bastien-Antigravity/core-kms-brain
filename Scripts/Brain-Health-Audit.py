@@ -101,6 +101,15 @@ class BrainSentinel:
 
     # -----------------------------------------------------------------------------------------------
 
+    def auto_fix(self) -> None:
+        """
+        Runs the auto-fix logic using the Sovereignty engine.
+        """
+        for file_path in self.files:
+            self.engine.auto_fix_file(file_path)
+
+    # -----------------------------------------------------------------------------------------------
+
     def report(self) -> None:
         """
         Outputs the audit summary to the terminal.
@@ -148,13 +157,6 @@ class BrainSentinel:
 if __name__ == "__main__":
     sentinel = BrainSentinel(VAULT_ROOT)
     sentinel.scan()
-    sentinel.audit()
-    sentinel.report()
-
-# -----------------------------------------------------------------------------------------------
-
-if __name__ == "__main__":
-    sentinel = BrainSentinel(VAULT_ROOT)
-    sentinel.scan()
+    sentinel.auto_fix()
     sentinel.audit()
     sentinel.report()
