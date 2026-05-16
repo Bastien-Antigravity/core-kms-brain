@@ -2,9 +2,11 @@
 type: architecture
 status: active
 tags:
+- \'#service/core-kms-brain\'
 - '#state/active'
 - null
 - '#type/architecture'
+microservice: core-kms-brain
 ---
 
 # 🏷️ Tag Taxonomy: Source of Truth

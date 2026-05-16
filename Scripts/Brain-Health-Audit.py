@@ -52,7 +52,7 @@ def _find_workspace_root() -> Path:
             return parent
         if (parent / "obsidian-brain").is_dir() and (parent / "fleet-operation-brain").is_dir():
             return parent
-    return Path(__file__).resolve().parents[1]
+    return Path(__file__).resolve().parents[3]
 
 WORKSPACE_ROOT = _find_workspace_root()
 VAULT_ROOT = WORKSPACE_ROOT / "obsidian-brain"
@@ -69,7 +69,8 @@ class BrainSentinel:
         self.files: List[Path] = []
         self.valid_stems: Set[str] = set()
         self.valid_paths: Set[str] = set()
-        self.engine = Sovereignty()
+        taxonomy_path = root / "07-Core-KMS" / "tag_taxonomy.md"
+        self.engine = Sovereignty(taxonomy_path)
 
     # -----------------------------------------------------------------------------------------------
 
