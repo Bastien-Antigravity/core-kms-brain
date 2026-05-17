@@ -2,18 +2,17 @@
 # coding:utf-8
 """
 ESSENTIAL PROCESS:
-Monitors the 'Inbox' directory in the Obsidian Vault for pending tasks
+Monitors the Obsidian Vault recursively for pending tasks
 and automates the handover to specific AI Agent personas.
 
 DATA FLOW:
-1. Scans obsidian-brain/10-State-and-Tasks/Inbox for markdown files.
+1. Scans the entire obsidian-brain recursively for markdown files.
 2. Parses YAML frontmatter to identify tasks with 'status: pending'.
 3. Updates the status to 'active' for tasks assigned to known roles.
 4. (Simulation) Triggers the appropriate AI persona workflow.
 
 KEY PARAMETERS:
 - ROLE_MAP: Dictionary mapping agent roles to their prompt files.
-- INBOX_DIR: Target directory for incoming task definitions.
 """
 
 from os.path import dirname as osPathDirname, abspath as osPathAbspath, join as osPathJoin, exists as osPathExists
@@ -39,7 +38,6 @@ WORKSPACE_ROOT = _find_workspace_root()
 
 # Path to the obsidian vault
 OBSIDIAN_DIR = osPathJoin(WORKSPACE_ROOT, "obsidian-brain")
-INBOX_DIR = osPathJoin(OBSIDIAN_DIR, "10-State-and-Tasks", "Inbox")
 ROLE_PROMPTS_DIR = osPathJoin(WORKSPACE_ROOT, "core-kms-brain", "Role-Prompts")
 
 # Role to Prompt Mapping

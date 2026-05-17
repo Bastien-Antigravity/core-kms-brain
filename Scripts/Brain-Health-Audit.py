@@ -57,7 +57,7 @@ def _find_workspace_root() -> Path:
 WORKSPACE_ROOT = _find_workspace_root()
 VAULT_ROOT = WORKSPACE_ROOT / "obsidian-brain"
 
-IGNORE_DIRS = {".git", ".obsidian", "state-and-tasks/Inbox/Templates"}
+IGNORE_DIRS = {".git", ".obsidian", "experiments"}
 
 # -----------------------------------------------------------------------------------------------
 

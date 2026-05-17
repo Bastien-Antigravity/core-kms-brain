@@ -34,7 +34,7 @@ and enforces metadata standards.
 1. **Health Auditing**: Run `python core-kms-brain/Scripts/Brain-Health-Audit.py` to generate
    a drift report.
 2. **Sovereignty Verification**: Ensure the **DocMaintainer** has successfully run 
-   `python 20-Scripts/close_mission.py` and resolved any violations before the session ends.
+   `python3 20-Scripts/close_mission.py` and resolved any violations before the session ends.
 3. **Metadata Hardening**: Fix any YAML frontmatter violations (`type`, `status`, `microservice`).
 3. **Link Repair**: Search for the correct file names for any broken links and update referencing
    files.

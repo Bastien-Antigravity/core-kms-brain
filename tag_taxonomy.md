@@ -2,7 +2,7 @@
 type: architecture
 status: active
 tags:
-- \'#service/core-kms-brain\'
+- '#service/core-kms-brain\'
 - '#state/active'
 - null
 - '#type/architecture'
@@ -21,6 +21,10 @@ This document defines the controlled vocabulary for tagging files within the Bas
 - **#type/reference**: API definitions, schemas, or glossaries.
 - **#type/task**: Actionable tasks or session logs.
 - **#type/wisdom**: Lessons learned and AI experience extraction.
+- **#type/governance**: AI session initialization, audit scripts, and ritual prompts (e.g., `AI-Init.md`).
+- **#type/fleet-op**: Global fleet operational READMEs, registries, and strategies.
+- **#type/fleet-action-plan**: Migration, refactoring, and update checklists (e.g., FAP series).
+- **#type/deployment-log**: Post-deployment audit logs and trace logs.
 
 ## 2. #state/ (Operational Status)
 - **#state/active**: Currently used and valid.

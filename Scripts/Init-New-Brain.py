@@ -16,7 +16,7 @@ KEY PARAMETERS:
 """
 
 from os import remove as osRemove
-from os.path import dirname as osPathDirname, abspath as osPathAbspath, join as osPathJoin, basename as osPathBasename
+from os.path import dirname as osPathDirname, abspath as osPathAbspath, join as osPathJoin, basename as osPathBasename, exists as osPathExists
 from glob import glob as globGlob
 from sys import argv as sysArgv, exit as sysExit
 
