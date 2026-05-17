@@ -3,12 +3,11 @@ microservice: core-kms-brain
 type: governance
 status: active
 tags:
-- \'#service/core-kms-brain\'
+- '#service/core-kms-brain'
 - '#type/governance'
-- null
 - '#state/active'
+- '#zone/3-fleet'
 ---
-
 # ⚡ AI Initialization: core-kms-brain
 
 > [!IMPORTANT] MANDATORY INITIALIZATION

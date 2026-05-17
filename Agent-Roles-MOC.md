@@ -1,28 +1,26 @@
 ---
 microservice: agent-roles-moc
-type: moc
+type: governance
 status: active
 tags:
-- \'#service/agent-roles-moc\'
+- '#service/agent-roles-moc'
+- '#type/governance'
 - '#state/active'
-- null
-- '#type/moc'
+- '#zone/3-fleet'
 ---
-
 # Agent Roles MOC
 
 This index auto-aggregates previously orphaned files.
 
+- [[Prompt-Chronos-Oracle]]
+- [[Prompt-Orchestrator]]
+- [[Prompt-Architect]]
+- [[Prompt-Lead-Developer]]
+- [[Prompt-QA]]
+- [[Prompt-Fleet-Architect]]
 - [[Prompt-DocMaintainer]]
 - [[Prompt-FleetCommander]]
-- [[Prompt-Orchestrator]]
-- [[architect]]
-- [[developer]]
-- [[docmaintainer]]
-- [[fleetarchitect]]
-- [[fleetcommander]]
-- [[oracle]]
-- [[orchestrator]]
-- [[purger]]
-- [[qa]]
-- [[sentinel]]
+- [[Mister-Straight-to-Goal]]
+- [[Prompt-Sentinel]]
+
+<!-- [SCAN] -->

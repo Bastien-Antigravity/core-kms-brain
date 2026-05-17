@@ -1,17 +1,13 @@
 ---
-title: Obsidian App Configuration Guide
-type: architecture
-status: active
 microservice: ecosystem-wide
+type: governance
+status: active
 tags:
-- \'#service/ecosystem-wide\'
-- onboarding
+- '#service/ecosystem-wide'
+- '#type/governance'
 - '#state/active'
-- '#type/architecture'
-- configuration
-- automation
+- '#zone/3-fleet'
 ---
-
 # ⚙️ Obsidian App Configuration Guide
 
 To ensure the **Bastien-Antigravity** Obsidian Brain functions correctly, follow these configuration steps within your Obsidian Application.

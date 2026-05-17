@@ -1,14 +1,13 @@
 ---
 microservice: core-kms-brain
-type: kms
+type: governance
 status: active
 tags:
-- \'#service/core-kms-brain\'
-- '#type/guide'
-- null
+- '#service/core-kms-brain'
+- '#type/governance'
 - '#state/active'
+- '#zone/3-fleet'
 ---
-
 # 🧪 Role 04: QA Engineer (Expectation Enforcer)
 
 > "If it isn't tested, it doesn't exist."

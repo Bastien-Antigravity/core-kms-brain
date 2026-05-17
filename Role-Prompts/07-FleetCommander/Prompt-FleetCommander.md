@@ -1,14 +1,13 @@
 ---
 microservice: core-kms-brain
-type: kms
+type: governance
 status: active
 tags:
-- \'#service/core-kms-brain\'
-- '#type/guide'
-- null
+- '#service/core-kms-brain'
+- '#type/governance'
 - '#state/active'
+- '#zone/3-fleet'
 ---
-
 # 📡 Role 07: Fleet Commander (Synchronization Officer)
 
 > "The fleet moves as one, or it does not move at all."
@@ -74,4 +73,4 @@ After a successful fleet action, you must follow this exact sequence:
 3. Report the final fleet state to the USER.
 
 ---
-*Reference: [[05-Fleet-Operation/00-Repo-Control/inventory.json]], [[Global-Architecture-Rules]]*
+*Reference: [inventory.json](../../../05-Fleet-Operation/00-Repo-Control/inventory.json), [[Global-Architecture-Rules]]*

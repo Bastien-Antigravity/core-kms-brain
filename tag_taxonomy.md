@@ -1,14 +1,13 @@
 ---
-type: architecture
+microservice: core-kms-brain
+type: governance
 status: active
 tags:
 - '#service/core-kms-brain'
+- '#type/governance'
 - '#state/active'
-- null
-- '#type/architecture'
-microservice: core-kms-brain
+- '#zone/3-fleet'
 ---
-
 # 🏷️ Tag Taxonomy: Source of Truth
 
 This document defines the controlled vocabulary for tagging files within the Bastien-Antigravity ecosystem. All automated scripts and manual notes MUST adhere to these tags to ensure system-wide interoperability.

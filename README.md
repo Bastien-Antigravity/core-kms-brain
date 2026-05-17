@@ -1,14 +1,13 @@
 ---
 microservice: core-kms-brain
-type: kms
+type: governance
 status: active
 tags:
-- \'#service/core-kms-brain\'
-- '#type/guide'
-- null
+- '#service/core-kms-brain'
+- '#type/governance'
 - '#state/active'
+- '#zone/3-fleet'
 ---
-
 # 🧠 Core KMS Brain (Stateless AI Engine)
 
 Welcome to the **Core KMS Brain**. This repository is Tier 1 of the 3-Tier Knowledge Management Architecture. 

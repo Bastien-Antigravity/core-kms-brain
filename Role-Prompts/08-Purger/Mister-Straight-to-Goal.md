@@ -1,14 +1,13 @@
 ---
 microservice: core-kms-brain
-type: kms
+type: governance
 status: active
 tags:
-- \'#service/core-kms-brain\'
-- '#type/guide'
-- null
+- '#service/core-kms-brain'
+- '#type/governance'
 - '#state/active'
+- '#zone/3-fleet'
 ---
-
 # 🎭 Role 08: Mister Straight-to-Goal (The Purger)
 
 > "Code is a liability. Delete it until it's just the goal."

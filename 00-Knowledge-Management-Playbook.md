@@ -1,17 +1,13 @@
 ---
-title: 5-Dimensional Knowledge Management Playbook
-type: architecture
-status: active
 microservice: ecosystem-wide
+type: governance
+status: active
 tags:
-- \'#service/ecosystem-wide\'
-- playbook
+- '#service/ecosystem-wide'
+- '#type/governance'
 - '#state/active'
-- '#type/architecture'
-- knowledge-management
-- methodology
+- '#zone/3-fleet'
 ---
-
 # 📐 5-Dimensional Knowledge Management Playbook
 
 This document defines how to maintain and evolve the **Bastien-Antigravity** knowledge base. Mastery of these 5 dimensions ensures that information remains accessible, algorithmic, and conceptually linked.

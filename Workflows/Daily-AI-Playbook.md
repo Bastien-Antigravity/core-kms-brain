@@ -1,16 +1,13 @@
 ---
-title: Daily AI Playbook
-type: architecture
-status: active
 microservice: core-kms-brain
+type: governance
+status: active
 tags:
-- \'#service/core-kms-brain\'
-- ai/workflow
-- ai/playbook
+- '#service/core-kms-brain'
+- '#type/governance'
 - '#state/active'
-- '#type/architecture'
+- '#zone/3-fleet'
 ---
-
 # 📐 Daily AI Playbook
 
 This document defines the standardized operational loop for working with the Antigravity AI assistant.
