@@ -2,7 +2,7 @@
 type: architecture
 status: active
 tags:
-- '#service/core-kms-brain\'
+- '#service/core-kms-brain'
 - '#state/active'
 - null
 - '#type/architecture'
@@ -25,6 +25,8 @@ This document defines the controlled vocabulary for tagging files within the Bas
 - **#type/fleet-op**: Global fleet operational READMEs, registries, and strategies.
 - **#type/fleet-action-plan**: Migration, refactoring, and update checklists (e.g., FAP series).
 - **#type/deployment-log**: Post-deployment audit logs and trace logs.
+- **#type/service-hub**: Operational hub files mapping specific microservice details (specs, code, dashboards).
+- **#type/protocol**: Technical protocols defining standardized conventions and behavior in the fleet.
 
 ## 2. #state/ (Operational Status)
 - **#state/active**: Currently used and valid.
