@@ -57,7 +57,10 @@ def _find_workspace_root() -> Path:
 WORKSPACE_ROOT = _find_workspace_root()
 VAULT_ROOT = WORKSPACE_ROOT / "obsidian-brain"
 
-IGNORE_DIRS = {".git", ".obsidian", "experiments"}
+IGNORE_DIRS = {
+    ".git", ".obsidian", ".gemini", ".claude", ".codex", ".mistral", ".deepseek",
+    "experiments", "deployments", "plans", "Templates", "99-Humans", "quick-overview"
+}
 
 # -----------------------------------------------------------------------------------------------
 
@@ -79,7 +82,7 @@ class BrainSentinel:
         Discovers all files and builds the relationship graph.
         """
         for root, dirs, files in osWalk(self.root):
-            dirs[:] = [d for d in dirs if d not in IGNORE_DIRS]
+            dirs[:] = [d for d in dirs if not d.startswith(".") and d not in IGNORE_DIRS]
             for file in files:
                 path = Path(root) / file
                 rel_path = path.relative_to(self.root).as_posix()
