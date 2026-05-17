@@ -14,11 +14,26 @@ KEY PARAMETERS:
 - VAULT_ROOT: The target directory for auditing.
 - IGNORE_DIRS: Folders to skip during the scan.
 """
+import os, sys
+# Ensure we are running inside the virtual environment
+_venv_dir = os.path.dirname(os.path.abspath(__file__))
+while _venv_dir and _venv_dir != '/' and not os.path.exists(os.path.join(_venv_dir, ".venv")):
+    _parent = os.path.dirname(_venv_dir)
+    if _parent == _venv_dir:
+        break
+    _venv_dir = _parent
+_venv_python = os.path.join(_venv_dir, ".venv", "Scripts", "python.exe") if os.name == "nt" else os.path.join(_venv_dir, ".venv", "bin", "python3")
+if os.path.exists(_venv_python):
+    try:
+        if not os.path.samefile(sys.executable, _venv_python):
+            os.execl(_venv_python, _venv_python, *sys.argv)
+    except OSError:
+        pass
 
-from sys import argv as sysArgv, exit as sysExit, stdout as sysStdout, path as sysPath
+from sys import exit as sysExit, stdout as sysStdout, path as sysPath
 from os import walk as osWalk
 from pathlib import Path
-from typing import List, Set, Dict
+from typing import List
 
 # Add the lib directory to sys.path to import sovereignty
 script_dir = Path(__file__).resolve().parent
@@ -42,17 +57,18 @@ if sysStdout.encoding != 'utf-8':
 
 def _find_workspace_root() -> Path:
     """
-    Walk up from this script's location until we find the workspace root.
-    Works whether the script lives in core-kms-brain/Scripts/ (standalone)
-    or obsidian-brain/07-Core-KMS/Scripts/ (submodule).
+    Resolves the workspace root robustly using git rev-parse, falling back to deterministic relative pathing.
     """
-    current = Path(__file__).resolve().parent
-    for parent in [current] + list(current.parents):
-        if (parent / "Bastien-Antigravity.code-workspace").exists():
-            return parent
-        if (parent / "obsidian-brain").is_dir() and (parent / "fleet-operation-brain").is_dir():
-            return parent
-    return Path(__file__).resolve().parents[3]
+    import subprocess
+    try:
+        current = Path(__file__).resolve().parent
+        result = subprocess.run(["git", "rev-parse", "--show-toplevel"], cwd=current, capture_output=True, text=True, check=True)
+        git_root = Path(result.stdout.strip())
+        if git_root.name == "obsidian-brain":
+            return git_root.parent
+        return git_root
+    except Exception:
+        return Path(__file__).resolve().parents[3]
 
 WORKSPACE_ROOT = _find_workspace_root()
 VAULT_ROOT = WORKSPACE_ROOT / "obsidian-brain"
@@ -70,10 +86,8 @@ class BrainSentinel:
     def __init__(self, root: Path) -> None:
         self.root = root
         self.files: List[Path] = []
-        self.valid_stems: Set[str] = set()
-        self.valid_paths: Set[str] = set()
         taxonomy_path = root / "07-Core-KMS" / "tag_taxonomy.md"
-        self.engine = Sovereignty(taxonomy_path)
+        self.engine = Sovereignty(taxonomy_path, WORKSPACE_ROOT)
 
     # -----------------------------------------------------------------------------------------------
 
@@ -89,10 +103,6 @@ class BrainSentinel:
                 
                 if file.endswith(".md"):
                     self.files.append(path)
-                    self.valid_stems.add(path.stem)
-                
-                self.valid_paths.add(rel_path)
-                self.valid_paths.add(file) # Allow linking by filename only
 
     # -----------------------------------------------------------------------------------------------
 
@@ -101,7 +111,7 @@ class BrainSentinel:
         Runs the validation rules using the Sovereignty engine.
         """
         for file_path in self.files:
-            self.engine.audit_file(file_path, self.valid_stems, self.valid_paths)
+            self.engine.audit_file(file_path)
 
     # -----------------------------------------------------------------------------------------------
 
