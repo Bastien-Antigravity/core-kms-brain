@@ -255,6 +255,59 @@ def _check_essential_files() -> Tuple[str, List[str]]:
     messages.append("All {0} essential files present.".format(len(essential)))
     return "GREEN", messages
 
+# -----------------------------------------------------------------------------------------------
+
+def _check_spec_parity() -> Tuple[str, List[str]]:
+    """
+    Validates that BDD features specify repositories that actually exist in the workspace.
+    """
+    messages = []
+    behavior_specs_dir = VAULT_DIR / "02-Business-BDD" / "02-Behavior-Specs"
+    if not behavior_specs_dir.exists():
+        messages.append("Behavior specs folder not found — skipping spec parity check.")
+        return "YELLOW", messages
+        
+    missing_repos = set()
+    total_checked = 0
+    
+    for root, _, files in os.walk(str(behavior_specs_dir)):
+        for file in files:
+            if file.endswith(".md") and file != "TEMPLATE.md":
+                filepath = osPathJoin(root, file)
+                total_checked += 1
+                try:
+                    with open(filepath, "r", encoding="utf-8") as f:
+                        content = f.read()
+                    if content.startswith("---"):
+                        parts = content.split("---", 2)
+                        if len(parts) >= 3:
+                            frontmatter = parts[1]
+                            repo_name = None
+                            for line in frontmatter.splitlines():
+                                if line.strip().startswith("repo:"):
+                                    repo_name = line.split(":", 1)[1].strip()
+                                    # Strip quotes if present
+                                    repo_name = repo_name.strip("'\"")
+                                    break
+                            
+                            if repo_name:
+                                repo_dir = WORKSPACE_ROOT / repo_name
+                                if not repo_dir.exists():
+                                    missing_repos.add((file, repo_name))
+                except Exception:
+                    pass
+                    
+    if missing_repos:
+        messages.append("Spec-Code drift: {0} specifications reference missing repositories:".format(len(missing_repos)))
+        for spec_file, repo_name in sorted(list(missing_repos))[:5]:
+            messages.append("  - '{0}' references missing repo '{1}'".format(spec_file, repo_name))
+        if len(missing_repos) > 5:
+            messages.append("  - ... and {0} more.".format(len(missing_repos) - 5))
+        return "YELLOW", messages
+        
+    messages.append("All {0} feature specifications have matching workspace repositories.".format(total_checked))
+    return "GREEN", messages
+
 # ### MAIN ###
 
 def run_preflight(quiet: bool = False) -> bool:
@@ -267,6 +320,7 @@ def run_preflight(quiet: bool = False) -> bool:
         ("Submodule Status", _check_submodules),
         ("Mode Consistency", _check_mode_consistency),
         ("Inventory Portability", _check_inventory_portability),
+        ("Spec-Code Parity", _check_spec_parity),
     ]
     
     overall = "GREEN"
