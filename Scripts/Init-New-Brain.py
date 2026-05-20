@@ -44,7 +44,7 @@ def _find_workspace_root() -> str:
     """
     current = osPathDirname(osPathAbspath(__file__))
     while current != osPathDirname(current):
-        if osPathExists(osPathJoin(current, "Bastien-Antigravity.code-workspace")):
+        if globGlob(osPathJoin(current, "*.code-workspace")):
             return current
         if osPathExists(osPathJoin(current, "obsidian-brain")) and osPathExists(osPathJoin(current, "fleet-operation-brain")):
             return current

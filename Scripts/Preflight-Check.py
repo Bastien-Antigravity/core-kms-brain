@@ -58,17 +58,10 @@ def _find_workspace_root() -> Path:
     """
     current = Path(__file__).resolve().parent
     for parent in [current] + list(current.parents):
-        if (parent / "Bastien-Antigravity.code-workspace").exists():
-            return parent
-        # Root is where obsidian-brain and docker-deployment coexist
-        if (parent / "obsidian-brain").is_dir() and (parent / "docker-deployment").is_dir():
-            return parent
-            
-    # Fallback: if we are inside obsidian-brain, the root is above it
-    for parent in [current] + list(current.parents):
         if parent.name == "obsidian-brain":
             return parent.parent
             
+    # Fallback if running outside obsidian-brain structure
     return Path(__file__).resolve().parents[2]
 
 WORKSPACE_ROOT = _find_workspace_root()

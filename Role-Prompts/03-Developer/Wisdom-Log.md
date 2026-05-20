@@ -21,5 +21,10 @@ tags:
 ## 🦀 Rust Patterns
 - Use `#[repr(C)]` for all FFI-facing structures.
 
+## 🌐 Web / UI Patterns
+- Delegate CPU-bound operations (e.g. data filtering, parsing, linkifying) to a Web Worker thread to keep the UI fluid.
+- Cache DOM element references inside a single `dom` object on initialization.
+
 ## ⚠️ Language-Specific Gotchas
 - **VBA**: Strings returned from DLLs must be BSTR compatible or carefully managed via `CoTaskMemAlloc`.
+- **JavaScript**: Vis.js canvas requires manual resize refitting when parent containers undergo CSS Grid or Flex transitions; query computed style durations to synchronize the engine.

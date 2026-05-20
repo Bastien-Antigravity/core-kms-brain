@@ -44,7 +44,7 @@ def _find_workspace_root() -> Path:
     """
     current = Path(__file__).resolve().parent
     for parent in [current] + list(current.parents):
-        if (parent / "Bastien-Antigravity.code-workspace").exists():
+        if list(parent.glob("*.code-workspace")):
             return parent
         if (parent / "obsidian-brain").is_dir() and (parent / "fleet-operation-brain").is_dir():
             return parent

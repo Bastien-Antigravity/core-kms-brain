@@ -57,25 +57,25 @@ if sysStdout.encoding != 'utf-8':
 
 def _find_workspace_root() -> Path:
     """
-    Resolves the workspace root robustly using git rev-parse, falling back to deterministic relative pathing.
+    Walk up from this script's location until we find the workspace root.
+    Works whether the script lives in core-kms-brain/Scripts/ (standalone)
+    or obsidian-brain/07-Core-KMS/Scripts/ (submodule).
     """
-    import subprocess
-    try:
-        current = Path(__file__).resolve().parent
-        result = subprocess.run(["git", "rev-parse", "--show-toplevel"], cwd=current, capture_output=True, text=True, check=True)
-        git_root = Path(result.stdout.strip())
-        if git_root.name == "obsidian-brain":
-            return git_root.parent
-        return git_root
-    except Exception:
-        return Path(__file__).resolve().parents[3]
+    current = Path(__file__).resolve().parent
+    for parent in [current] + list(current.parents):
+        if parent.name == "obsidian-brain":
+            return parent.parent
+            
+    # Fallback if running outside obsidian-brain structure
+    return Path(__file__).resolve().parents[2]
 
 WORKSPACE_ROOT = _find_workspace_root()
 VAULT_ROOT = WORKSPACE_ROOT / "obsidian-brain"
 
 IGNORE_DIRS = {
-    ".git", ".obsidian", ".gemini", ".claude", ".codex", ".mistral", ".deepseek",
-    "experiments", "deployments", "plans", "Templates", "99-Humans", "quick-overview"
+    ".git", ".obsidian", ".gemini", ".claude", ".codex", ".mistral", ".deepseek", ".venv", "venv", "node_modules",
+    "experiments", "deployments", "plans", "Templates", "04-Templates", "99-Humans", "quick-overview",
+    "08-RAG-Engine"
 }
 
 # -----------------------------------------------------------------------------------------------
