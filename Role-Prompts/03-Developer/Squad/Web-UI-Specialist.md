@@ -44,6 +44,11 @@ Design, implement, and maintain premium interactive front-ends, browser dashboar
     - `SessionManager`: Context tab structures, layout isolations, workspace tracking.
     - `GraphManager`: Vis.js or canvas canvas setups, dynamic clustering, layout calculations.
   - **Coordinator**: Maintain a main singleton class (e.g. `CodebaseVisualizer`) bound to `window` that initializes and coordinates the managers.
+- **Event Binding Standards**: Prohibit inline HTML event properties (e.g., `onclick=""` or `onchange=""` in templates). Bind all actions dynamically inside constructors or lifecycle methods using `addEventListener` to keep global scope clean:
+  ```javascript
+  this.dom.$menuBtn.addEventListener('click', () => this.toggleSidebar());
+  ```
+- **API Data-Contract Parity**: API payloads from the backend must map Go `PascalCase` struct keys to client-side `camelCase` keys when serialized to JSON.
 - Prefix methods logically: `render...` (DOM generation), `handle...` (user events), `on...` (async responses), `update...` (state sync), `toggle...` (ui state).
 
 ### 3. Non-Blocking Concurrency (Web Workers)
@@ -60,10 +65,11 @@ Design, implement, and maintain premium interactive front-ends, browser dashboar
 ### 4. Premium Styling & CSS Variables Layouts
 - Use CSS Custom Properties (Variables) defined in `:root` for design system tokens (colors, animations, fonts, panel sizes).
 - **Aesthetic Guidelines**:
-  - Dark mode by default using rich, HSL-tailored dark tones (`#09090b`, `#18181b`, `#27272a`).
+  - Dark mode by default using HSL-tailored dark tones (e.g., `hsl(240, 10%, 4%)` / `hsl(240, 5%, 8%)`). Avoid raw hex in variables to allow alpha overrides.
   - Glassmorphic panels with `backdrop-filter: blur(12px)`, border overlays, and subtle box shadows.
   - Custom scrollbars, monospace typography for code displays (e.g. `Fira Code`), and Inter/Outfit for headings.
   - Badge colors reflecting node/symbol taxonomy (e.g. classes, functions, methods, modules).
+- **Framework & CSS Governance**: Standardize layouts on **Bootstrap 4** utility grid structures. Deprecate legacy W3.CSS layout overrides (`.w3-show`, `.w3-*`) in custom stylesheets.
 - **Responsive Collapsible Sidebars**:
   - Implement smooth grid or width transitions for sidebar panel collapse (`transition: grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1)`).
   - Synchronize panel resizing with the Javascript visualization canvas layout updates. Use `window.getComputedStyle` to read transition durations directly, preventing layout stutters or canvas distortion.
@@ -71,6 +77,12 @@ Design, implement, and maintain premium interactive front-ends, browser dashboar
 ### 5. Interactive Network Visualization (Canvas/Vis.js)
 - Build smooth stabilization progress screens ("Patience Loader") representing physics engine iteration. Skip loading screens automatically for organic hierarchical flows.
 - Implement interactive double-click behaviors for node clustering (e.g. folding/unfolding class members).
+- **Endpoint Portability**: Strictly prohibit hardcoded external domain strings for local resources. Derive all paths relatively. Dynamically resolve WebSockets based on location protocol:
+  ```javascript
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const wsUrl = `${protocol}//${window.location.host}/wsc`;
+  ```
+- **Robust Reconnection**: Automated WebSocket connection loops must implement an **exponential backoff** algorithm rather than fixed intervals to prevent endpoint flooding during outages.
 - Handle cross-origin fetch/CORS policies gracefully. Prefer relative routes and fallback to sandbox-compliant scratch assets dynamically.
 
 ### 6. Code Style & Visual Dividers
