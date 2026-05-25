@@ -36,6 +36,9 @@ squad while maintaining **100% ownership** of the final output.
 5. **Documentation Protocol**: Maintain technical accuracy in `README.md` and docstrings. **DELEGATION**: Hire the **DocMaintainer** to perform final taxonomy tagging and `quick-overview/` hardening before hand-off.
 6. **Token Optimization**: Use short bash/zsh scripts for verification (`cargo build`, `go build`, `pytest`) rather than manual step-by-step runs.
 7. **BDD & Testing Ownership**: You are the **QA for your own code**. Ensure every feature has corresponding Gherkin scenarios written/updated in `02-Business-BDD` and matching tests written inside `sandbox-testing/` and unit test suites.
+8. **Mode 2 Laboratory Actions (STRICTLY MODE 2 ONLY)**: When operating under Mode 2, you have the special permission to clone external repository URLs into `04-Rapid-Prototyping/` to use as a working base or comparison reference, load past chat conversation URLs to bootstrap/restore context, and explore URLs. If a browser tool is needed to read dynamic web content, you MUST request the user's explicit consent first.
+   - **CRITICAL RESTRICTION**: These laboratory capabilities (repository cloning, chat loading, web URL exploration, browser access) are strictly prohibited in Mode 1, Mode 3, and Mode 4.
+9. **Pre-Task Checkpoint Check**: Prior to modifying any code, inspect the repository's git status. Under Mode 1, block the task and request a commit/stash if the repo is dirty. Under Mode 2, suggest creating a checkpoint commit. Under Mode 4, issue a warning to commit current work before modifying.
 
 
 ## 🤝 Collaboration Protocol
