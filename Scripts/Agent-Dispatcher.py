@@ -55,9 +55,14 @@ WORKSPACE_ROOT = _find_workspace_root()
 
 # Path to the obsidian vault
 OBSIDIAN_DIR = osPathJoin(WORKSPACE_ROOT, "obsidian-brain")
-ROLE_PROMPTS_DIR = osPathJoin(OBSIDIAN_DIR, "07-Core-KMS", "Role-Prompts")
 
-# Role to Prompt Mapping
+# Source of Truth Precedence
+ROLE_PROMPT_SOURCES = [
+    osPathJoin(OBSIDIAN_DIR, "01-Strategic-Nexus", "Role-Prompts"),
+    osPathJoin(OBSIDIAN_DIR, "07-Core-KMS", "Role-Prompts")
+]
+
+# Role to Prompt Filename Mapping
 ROLE_MAP = {
     "oracle": "00-Oracle/Prompt-Chronos-Oracle.md",
     "orchestrator": "01-Orchestrator/Prompt-Orchestrator.md",
@@ -70,6 +75,20 @@ ROLE_MAP = {
     "purger": "08-Purger/Mister-Straight-to-Goal.md",
     "sentinel": "09-Sentinel/Prompt-Sentinel.md",
 }
+
+def get_role_prompt_path(role_key: str) -> Optional[str]:
+    """
+    Finds the absolute path to a role prompt following the Source of Truth precedence.
+    """
+    filename = ROLE_MAP.get(role_key)
+    if not filename:
+        return None
+        
+    for source_dir in ROLE_PROMPT_SOURCES:
+        full_path = osPathJoin(source_dir, filename)
+        if osPathExists(full_path):
+            return full_path
+    return None
 
 # Semantic Keywords for Fallback Scoring
 SEMANTIC_KEYWORDS = {

@@ -19,12 +19,14 @@ import re
 import json
 import yaml
 from pathlib import Path
+from datetime import datetime
 
 # Sync with RAG Engine's GLOBAL_EXCLUDES
 GLOBAL_EXCLUDES = {
     '.git', '.obsidian', 'Templates', '.gemini', '.github', '.venv',
     'node_modules', 'build', 'dist', 'target', 'bin', 'out', 'venv',
-    '__pycache__', '99-Humans', 'quick-overview', 'tests', '20-Scripts'
+    '__pycache__', '99-Humans', 'quick-overview', 'tests', '20-Scripts',
+    '.claude', '.codex', '.deepseek', '.gemini'
 }
 
 def _find_vault_root():
@@ -70,7 +72,7 @@ def joint_audit():
 
     all_md_files = []
     for r, d, fs in os.walk(root):
-        # Prune excluded directories in-place to speed up scan and avoid false positives (.venv, node_modules)
+        # Prune excluded directories in-place
         d[:] = [dirname for dirname in d if dirname not in GLOBAL_EXCLUDES]
         
         # In-place directory ignore pruning
@@ -81,7 +83,7 @@ def joint_audit():
                 is_dir_ignored = True
                 break
         if is_dir_ignored:
-            d[:] = []  # Do not descend
+            d[:] = []
             continue
             
         for f in fs:
@@ -104,7 +106,6 @@ def joint_audit():
         except Exception:
             continue
 
-    # Sentinel + Purger Joint Filtering
     potential_deletions = []
     protected_count = 0
     
@@ -114,11 +115,10 @@ def joint_audit():
         
         try:
             with open(f, 'r', encoding='utf-8', errors='ignore') as fh:
-                header = fh.read(1000) # Read enough for YAML
+                header = fh.read(1000)
         except:
             header = ""
 
-        # 🛡️ SENTINEL PROTECTION RULES (Why we KEEP an orphan)
         # Protect MOCs, specifications, strategic nexus notes, and core components
         is_protected = (
             stem.endswith('-MOC') or
@@ -138,7 +138,6 @@ def joint_audit():
         )
         
         if stem not in linked_stems and not is_protected:
-            # 🧹 PURGER CLASSIFICATION
             potential_deletions.append(str(rel_path))
         elif stem not in linked_stems and is_protected:
             protected_count += 1
@@ -151,13 +150,19 @@ def joint_audit():
     print(f"Potential Dark Matter (For Deletion): {len(potential_deletions)}")
     print(f"------------------------------------------------------------")
     
-    # Save candidates to JSON
     candidates_json_path = root / "00-AI-Orchestration" / "PURGE-CANDIDATES.json"
     try:
         os.makedirs(candidates_json_path.parent, exist_ok=True)
-        with open(candidates_json_path, "w", encoding="utf-8") as jf:
-            json.dump(potential_deletions, jf, indent=2)
-        print(f"[*] Saved candidates checklist to: {candidates_json_path}")
+        # Only write files if candidates are found, otherwise cleanup old ones
+        if potential_deletions:
+            with open(candidates_json_path, "w", encoding="utf-8") as jf:
+                json.dump(potential_deletions, jf, indent=2)
+            print(f"[*] Saved candidates checklist to: {candidates_json_path}")
+        else:
+            if candidates_json_path.exists(): os.remove(candidates_json_path)
+            approval_md_path = root / "00-AI-Orchestration" / "PURGE-APPROVAL-REQUEST.md"
+            if approval_md_path.exists(): os.remove(approval_md_path)
+            print("\n✨ NO DARK MATTER FOUND. VAULT IS HIGHLY COHERENT.")
     except Exception as e:
         print(f"Error saving candidates JSON: {e}")
         
@@ -165,8 +170,6 @@ def joint_audit():
         print("\n--- CANDIDATES FOR DELETION ---")
         for p in sorted(potential_deletions):
             print(f"[!] {p}")
-    else:
-        print("\n✨ NO DARK MATTER FOUND. VAULT IS HIGHLY COHERENT.")
     print(f"============================================================")
 
 def generate_purge_approval_request():
@@ -190,6 +193,17 @@ def generate_purge_approval_request():
     target_md_path = root / "00-AI-Orchestration" / "PURGE-APPROVAL-REQUEST.md"
     
     lines = []
+    lines.append("---")
+    lines.append("microservice: obsidian-brain")
+    lines.append("type: orchestration")
+    lines.append("status: active")
+    lines.append(f"last-updated: {datetime.now().strftime('%Y-%m-%d')}")
+    lines.append("tags:")
+    lines.append("- '#service/obsidian-brain'")
+    lines.append("- '#type/orchestration'")
+    lines.append("- '#state/active'")
+    lines.append("- '#zone/3-fleet'")
+    lines.append("---")
     lines.append("# 🧹 Dark Matter Purging Review Checklist")
     lines.append("")
     lines.append("> [!IMPORTANT]")
@@ -197,7 +211,7 @@ def generate_purge_approval_request():
     lines.append("> Review the candidates below and toggle the checkbox to `[x] Keep` or `[x] Delete` to authorize action.")
     lines.append("")
     lines.append("## 📦 Scan Summary")
-    lines.append(f"- **Scan Date**: 2026-05-19")
+    lines.append(f"- **Scan Date**: {datetime.now().strftime('%Y-%m-%d')}")
     lines.append(f"- **Total Candidates Found**: {len(candidates)}")
     lines.append("")
     lines.append("---")
@@ -217,12 +231,10 @@ def generate_purge_approval_request():
                     with open(full_path, "r", encoding="utf-8", errors="ignore") as fh:
                         content = fh.read()
                         
-                    # Extract H1 Title
                     title_match = re.search(r"^#\s+(.*)$", content, re.MULTILINE)
                     if title_match:
                         title = title_match.group(1).strip()
                         
-                    # Extract first 3 lines of body (excluding frontmatter)
                     body_text = content
                     if content.startswith("---"):
                         fm_parts = content.split("---", 2)
@@ -235,7 +247,6 @@ def generate_purge_approval_request():
                             except:
                                 pass
                                 
-                    # Clean body_text and extract a short snippet
                     clean_body = re.sub(r"[#*`>_\-\[\]]", " ", body_text).strip()
                     clean_body = re.sub(r"\s+", " ", clean_body)
                     if clean_body:
@@ -265,9 +276,71 @@ def generate_purge_approval_request():
     except Exception as e:
         print(f"Error generating approval request: {e}")
 
+def execute_purge():
+    """Reads the approval checklist and deletes files marked for deletion."""
+    root = _find_vault_root()
+    if not root:
+        print("Error: Could not find 'obsidian-brain' directory.")
+        return
+
+    approval_md_path = root / "00-AI-Orchestration" / "PURGE-APPROVAL-REQUEST.md"
+    if not approval_md_path.exists():
+        print(f"Error: Approval checklist {approval_md_path} does not exist.")
+        return
+
+    try:
+        with open(approval_md_path, "r", encoding="utf-8") as f:
+            content = f.read()
+    except Exception as e:
+        print(f"Error reading approval checklist: {e}")
+        return
+
+    purge_blocks = re.findall(r"### \d+\. `([^`]+)`.*?\[\s*\]\s+\*\*Keep\*\*.*?\[[xX]\]\s+\*\*Delete\*\*", content, re.DOTALL)
+    
+    if not purge_blocks:
+        print("No files marked for deletion in the checklist.")
+        return
+
+    print(f"🚀 Found {len(purge_blocks)} files authorized for deletion.")
+    deleted_count = 0
+    for rel_path in purge_blocks:
+        full_path = root / rel_path
+        if full_path.exists():
+            try:
+                os.remove(full_path)
+                print(f"  [X] Deleted: {rel_path}")
+                deleted_count += 1
+            except Exception as e:
+                print(f"  [!] Failed to delete {rel_path}: {e}")
+        else:
+            print(f"  [?] File already gone: {rel_path}")
+
+    print(f"\n✨ Purge complete. {deleted_count} files removed.")
+    
+    candidates_json_path = root / "00-AI-Orchestration" / "PURGE-CANDIDATES.json"
+    try:
+        if approval_md_path.exists(): os.remove(approval_md_path)
+        if candidates_json_path.exists(): os.remove(candidates_json_path)
+        print("[*] Cleanup: Removed checklist and candidates files.")
+    except Exception as e:
+        print(f"Error during cleanup: {e}")
+
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == "--ai-classify":
-        print("Starting AI-Assisted classification phase...")
-        generate_purge_approval_request()
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "--ai-classify":
+            print("Starting AI-Assisted classification phase...")
+            generate_purge_approval_request()
+        elif sys.argv[1] == "--execute":
+            print("Starting Purge Execution phase...")
+            execute_purge()
+        elif sys.argv[1] == "--help" or sys.argv[1] == "-h":
+            print("Usage: python Joint-Audit-Purger.py [OPTION]")
+            print("Options:")
+            print("  (none)         Run scan and generate PURGE-CANDIDATES.json")
+            print("  --ai-classify  Generate PURGE-APPROVAL-REQUEST.md from candidates")
+            print("  --execute      Delete files marked with [x] Delete in the checklist")
+        else:
+            print(f"Unknown option: {sys.argv[1]}")
+            sys.exit(1)
     else:
         joint_audit()
