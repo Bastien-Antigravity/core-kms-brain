@@ -41,31 +41,22 @@ from pathlib import Path
 from re import search as reSearch
 from typing import List, Tuple
 
-# Standardize terminal output encoding for Windows
-if sysStdout.encoding != 'utf-8':
-    try:
-        sysStdout.reconfigure(encoding='utf-8')
-    except (AttributeError, Exception):
-        pass
+# --- Bootstrap ---
+import os, sys
+_vault_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+while not os.path.exists(os.path.join(_vault_root, ".venv")) and _vault_root != os.path.dirname(_vault_root):
+    _vault_root = os.path.dirname(_vault_root)
+if _vault_root not in sys.path:
+    sys.path.append(_vault_root)
 
-# ### CONFIGURATIONS ###
+_orch_dir = os.path.join(_vault_root, "00-AI-Orchestration")
+if _orch_dir not in sys.path:
+    sys.path.append(_orch_dir)
 
-def _find_workspace_root() -> Path:
-    """
-    Walk up from this script's location until we find the workspace root.
-    Works whether the script lives in core-kms-brain/Scripts/ (standalone)
-    or obsidian-brain/07-Core-KMS/Scripts/ (submodule).
-    """
-    current = Path(__file__).resolve().parent
-    for parent in [current] + list(current.parents):
-        if parent.name == "obsidian-brain":
-            return parent.parent
-            
-    # Fallback if running outside obsidian-brain structure
-    return Path(__file__).resolve().parents[2]
+from orchestration_lib import setup_terminal, resolve_vault_and_workspace
+setup_terminal()
 
-WORKSPACE_ROOT = _find_workspace_root()
-VAULT_DIR = WORKSPACE_ROOT / "obsidian-brain"
+VAULT_DIR, WORKSPACE_ROOT = resolve_vault_and_workspace(__file__)
 
 # Submodule mapping: folder name inside vault -> sibling repo name
 SUBMODULE_MAP = {
@@ -301,6 +292,47 @@ def _check_spec_parity() -> Tuple[str, List[str]]:
     messages.append("All {0} feature specifications have matching workspace repositories.".format(total_checked))
     return "GREEN", messages
 
+def _check_manifest_elements() -> Tuple[str, List[str]]:
+    """
+    Loads process-manifest.json and verifies that all registered associated files exist.
+    """
+    messages = []
+    manifest_path = VAULT_DIR / "00-AI-Orchestration" / "process-manifest.json"
+    if not manifest_path.exists():
+        messages.append("process-manifest.json not found.")
+        return "RED", messages
+
+    import json
+    try:
+        with open(manifest_path, "r", encoding="utf-8") as f:
+            manifest = json.load(f)
+    except Exception as e:
+        messages.append("Failed to load process-manifest.json: {0}".format(e))
+        return "RED", messages
+
+    missing_files = []
+    total_checked = 0
+
+    for category in ["processes", "agents", "concepts"]:
+        elements = manifest.get(category, [])
+        for element in elements:
+            name = element.get("name")
+            assoc_file = element.get("associated_file")
+            if assoc_file:
+                total_checked += 1
+                full_path = VAULT_DIR / assoc_file
+                if not full_path.exists():
+                    missing_files.append("{0} ({1}): missing {2}".format(name, category, assoc_file))
+
+    if missing_files:
+        messages.append("Ecosystem drift: {0} manifest elements have missing files:".format(len(missing_files)))
+        for err in missing_files:
+            messages.append("  - {0}".format(err))
+        return "RED", messages
+
+    messages.append("All {0} manifest-registered files are present and verified.".format(total_checked))
+    return "GREEN", messages
+
 # ### MAIN ###
 
 def run_preflight(quiet: bool = False) -> bool:
@@ -314,6 +346,7 @@ def run_preflight(quiet: bool = False) -> bool:
         ("Mode Consistency", _check_mode_consistency),
         ("Inventory Portability", _check_inventory_portability),
         ("Spec-Code Parity", _check_spec_parity),
+        ("Process Manifest Check", _check_manifest_elements),
     ]
     
     overall = "GREEN"

@@ -63,8 +63,7 @@ ZONE_MAP = {
     "05-Fleet-Operation": {"type": "fleet-op", "status": "active"},
     "06-Microservices": {"type": "hub", "status": "active"},
     "07-Core-KMS": {"type": "kms", "status": "active"},
-    "10-State-and-Tasks": {"type": "task", "status": "active"},
-    "20-Scripts": {"type": "automation", "status": "active"},
+    "08-Base-Scripts": {"type": "automation", "status": "active"},
 }
 
 # -----------------------------------------------------------------------------------------------

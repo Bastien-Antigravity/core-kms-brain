@@ -26,6 +26,7 @@ This document defines the controlled vocabulary for tagging files within the Bas
 - **#type/deployment-log**: Post-deployment audit logs and trace logs.
 - **#type/service-hub**: Operational hub files mapping specific microservice details (specs, code, dashboards).
 - **#type/protocol**: Technical protocols defining standardized conventions and behavior in the fleet.
+- **#type/dashboard**: Interactive monitoring web application or system status UI.
 
 ## 2. #state/ (Operational Status)
 - **#state/active**: Currently used and valid.
@@ -59,6 +60,10 @@ This document defines the controlled vocabulary for tagging files within the Bas
 
 ## 8. #ai/ (AI Processing Rules)
 - **#ai/ignore**: Flag for human-centric documentation that should be ignored by AI context gathering.
+
+## 9. #role/ (Persona & Operator Responsibilities)
+- **#role/human-onboarding**: Guides for humans onboarding to a role.
+- **#role/<name>**: Direct linkage to a specific AI squad role or persona (e.g. `#role/developer`).
 
 ---
 > [!IMPORTANT]

@@ -25,7 +25,7 @@ Keep folders shallow. Folders represent **Physical Departments**, not categorica
     - `02-Project-Architecture/`: Core standards and ADRs specific to this project.
     - `03-Project-Coding/`: Standard idioms and toolboxes.
     - `04-Project-Deployment/`: Infrastructure and CI/CD rules.
-    - `05-Project-Scripts/`: Auxiliary 20-Scripts.
+    - `08-Base-Scripts/`: Auxiliary scripts.
 
 ---
 
@@ -87,6 +87,6 @@ Use bidirectional links ` ` to create an organic conceptual web.
 
 > [!TIP] The Workflow of Expansion
 > To add a new architecture rule:
-> 1. Create a file using `[[Template-Architecture]]`.
+> 1. Create a file using `[[Template-ADR]]`.
 > 2. Fill in the YAML.
 > 3. Link it in the **[[Ecosystem-Map-MOC]]**.

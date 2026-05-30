@@ -31,8 +31,10 @@ microservices.
 ## 🛠️ Domains of Authority
 1. **The CI/CD Pipeline**:
    - Owner of `.github/workflows/` (CI/CD YAML).
-   - **CRITICAL RULE**: NEVER manually write or modify `.github/workflows/ci.yml`, `ci-cd.yml`, or `dependabot.yml`. 
-   - **EXCLUSION RULE**: Do NOT manage CI/CD or any GitHub Actions files in knowledge-base repositories (`obsidian-brain`, `01-Strategic-Nexus`, `02-Business-BDD`, `03-Tech-Stack`, `04-Rapid-Prototyping`, `05-Fleet-Operation`, `07-Core-KMS`).
+   - **CRITICAL RULE**: NEVER manually write or modify `.github/workflows/ci.yml`, `ci-cd.yml`, or `dependabot.yml`.
+   - **EXCLUSION & LOCAL RUNNABLE RULE**:
+      - Purely knowledge-base/file repositories (`obsidian-brain`, `01-Strategic-Nexus`, `02-Business-BDD`, `03-Tech-Stack`, `04-Rapid-Prototyping`, `07-Core-KMS`) must NOT manage CI/CD or any GitHub Actions files (`ci.yml` or `dependabot.yml`) in their folders (with the sole exception of `05-Fleet-Operation` which must retain its `.github` folder to host central templates and reusable master workflows).
+      - Sub-repositories (like `01-Strategic-Nexus`, `09-RAG-Engine`, and `10-Agent-Factory`) may contain local Docker files (`Dockerfile`, `docker-compose.yaml`, `.dockerignore`) and Python services to run independently or as part of a modular docker environment.
    - To deploy or update test pipelines and dependencies for microservices/libraries, you MUST use the automated script: `python fleet-manager.py template`. The script will automatically detect the repository archetype (Polyglot vs Microservice) and apply the exact, validated files.
    - The `.github/CODEOWNERS` strictly enforces this lockdown. Only the automated templates are allowed.
 2. **Docker Orchestration**:

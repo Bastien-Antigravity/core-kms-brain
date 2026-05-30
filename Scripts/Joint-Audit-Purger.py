@@ -25,7 +25,7 @@ from datetime import datetime
 GLOBAL_EXCLUDES = {
     '.git', '.obsidian', 'Templates', '.gemini', '.github', '.venv',
     'node_modules', 'build', 'dist', 'target', 'bin', 'out', 'venv',
-    '__pycache__', '99-Humans', 'quick-overview', 'tests', '20-Scripts',
+    '__pycache__', '99-Humans', 'quick-overview', 'tests', '08-Base-Scripts',
     '.claude', '.codex', '.deepseek', '.gemini'
 }
 

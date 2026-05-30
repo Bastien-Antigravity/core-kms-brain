@@ -37,7 +37,7 @@ from typing import List
 
 # Add the lib directory to sys.path to import sovereignty
 script_dir = Path(__file__).resolve().parent
-lib_path = script_dir.parents[1] / "20-Scripts" / "lib"
+lib_path = script_dir.parents[1] / "08-Base-Scripts" / "lib"
 sysPath.append(str(lib_path))
 
 try:
@@ -74,8 +74,8 @@ VAULT_ROOT = WORKSPACE_ROOT / "obsidian-brain"
 
 IGNORE_DIRS = {
     ".git", ".obsidian", ".gemini", ".claude", ".codex", ".mistral", ".deepseek", ".venv", "venv", "node_modules",
-    "experiments", "deployments", "plans", "Templates", "04-Templates", "99-Humans", "quick-overview",
-    "08-RAG-Engine"
+    "experiments", "deployments", "plans", "Templates", "04-Templates",
+    "09-RAG-Engine"
 }
 
 # -----------------------------------------------------------------------------------------------
