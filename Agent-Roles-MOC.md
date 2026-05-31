@@ -26,8 +26,8 @@ This index auto-aggregates previously orphaned files.
 - [[Prompt-CodeIndexer]]
 
 ## 🛠️ Reusable Squad Skills
-- [[07-Core-KMS/Skills/ast-chunker|AST Chunker Skill]]
-- [[07-Core-KMS/Skills/ai-augmenter|AI Augmenter Skill]]
-- [[07-Core-KMS/Skills/chroma-router|Chroma Router Skill]]
+- [[ast-chunker|AST Chunker Skill]]
+- [[ai-augmenter|AI Augmenter Skill]]
+- [[chroma-router|Chroma Router Skill]]
 
 <!-- [SCAN] -->

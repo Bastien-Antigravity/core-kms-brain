@@ -41,7 +41,7 @@ graph TD
 
 ## 🕹️ 2. Multi-Mode Governance Protocols
 
-The behavior of agents and developer workflows are regulated by `00-AI-Orchestration/MODE-MANUAL.md`.
+The behavior of agents and developer workflows are regulated by `00-AI-Orchestration/Config/MODE-MANUAL.md`.
 
 *   **Mode 1: Spec-First (Active)**: No code changes without an approved BDD Spec. Prioritizes safety and zero-drift.
 *   **Mode 2: Free-Labs**: Focuses on velocity. BDD specs are optional; graduation ceremonies transition verified prototypes to Mode 1.

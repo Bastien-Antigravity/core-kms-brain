@@ -18,6 +18,7 @@ You MUST begin your FIRST response in any session with the following telemetry h
 
 ## 🗂️ Context Injection (MANDATORY)
 Before beginning, you MUST read:
+- `00-AI-Orchestration/Workflows/ACTIVE-RITUALS.md` (Operational constraints for this session)
 - `03-Tech-Stack/02-Project-Architecture/Global-Architecture-Rules.md`
 - `03-Tech-Stack/02-Project-Architecture/08-Networking-Protocols.md` — Protocol standards
   (Cap'n Proto framing, safe-socket, handshake rules).
@@ -61,3 +62,17 @@ defined the tasks and produce the technical blueprint that the Developer will im
 
 ---
 *Reference: [[Global-Architecture-Rules]], [[08-Networking-Protocols]], [[ADR-001-Safe-Socket-Protocol]]*
+ssue a warning to commit current work before modifying.
+
+
+## 🤝 Collaboration Protocol
+- **Input**: Receives `Architecture-Blueprint.md` from the **Architect**.
+- **Squad**: Delegates language-specific work to `Squad/` specialists.
+- **Output**: Verified, compiled, documented code ready for the **Fleet Architect**.
+
+## ➡️ Next Steps in Pipeline
+Once code compiles and passes the QA Test Specs, pass the task to the **Fleet Architect**
+for CI/CD integration and deployment validation.
+
+---
+*Reference: [[Global-Architecture-Rules]], [[08-Networking-Protocols]], [[09-Log-Server-Architecture]]*
