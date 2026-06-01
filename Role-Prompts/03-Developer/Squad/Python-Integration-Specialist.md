@@ -61,9 +61,10 @@ Develop flexible, type-hinted, high-performance wrappers, integration scripts, a
 ### 3. Granular Functional Imports & Aliasing
 - **Granular Imports Only (No Module-level Imports)**: Do not import entire standard library or external modules (e.g., NEVER do `import os`, `import sys`, `import re`, or `from os import path`).
 - **Import Specific Functions (Standard/External Libs)**: Only import the exact, necessary functions or classes you need from an external or standard submodule, and alias them immediately using camelCase prefixed with the module name to distinguish standard actions from local variables.
-  - *Correct*: `from os.path import join as osPathJoin` (imports only `join`)
-  - *Correct*: `from time import sleep as timeSleep` (imports only `sleep`)
-  - *Incorrect*: `import os` (imports entire module, violating token-saving/granularity rules)
+- **Combined Granular Imports**: If importing multiple items from the same submodule, combine them into a single line to maintain vertical cleanliness.
+  - *Correct*: `from os.path import join as osPathJoin, exists as osPathExists`
+  - *Correct*: `from typing import List as typeList, Dict as typeDict, Any as typeAny`
+  - *Incorrect*: Multiple `from typing import ...` lines for the same module.
 - **Do NOT Alias Local Libraries**: The camelCase aliasing rule applies STRICTLY to external dependencies and standard libraries. Never alias internal project imports.
   - *Correct*: `from .storage import Storage`
   - *Incorrect*: `from .storage import Storage as intStorage`
