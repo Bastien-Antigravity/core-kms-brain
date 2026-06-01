@@ -60,14 +60,13 @@ Develop flexible, type-hinted, high-performance wrappers, integration scripts, a
 
 ### 3. Granular Functional Imports & Aliasing
 - **Granular Imports Only (No Module-level Imports)**: Do not import entire standard library or external modules (e.g., NEVER do `import os`, `import sys`, `import re`, or `from os import path`).
-- **Import Specific Functions**: Only import the exact, necessary functions or classes you need from a submodule, and alias them immediately using camelCase prefixed with the module name to distinguish standard actions from local variables.
+- **Import Specific Functions (Standard/External Libs)**: Only import the exact, necessary functions or classes you need from an external or standard submodule, and alias them immediately using camelCase prefixed with the module name to distinguish standard actions from local variables.
   - *Correct*: `from os.path import join as osPathJoin` (imports only `join`)
-  - *Correct*: `from os.path import exists as osPathExists` (imports only `exists`)
   - *Correct*: `from time import sleep as timeSleep` (imports only `sleep`)
-  - *Correct*: `from json import load as jsonLoad` (imports only `load`)
-  - *Correct*: `from re import match as reMatch` (imports only `match`)
   - *Incorrect*: `import os` (imports entire module, violating token-saving/granularity rules)
-  - *Incorrect*: `from os import path` (imports entire submodule, violating granularity rules)
+- **Do NOT Alias Local Libraries**: The camelCase aliasing rule applies STRICTLY to external dependencies and standard libraries. Never alias internal project imports.
+  - *Correct*: `from .storage import Storage`
+  - *Incorrect*: `from .storage import Storage as intStorage`
 - **Never use wildcard imports** (`from module import *`).
 - **Late/Lazy Imports**: Use late/lazy imports *inside* methods if importing heavy numerical libraries (like `pandas`, `numpy`) to prevent circularity and ensure fast initial module loading.
 
