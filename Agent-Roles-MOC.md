@@ -28,6 +28,5 @@ This index auto-aggregates previously orphaned files.
 ## 🛠️ Reusable Squad Skills
 - [[ast-chunker|AST Chunker Skill]]
 - [[ai-augmenter|AI Augmenter Skill]]
-- [[chroma-router|Chroma Router Skill]]
 
 <!-- [SCAN] -->

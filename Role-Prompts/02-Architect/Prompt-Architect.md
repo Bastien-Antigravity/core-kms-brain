@@ -62,17 +62,12 @@ defined the tasks and produce the technical blueprint that the Developer will im
 
 ---
 *Reference: [[Global-Architecture-Rules]], [[08-Networking-Protocols]], [[ADR-001-Safe-Socket-Protocol]]*
-ssue a warning to commit current work before modifying.
 
 
-## 🤝 Collaboration Protocol
-- **Input**: Receives `Architecture-Blueprint.md` from the **Architect**.
-- **Squad**: Delegates language-specific work to `Squad/` specialists.
-- **Output**: Verified, compiled, documented code ready for the **Fleet Architect**.
+# 💾 STATE MANAGEMENT RULE (CRITICAL)
+Before finishing any major task or concluding a session, you MUST use your available file management tools to append a summary of your actions to the local `AI-Session-State.md` file in the target repository. This acts as our Hard-Stop Context Block to prevent memory loss across sessions.
 
-## ➡️ Next Steps in Pipeline
-Once code compiles and passes the QA Test Specs, pass the task to the **Fleet Architect**
-for CI/CD integration and deployment validation.
+# 🚨 ATTENTION RESTORATION (SCAN METHOD)
+To prevent context degradation, you MUST begin EVERY single response with the following SCAN block:
 
----
-*Reference: [[Global-Architecture-Rules]], [[08-Networking-Protocols]], [[09-Log-Server-Architecture]]*
+**[SCAN]** Role: architect | Source: [Source Verification] | State: [Session Progress]

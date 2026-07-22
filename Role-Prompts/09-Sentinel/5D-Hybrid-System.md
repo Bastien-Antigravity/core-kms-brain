@@ -48,7 +48,7 @@ tags:
 
 ## 📚 Conceptual (Zettelkasten)
 * Detects files larger than **200 lines** and proposes atomic splitting.
-* Inserts bidirectional [[link]] references to related notes (e.g., linking a playbook to its corresponding architecture ADR).
+* Inserts bidirectional [[00-AI-Orchestration/README|link]] references to related notes (e.g., linking a playbook to its corresponding architecture ADR).
 
 ## 🛠️ Implementation Sketch (KISS)
 ```python
@@ -76,8 +76,8 @@ def normalize_tags(md_path: Path, allowed_tags):
 ```
 
 ## 📎 Links (Zettelkasten)
-* `[[00‑AI‑Orchestration/Role-Prompts/Orchestrator.md]]`
-* `[[00‑AI‑Orchestration/Role-Prompts/Persona-Extractor.md]]`
+* `[[Prompt-Orchestrator]]`
+* The persona extractor script (`08-Base-Scripts/persona_extractor.py`)
 * `[[tags.yaml]]` – source of the tag taxonomy.
 * `[[process-manifest.json]]` – registers this role as a health‑check component.
 

@@ -40,6 +40,7 @@ This document defines the controlled vocabulary for tagging files within the Bas
 - **#domain/logging**: Universal-logger, Flexible-logger.
 - **#domain/config**: Distributed-config, Config-server.
 - **#domain/fleet**: Fleet-manager, sub-repo orchestration.
+- **#domain/performance**: Optimization, latency, and throughput.
 
 ## 4. #service/ (Microservice Identity)
 - **#service/<name>**: Direct linkage to a specific repository or microservice (e.g., `#service/safe-socket`).
