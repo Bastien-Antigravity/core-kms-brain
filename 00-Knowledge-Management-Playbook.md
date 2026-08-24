@@ -19,13 +19,17 @@ Keep folders shallow. Folders represent **Physical Departments**, not categorica
 
 - **The Root Rule**: Only Master MOCs, Playbooks, and READMEs live at the root.
 - **Micro-Categorization**: Documentation for a microservice lives in that microservice's actual folder (`log-server/README.md`).
-- **Standard Folders**:
-    - `Role-Prompts/`: The portable, generic AI agents, workflows, and dispatcher.
-    - `01-Project-Business/`: Domain Driven Design, User Stories, and Epics.
-    - `02-Project-Architecture/`: Core standards and ADRs specific to this project.
-    - `03-Project-Coding/`: Standard idioms and toolboxes.
-    - `04-Project-Deployment/`: Infrastructure and CI/CD rules.
-    - `08-Base-Scripts/`: Auxiliary scripts.
+- **Standard Folders & AI Agent Placement Rules**:
+    - `00-AI-Orchestration/`: Multi-agent prompts, orchestrator rules, agent factory scripts.
+    - `01-Strategic-Nexus/`: Business domain vision, DDD, strategic decision records.
+    - `02-Business-BDD/`: Gherkin BDD feature specifications, user stories, epics.
+    - `03-Tech-Stack/quick-overview/`: Technical taxonomy guides (`Ecosystem-Taxonomy-Guide.md`), language SDK standards, architecture blueprints.
+    - `04-Rapid-Prototyping/`: PoCs, lab experiments, surface volatility demos.
+    - `05-Fleet-Operation/quick-overview/`: Onboarding guides (`Ecosystem-Onboarding-Guide.md`), Docker compose deployment, service port registry, fleet control CLI.
+    - `06-Microservices/`: Individual microservice catalog & registry metadata.
+    - `07-Core-KMS/`: Governance rules, tag taxonomy (`tag_taxonomy.md`), `DocMaintainer` & `DocIndexer` agent prompts.
+    - `08-Base-Scripts/`: Auxiliary maintenance & build scripts.
+    - `09-RAG-Engine/`: RAG indexing & vector search engine docs.
 
 ---
 
