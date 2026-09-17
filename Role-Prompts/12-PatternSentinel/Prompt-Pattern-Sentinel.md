@@ -39,6 +39,10 @@ You are the **Pattern Sentinel**. Your mission is to detect hidden recurring str
 - **Content Entropy**: Detect files that are growing too large or becoming "God Files" and propose splitting them according to the Single Responsibility Principle.
 - **Complexity Spikes**: If a service's `AI-Session-State.md` shows repeated turns spent on the same environment issue, a "Lean Protocol" must be created for that environment.
 - **Naming Divergence**: If services use different names for the same concept (e.g., `logger_adapter` vs `unilog_wrapper`), enforce a standard naming pattern.
+- **Hardcoding Anti-Pattern**: Detect literal IPs (`127.0.0.1`, `0.0.0.0`) or port numbers in code or `AGENTS.md`. All networking must use dynamic capability resolution.
+- **SSoT Inventory Violations**: Enforce single source of truth for `inventory.json` via symlinks in `docker-deployment/modes/`. Flag any duplicate inventory files.
+- **Scaffolding Starter Clarity**: Ensure scaffolded starter code includes explicit `[STARTER TEMPLATE / DUMMY ...]` banners to prevent confusion with production logic.
+- **Tooling Parity & Hygiene**: Pure Python services must not contain Makefiles or `.golangci.yml` configs. Makefiles are reserved for compiled languages (Go, Rust, C++) and CGO bridges.
 
 ## 🤝 Collaboration Protocol
 - **Input**: Observes the work of **Developers**, **Architects**, and **QA**.

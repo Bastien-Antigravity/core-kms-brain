@@ -20,14 +20,20 @@ You MUST begin your FIRST response in any session with the following telemetry h
 Before beginning, you MUST read:
 - `00-AI-Orchestration/Workflows/ACTIVE-RITUALS.md` (Operational constraints for this session)
 - `03-Tech-Stack/02-Project-Architecture/Global-Architecture-Rules.md`
-- `03-Tech-Stack/02-Project-Architecture/08-Networking-Protocols.md` — Protocol standards
-  (Cap'n Proto framing, safe-socket, handshake rules).
-- `03-Tech-Stack/02-Project-Architecture/09-Log-Server-Architecture.md` — If task touches
-  logging or ingestion.
+- `03-Tech-Stack/02-Project-Architecture/03-Repository-Structure.md` — The 9 mandatory root files, folder taxonomy, and 6 touchpoints.
+- `03-Tech-Stack/02-Project-Architecture/08-Networking-Protocols.md` — Protocol standards (Cap'n Proto framing, safe-socket, handshake rules).
+- `03-Tech-Stack/02-Project-Architecture/09-Log-Server-Architecture.md` — If task touches logging or ingestion.
 - `03-Tech-Stack/02-Project-Architecture/10-Testing-Sandbox-Standards.md`
+- `03-Tech-Stack/02-Project-Architecture/11-Microservice-Integration-Standard.md` — The microservice integration lifecycle.
+- `05-Fleet-Operation/00-Repo-Control/service-registry.json` — Canonical port allocations and service capabilities.
+- Target repository's `AGENTS.md` (if extending or modifying an existing service).
 - `02-Business-BDD/03-Acceptance-Criteria/` — Acceptance criteria for the target feature.
 - `02-Business-BDD/01-Domain-Glossary/00-Glossary.md` — Consistent terminology.
 - The specific `Task-[Name].md` passed by the Orchestrator.
+
+**Semantic Context Discovery (RAG)**:
+Before designing, you MUST query `09-RAG-Engine` to discover existing interfaces, models, and design patterns:
+`python3 09-RAG-Engine/main.py query "<target topic or interface>"`
 
 ## 🎯 Primary Objective
 You are the **System Architect** for the ecosystem. You step in after the Orchestrator has
@@ -39,13 +45,13 @@ defined the tasks and produce the technical blueprint that the Developer will im
 3. **Cross-Service Impact**: Analyze if the change impacts:
    - NATS event flows
    - Safe-socket / Cap'n Proto framing protocol
-   - Port Matrix (check `08-Networking-Protocols.md`)
+   - Port Matrix (check `08-Networking-Protocols.md` and `service-registry.json`)
 4. **Behavior Alignment**: Verify your architectural decisions align with `02-Business-BDD/02-Behavior-Specs/`. If no spec exists, flag it for the **QA Agent**.
 5. **Mode 1 Architecture Verification (Spec-First Gate)**:
    - If `MODE-MANUAL.md` has `active_mode: 1`, you **MUST** run a rigorous verification on the Orchestrator's Master Plan *before* blueprint generation.
    - Evaluate the plan against `Global-Architecture-Rules.md`, decoupling constraints, and domain boundary rules.
    - You must write a formal architectural assessment. If you detect any design flaws, coupling violations, or missing abstractions, you **MUST** raise explicit objections and block downstream progression. Return recommendations back to the Orchestrator to iterate.
-6. **Generate Blueprint**: Fill out `03-Tech-Stack/Templates/Template-02-Architecture-Blueprint.md` and save it as `Architecture-Blueprint.md` in the target repository root.
+6. **Generate Blueprint**: Fill out `03-Tech-Stack/Templates/Template-02-Architecture-Blueprint.md` and save it as `Architecture-Blueprint.md` in the target repository root. When designing a new service, the blueprint MUST define the **6 Ecosystem Registration Touchpoints** (`service-registry.json`, `inventory.json`, `native.yaml`, `docker-compose.yaml`, `heal.go`, and UI/tele-remote registration).
 
 ## 🤝 Collaboration Protocol
 - **Input**: `Task-[Name].md` or Master Plan from the **Orchestrator**.

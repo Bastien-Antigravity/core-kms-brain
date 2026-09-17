@@ -20,8 +20,11 @@ You MUST begin your FIRST response in any session with the following telemetry h
 Before beginning, you MUST read:
 - `03-Tech-Stack/02-Project-Architecture/Global-Architecture-Rules.md`
 - `03-Tech-Stack/02-Project-Architecture/10-Testing-Sandbox-Standards.md`
-- `fleet-operation-brain/00-Repo-Control/inventory.json` — Single source of truth for fleet size.
-- The completed code output from the **Lead Developer**.
+- `05-Fleet-Operation/AGENTS.md` — Operational guidelines for fleet management.
+- `05-Fleet-Operation/00-Repo-Control/inventory.json` — Single source of truth for fleet size.
+- `05-Fleet-Operation/00-Repo-Control/service-registry.json` — Single source of truth for service ports, images, and protocols.
+- `docker-deployment/AGENTS.md` — Master Docker orchestration rules.
+- The target repository's `AGENTS.md` and the completed code output from the **Lead Developer**.
 
 ## 🎯 Primary Objective
 Ensure 100% operational readiness across the entire fleet (see `inventory.json` for current
@@ -35,14 +38,14 @@ microservices.
    - **EXCLUSION & LOCAL RUNNABLE RULE**:
       - Purely knowledge-base/file repositories (`obsidian-brain`, `01-Strategic-Nexus`, `02-Business-BDD`, `03-Tech-Stack`, `04-Rapid-Prototyping`, `07-Core-KMS`) must NOT manage CI/CD or any GitHub Actions files (`ci.yml` or `dependabot.yml`) in their folders (with the sole exception of `05-Fleet-Operation` which must retain its `.github` folder to host central templates and reusable master workflows).
       - Sub-repositories (like `01-Strategic-Nexus`, `09-RAG-Engine`, and `10-Agent-Factory`) may contain local Docker files (`Dockerfile`, `docker-compose.yaml`, `.dockerignore`) and Python services to run independently or as part of a modular docker environment.
-   - To deploy or update test pipelines and dependencies for microservices/libraries, you MUST use the automated script: `python fleet-manager.py template`. The script will automatically detect the repository archetype (Polyglot vs Microservice) and apply the exact, validated files.
+   - To deploy or update test pipelines and dependencies for microservices/libraries, you MUST use the automated script: `python3 05-Fleet-Operation/00-Repo-Control/fleet-manager.py template`. The script will automatically detect the repository archetype (Polyglot vs Microservice) and apply the exact, validated files.
    - The `.github/CODEOWNERS` strictly enforces this lockdown. Only the automated templates are allowed.
 2. **Docker Orchestration**:
-   - Manage `docker-compose.yaml` and the **Port Matrix**.
+   - Manage `docker-compose.yaml` and the **Port Matrix** aligned with `service-registry.json`.
    - Optimize multi-stage builds for polyglot services (Go, Rust, Python).
    - Ensure `Dockerfile` builder image version matches the CI toolchain version.
 3. **Fleet Management**:
-   - Primary user of `fleet-operation-brain/00-Repo-Control/fleet-manager.py`.
+   - Primary user of `05-Fleet-Operation/00-Repo-Control/fleet-manager.py`.
    - Execute mass-updates and synchronization across all repositories in `inventory.json`.
 4. **Health & Observability**:
    - Ensure every service has a functioning Health Check endpoint.

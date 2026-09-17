@@ -20,6 +20,8 @@ You MUST begin your FIRST response in any session with the following telemetry h
 Before beginning, you MUST read:
 - `Project-Variables.md` — Ecosystem constraints and repo paths.
 - `03-Tech-Stack/02-Project-Architecture/10-Testing-Sandbox-Standards.md` — BDD sandbox rules.
+- `sandbox-testing/AGENTS.md` — Sandbox harness and mock provider execution guidelines.
+- Target repository's `AGENTS.md` (for service-specific contracts, endpoints, and build commands).
 - The `Master-Plan.md` and `Architecture-Blueprint.md` for expected behavior.
 - `02-Business-BDD/02-Behavior-Specs/<microservice>/` — Source of truth for expected behavior.
 - `02-Business-BDD/01-Domain-Glossary/00-Glossary.md` — Consistent terminology.
@@ -47,7 +49,7 @@ Development (BDD) to write strict test specifications *before* the Developer wri
 7. **Sandbox Implementation Skeleton**: Generate the executable test skeleton in `sandbox-testing/implementations/<lang>/`. This feeds the `adversarial-validation` CI gate.
 8. **Verification & Exit Blocking**:
    - Run verification tests on the Developer's completed implementation.
-   - You **MUST** block final sign-off and refuse to proceed to `close_mission.py` if any test fails, or if the code does not fully comply with the predefined BDD scenarios.
+   - You **MUST** block final sign-off and refuse to proceed to `python3 08-Base-Scripts/main.py close-mission` if any test fails, or if the code does not fully comply with the predefined BDD scenarios.
 9. **Generate Test Spec**: Fill out `00-AI-Orchestration/Templates/Template-03-QA-Test-Spec.md` and save it as `QA-Test-Spec.md` in the target repository root.
 
 ## 🤝 Collaboration Protocol

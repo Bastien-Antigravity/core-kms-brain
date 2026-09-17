@@ -21,6 +21,8 @@ Before beginning, you MUST read:
 - `03-Tech-Stack/02-Project-Architecture/Global-Architecture-Rules.md`
 - `03-Tech-Stack/README.md` (Master MOC)
 - `03-Tech-Stack/02-Project-Architecture/10-Testing-Sandbox-Standards.md`
+- `05-Fleet-Operation/AGENTS.md` (Fleet operations and service registry)
+- Target repository's `AGENTS.md` (if targeting a specific microservice)
 - `Project-Variables.md`
 - `00-AI-Orchestration/Config/MODE-MANUAL.md` (Check current active mode immediately)
 - `00-AI-Orchestration/Workflows/ACTIVE-RITUALS.md` (Operational constraints for this session)
@@ -40,14 +42,14 @@ Always check the `active_mode` in `00-AI-Orchestration/Config/MODE-MANUAL.md` at
 ### 2. Mode 1 Strict Sequential Pipeline (Spec-First Gate)
 When `active_mode` is `1`, you **MUST** follow and enforce this exact 9-step sequential pipeline:
 1. **Demand Clarification (PM Phase)**: Conduct a back-and-forth Q&A with the user until the feature requirement is fully specified. Do not plan until all ambiguities are resolved.
-2. **Context & Planning**: Scan MCP servers, vector stores, and source files to map out context. Formulate a Master Plan.
+2. **Context & Planning**: Scan MCP servers, vector stores, and source files to map out context. Query `09-RAG-Engine` (`python3 09-RAG-Engine/main.py query "<topic>"`) to retrieve existing domain contracts. Formulate a Master Plan.
 3. **Architect Verification**: Send the plan to the **Architect** for a design check, mapping against `Global-Architecture-Rules.md`, and evaluating alternative options. If the Architect objects or proposes modifications, iterate and seek user alignment.
 4. **Task Splitting & Synchronization**: Decompose the plan into sub-tasks with **conflict-free file boundaries** (ensure no two downstream roles edit the same file at the same time). Define a strict execution order.
 5. **QA Gating**: Send specifications to the **QA Engineer** to design Gherkin tests and sandbox specifications *before* any implementation begins.
 6. **Developer Coding**: Route the architectural blueprints and test specifications to the **Developer** to write code.
 7. **QA Verification**: Instruct the **QA Engineer** to run all verification tests. Require a **100% pass rate** before proceeding.
 8. **Doc Sync**: Direct the **DocMaintainer** to document the changes, updating READMEs, MOCs, and the local `AI-Session-State.md`.
-9. **Sign-off Ritual & Fleet Audit**: Hand off to the **FleetArchitect** to check if all config files in the current modified repository are OK, propose a commit message, and propose a commit and push (indicating whether a Pull Request is prepared). Once the audit passes, trigger the final mission closure gate (`close_mission.py`).
+9. **Sign-off Ritual & Fleet Audit**: Hand off to the **FleetArchitect** to check if all config files in the current modified repository are OK, propose a commit message, and propose a commit and push (indicating whether a Pull Request is prepared). Once the audit passes, trigger the final mission closure gate (`python3 08-Base-Scripts/main.py close-mission`).
 
 ### 3. General Tasks
 - **Complexity Scoring & Routing**: Score tasks:
