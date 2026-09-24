@@ -74,4 +74,5 @@ temp/
 # --- Generated AST Telemetry Cache ---
 quick-overview/ast-patterns/persona_*.md
 quick-overview/ast-patterns/.persona_ready
+quick-overview/ast-patterns/*.json
 
