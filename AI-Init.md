@@ -2,6 +2,11 @@
 microservice: 07-Core-KMS
 type: governance
 status: active
+tags:
+- '#service/07-Core-KMS'
+- '#type/governance'
+- '#state/active'
+- '#zone/3-fleet'
 ---
 
 # ⚡ AI Initialization: 07-Core-KMS
