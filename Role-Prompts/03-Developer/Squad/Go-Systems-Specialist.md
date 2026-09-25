@@ -53,7 +53,7 @@ Provide high-performance, concurrent, and memory-safe Go code for core infrastru
       Logger   *logger.Logger
   }
   ```
-- **Constructor pattern**: Exported components define a `New{Type}` constructor returning the struct or its interface. Implement `EnsureSafeLogger` helper in all entry points.
+- **Constructor pattern**: Exported library components define a `New{Type}` constructor returning the struct or its interface, wrapping injected loggers with `EnsureSafeLogger`. Microservices strictly use `BootstrapService` and must never instantiate `EnsureSafeLogger` fallbacks in production code (`PRODUCTION_MOCK_POLLUTION`).
 - **Facade Pattern**: Every package or library must expose a root-level facade file that re-exports internal types via type aliasing (e.g. `type Socket = interfaces.Socket`), ensuring consumers never import internal files directly.
 - **Factory + Profile Pattern**: Use factory dispatching via lowercase string constants matched inside `switch` statements (e.g. profiles `"tcp"`, `"udp"`, `"standard"`, `"audit"`).
 - **Strategy Pattern**: Interface strategy decouples operations (e.g. `ConfigStrategy` implementing `Load`, `Sync`, and `GetHandler`).
