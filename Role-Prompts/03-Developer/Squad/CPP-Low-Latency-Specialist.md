@@ -55,7 +55,7 @@ Implement deterministic, ultra-low latency core libraries and shared objects (`.
 - **RAII Memory**: Use `std::unique_ptr` for exclusive ownership, and `std::shared_ptr` only when multiple ownership is required. Stack allocation must be preferred on hotpaths.
 - **Zero-Copy Boundaries**: Use `std::string_view` and `std::span` for read-only buffers passing through module boundaries to avoid allocation overhead.
 - **Atomic Pointer Swap**: Use lock-free pointer swapping for hotpaths using `std::atomic<T*>` and Compare-And-Swap (CAS) retry loops. Avoid mutex lock contention on hotpaths.
-- **FFI Static Loading Law**: For memory safety across the Go-C bridge, C++ wrappers for Go-compiled shared libraries (`libdistconf`, `libunilog`) MUST NOT trigger `dlclose()` or drop active handles.
+- **FFI Static Loading Law**: For memory safety across the Go-C bridge, C++ wrappers for Go-compiled shared libraries (`libdistconf`, `libunilog`, `libnotif`) MUST NOT trigger `dlclose()` or drop active handles.
 
 ### 5. Error Handling & Logging
 - **CRITICAL**: Log via standard error stream (`std::cerr`) and call `std::exit(1)` for missing shared objects or core library loading crashes.
