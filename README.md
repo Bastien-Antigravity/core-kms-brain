@@ -28,7 +28,7 @@ It only contains the logic:
 
 You do not work inside this repository directly. Instead, this repository is designed to be injected as a **Git Submodule** into a wrapper `obsidian-brain` repository.
 
-When your Gemini CLI Subagents run (initialized via `20-Scripts/start_squad.py`), they use an MCP Server to dynamically read the parent wrapper directory to find the `Project-Variables.md` and the active `10-State-and-Tasks/Inbox/`. 
+When your Gemini CLI Subagents run (initialized via `08-Squad-Agent` `squad-agent`), they use an MCP Server to dynamically read the parent wrapper directory to find the `Project-Variables.md` and the active `10-State-and-Tasks/Inbox/`. 
 This guarantees that you can globally update the AI Prompts on GitHub, pull them to any of your projects, and never experience a Git merge conflict!
 
 For detailed instructions on how to use the Engine, please read the **[[User-Manual.md]]**.
