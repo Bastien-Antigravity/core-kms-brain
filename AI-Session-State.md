@@ -16,4 +16,4 @@ tags:
 ## 🎯 Active Status
 - **Current Mission**: Knowledge Management System, squad role prompts vault, and KMS cryptographic key management.
 - **Squad Role Prompts**: Central vault for all 21 agent personas (14 core personas in `Role-Prompts/` + 7 developer specialists in `Role-Prompts/03-Developer/Squad/`).
-- **Coherence**: Verified 100% coherent against `.agents/skills/` via `python3 08-Base-Scripts/main.py check-coherence`.
+- **Coherence**: Verified 100% coherent against `.agents/skills/` via `python3 08-Squad-Agent/main.py check-coherence`.

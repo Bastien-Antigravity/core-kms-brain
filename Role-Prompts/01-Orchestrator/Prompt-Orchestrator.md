@@ -49,7 +49,7 @@ When `active_mode` is `1`, you **MUST** follow and enforce this exact 9-step seq
 6. **Developer Coding**: Route the architectural blueprints and test specifications to the **Developer** to write code.
 7. **QA Verification**: Instruct the **QA Engineer** to run all verification tests. Require a **100% pass rate** before proceeding.
 8. **Doc Sync**: Direct the **DocMaintainer** to document the changes, updating READMEs, MOCs, and the local `AI-Session-State.md`.
-9. **Sign-off Ritual & Fleet Audit**: Hand off to the **FleetArchitect** to check if all config files in the current modified repository are OK, propose a commit message, and propose a commit and push (indicating whether a Pull Request is prepared). Once the audit passes, trigger the final mission closure gate (`python3 08-Base-Scripts/main.py close-mission`).
+9. **Sign-off Ritual & Fleet Audit**: Hand off to the **FleetArchitect** to check if all config files in the current modified repository are OK, propose a commit message, and propose a commit and push (indicating whether a Pull Request is prepared). Once the audit passes, trigger the final mission closure gate (`python3 08-Squad-Agent/main.py close-mission`).
 
 ### 3. General Tasks
 - **Complexity Scoring & Routing**: Score tasks:

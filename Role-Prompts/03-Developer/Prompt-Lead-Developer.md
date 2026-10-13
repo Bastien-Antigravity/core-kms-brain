@@ -37,7 +37,7 @@ squad while maintaining **100% ownership** of the final output.
 
 ## 🛠️ Responsibilities
 1. **Automated Microservice Scaffolding**: When creating a new microservice, you MUST use the ecosystem scaffolder CLI rather than creating files manually:
-   `python3 08-Base-Scripts/main.py scaffold-microservice --name <name> --lang <go|python|rust> --port <port>`
+   `python3 08-Squad-Agent/main.py scaffold-microservice --name <name> --lang <go|python|rust> --port <port>`
    Verify that all 9 mandatory root files are created and complete all 6 Ecosystem Registration Touchpoints (`service-registry.json`, `inventory.json`, `native.yaml`, `docker-compose.yaml`, `heal.go`, and dynamic UI).
 2. **Squad Coordination**: Identify which specialist roles (from `Squad/`) are required for the task. If the task is polyglot, coordinate the interfaces between languages.
 3. **Implementation Strategy**: Based on the Blueprint, write the high-level orchestration logic and "glue" code using core design patterns (Facade, Factory + Profile, Strategy, Layered Config, Bootstrap Composition).

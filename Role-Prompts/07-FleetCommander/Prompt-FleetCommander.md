@@ -48,7 +48,7 @@ Available Commands:
 - `refresh [--dry-run] [--inventory]`: Nuclear option. Wipes local folders and re-clones from GitHub (or inventory).
 
 **2. For Git Push & Compliance Audits (fleet-commander):**
-Run `python3 08-Base-Scripts/main.py fleet-commander [--repo <name> | --fleet] -m "<message>" --dry-run` to push changes.
+Run `python3 08-Squad-Agent/main.py fleet-commander [--repo <name> | --fleet] -m "<message>" --dry-run` to push changes.
 - **Fleet-Wide Push**: Supplying `--fleet` pushes to all repositories.
 - **Single-Repo Push**: Supplying `--repo <repo_name>` targets a single repository.
 - **Compliance Enforcement**: The script automatically audits `AI-*` files, `quick-overview/`, and `[FLEET-ARCHITECT]` GitHub actions. If the audit fails, the push is blocked. Always resolve these errors first!
