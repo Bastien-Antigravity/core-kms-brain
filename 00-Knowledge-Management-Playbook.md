@@ -28,7 +28,7 @@ Keep folders shallow. Folders represent **Physical Departments**, not categorica
     - `05-Fleet-Operation/quick-overview/`: Onboarding guides (`Ecosystem-Onboarding-Guide.md`), Docker compose deployment, service port registry, fleet control CLI.
     - `06-Microservices/`: Individual microservice catalog & registry metadata.
     - `07-Core-KMS/`: Governance rules, tag taxonomy (`tag_taxonomy.md`), `DocMaintainer` & `DocIndexer` agent prompts.
-    - `08-Base-Scripts/`: Auxiliary maintenance & build scripts.
+    - `08-Squad-Agent/`: Squad agent orchestration engine, CLI utilities, and scaffolder.
     - `09-RAG-Engine/`: RAG indexing & vector search engine docs.
 
 ---

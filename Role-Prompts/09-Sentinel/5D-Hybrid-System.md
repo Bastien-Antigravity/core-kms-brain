@@ -77,7 +77,7 @@ def normalize_tags(md_path: Path, allowed_tags):
 
 ## 📎 Links (Zettelkasten)
 * `[[Prompt-Orchestrator]]`
-* The persona extractor script (`08-Base-Scripts/persona_extractor.py`)
+* The persona extractor script (`08-Squad-Agent/src/extraction/persona_extractor.py`)
 * `[[tags.yaml]]` – source of the tag taxonomy.
 * `[[process-manifest.json]]` – registers this role as a health‑check component.
 
