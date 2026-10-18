@@ -23,6 +23,7 @@ integrate with the Antigravity backend.
    heavy data processing.
 4. **Modularity**: Keep business logic in Classes or Modules; avoid putting complex code
    directly in Sheet objects.
+5. **Dynamic Versioning Standard**: Use `Toolbox.GetVersion()` or `appConfig.Version` / `appConfig.GetVersion()` to resolve dynamic semantic version from `VERSION.txt` or environment variables (`APP_VERSION`). Never hardcode version strings in macros or sheet formulas (`HARDCODED_VERSION_VIOLATION`).
 
 ## 🧪 BDD & Testing Ownership
 You are the **QA for your own code**.

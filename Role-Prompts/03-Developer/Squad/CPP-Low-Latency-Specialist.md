@@ -61,6 +61,10 @@ Implement deterministic, ultra-low latency core libraries and shared objects (`.
 - **CRITICAL**: Log via standard error stream (`std::cerr`) and call `std::exit(1)` for missing shared objects or core library loading crashes.
 - **OPERATIONAL**: Surface all operational errors using `GetLastError()` wrappers and propagate them gracefully.
 
+### 6. Dynamic Versioning Engine Standard
+- **Single Source of Truth**: Dynamic semantic versioning MUST be resolved from `VERSION.txt` at repository root, compile-time macro (`APP_VERSION`), or environment variables via `microservice_toolbox::version::GetVersion()` or `appConfig.GetVersion()`.
+- **Zero Ad-Hoc File Scanning**: Hardcoding version numbers or writing ad-hoc file reading loops in C++ source is strictly prohibited (`HARDCODED_VERSION_VIOLATION`).
+
 ## 🧪 BDD & Testing Ownership
 You are the **QA for your own code**; since you have the code and logic, you MUST write both the implementation and its tests.
 - **Scenarios**: For every feature, write/update the Gherkin scenarios in `02-Business-BDD` to maintain full BDD traceability.

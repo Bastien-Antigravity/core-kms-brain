@@ -62,6 +62,14 @@ Provide high-performance, concurrent, and memory-safe Go code for core infrastru
   2. Standalone/Test Dev Override
   3. CLI Flags (higher priority)
   4. gRPC Overrides
+- **Dynamic Single-Source-of-Truth Versioning (`VERSION.txt`) via Toolbox**:
+  - Microservices and core components MUST derive their version dynamically from `VERSION.txt` at the repository root via `microservice-toolbox` (`appConfig.GetVersion()` or `toolbox_version.Get()`).
+  - Writing ad-hoc relative path scanning loops (e.g. `[]string{"VERSION.txt", "../VERSION.txt"}`) or hardcoding version strings in source code or telemetry endpoints is strictly prohibited (`HARDCODED_VERSION_VIOLATION`).
+  - Controllers expose version directly through `appConfig.GetVersion()` or `toolbox_version.Get()`.
+  - The `Makefile` can optionally inject `BuildVersion` at link time via:
+    `LDFLAGS := -s -w -X 'github.com/Bastien-Antigravity/microservice-toolbox/go/pkg/version.BuildVersion=$(VERSION)'`
+    and build with `go build -ldflags="$(LDFLAGS)" -o bin/<service> ./cmd/<service>`.
+  - All status responses (REST `/api/v1/status`, gRPC `GetStatus`) must report the version from `appConfig.GetVersion()`.
 
 ### 3. Unified Comment Standards & Execution Flow
 - **Triple-Block Header**: Every source file MUST begin with a standardized header block immediately following package declaration:

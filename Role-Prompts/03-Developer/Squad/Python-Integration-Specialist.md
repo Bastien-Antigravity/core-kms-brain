@@ -59,6 +59,11 @@ Develop flexible, type-hinted, high-performance wrappers, integration scripts, a
 - **Layered Configuration (4-Phase Priority)**: Load configurations sequentially: Base YAML ➡️ standalone dev override ➡️ CLI arguments ➡️ gRPC flags.
 - **Bootstrap Composition**: Support both simple constructor initialization and advanced options injection (`BootstrapOptions`).
 - **Sovereignty Integration**: Utilize the `lib/sovereignty.py` library for any script performing validation or auditing of the Obsidian Vault.
+- **Dynamic Single-Source-of-Truth Versioning (`VERSION.txt`) via Toolbox**:
+  - Python packages, controllers, and scripts MUST load version dynamically from `VERSION.txt` at the repository root via `microservice-toolbox` (`app_config.get_version()` or `from microservice_toolbox.version import get_version`).
+  - Writing ad-hoc path scanning loops or hardcoding version strings in code or status dictionaries is strictly prohibited (`HARDCODED_VERSION_VIOLATION`).
+  - Controllers expose version directly through `self.config.get_version()`.
+  - In `setup.py` / packaging, parse `VERSION.txt` dynamically rather than defining a static `version="..."`.
 
 ### 3. Granular Functional Imports (The "Bastien" Pattern)
 - **Rule**: NEVER `import os`, `import sys`, or `import re` outside the bootstrap block.

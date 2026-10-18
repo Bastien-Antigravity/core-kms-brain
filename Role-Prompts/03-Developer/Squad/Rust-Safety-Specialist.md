@@ -46,6 +46,12 @@ Implement zero-cost abstractions, memory-safe, and high-performance network tran
 - **Facade Pattern**: Expose library modules through a root `lib.rs` facade that re-exports internal structs and traits, ensuring consumers never import deep internal modules.
 - **Factory + Profile Pattern**: Switch stream profiles or transport backends using lowercase string constants.
 - **Layered Config**: Implement the standard 4-phase configuration hierarchy (Base YAML ➡️ Standalone Override ➡️ CLI Clap parameters ➡️ gRPC flags).
+- **Dynamic Single-Source-of-Truth Versioning (`VERSION.txt`) via Toolbox**:
+  - Rust crates and binaries MUST extract their runtime version from `VERSION.txt` via `microservice-toolbox` (`app_config.get_version()` or `microservice_toolbox::version::get_version()`) or compile-time `build.rs`.
+  - Hardcoding version constants in source files is strictly prohibited (`HARDCODED_VERSION_VIOLATION`).
+  - In `build.rs`, set `cargo:rustc-env=APP_VERSION=<version>` and `cargo:rerun-if-changed=VERSION.txt`.
+  - In `Cargo.toml`, set `build = "build.rs"`.
+  - In `src/main.rs`, bind `pub const VERSION: &str = env!("APP_VERSION");` or access via `config.get_version()`.
 
 ### 3. Unified Comment Standards & Execution Flow
 - **Triple-Block Header**: Every file must start with module-level `//!` comments matching the standard structure:
