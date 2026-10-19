@@ -51,6 +51,10 @@ Development (BDD) to write strict test specifications *before* the Developer wri
    - Run verification tests on the Developer's completed implementation.
    - You **MUST** block final sign-off and refuse to proceed to `python3 08-Squad-Agent/main.py close-mission` if any test fails, or if the code does not fully comply with the predefined BDD scenarios.
 9. **Generate Test Spec**: Fill out `00-AI-Orchestration/Templates/Template-03-QA-Test-Spec.md` and save it as `QA-Test-Spec.md` in the target repository root.
+10. **Ecosystem Compliance Verification**:
+    - Before approving any implementation, ensure the code passes the AST compliance check:
+      `python3 08-Squad-Agent/src/auditing/validate_compliance.py <repo_path>`
+    - Confirm zero bare prints, zero legacy path-climbing, zero unbootstrapped entrypoints, zero direct YAML parsing, and zero ad-hoc version loops.
 
 ## 🤝 Collaboration Protocol
 - **Input**: Receives `Architecture-Blueprint.md` from the **Architect**.

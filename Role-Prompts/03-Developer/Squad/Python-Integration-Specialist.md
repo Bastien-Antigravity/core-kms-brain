@@ -103,6 +103,15 @@ Develop flexible, type-hinted, high-performance wrappers, integration scripts, a
 - **Logging Format**: All logs must prefix with the class name using: `self.logger.info("{0} : {1}".format(self.Name, message))` (using `.format()`).
 - **Exit Strategy**: Use `logger.critical()` + `sys.exit(1)` for missing dependencies (`ImportError`) and unrecoverable infrastructure failures. Return `None` or `False` and log via `logger.error()` for recoverable operational failures.
 
+### 7. Mandatory Ecosystem Tooling & Anti-Pattern Prohibition
+- **Strictly Prohibited**:
+  - Bare `print()` in production or daemon code (must use `UniLog` from `universal-logger` or `microservice_toolbox`). CLI terminal presenters may use `print()` only if annotated with `# cli:allow-print` or housed under `cli_presenters`.
+  - Legacy `sys.path.insert(0, ...)` or upward parent-climbing directory loops (`Path(__file__).resolve().parent.parent...`). All dependencies must resolve through virtual environment packaging or standard modules.
+  - Unbootstrapped service entrypoints (daemon scripts must use `bootstrap_microservice`).
+  - Direct parsing of `standalone.yaml` via `yaml.safe_load` (must use `microservice_toolbox` / `distributed-config`).
+  - Ad-hoc scanning loops for `VERSION.txt` (must use `microservice_toolbox.version.get_version()` or `app_config.get_version()`).
+  - Hardcoded ports/IPs or silent fallback values (must use dynamic capability resolution and fail fast).
+
 ---
 
 ## 🧪 BDD & Testing Ownership

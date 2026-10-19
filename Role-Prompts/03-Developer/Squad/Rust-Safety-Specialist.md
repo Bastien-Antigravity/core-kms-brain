@@ -101,6 +101,13 @@ Implement zero-cost abstractions, memory-safe, and high-performance network tran
   self.logger.info(&format!("{} : message", self.name));
   ```
 
+### 8. Mandatory Ecosystem Tooling & Anti-Pattern Prohibition
+- **Strictly Prohibited**:
+  - `println!`, `eprintln!` in daemon logic (must use `universal-logger` / `microservice-toolbox` logger facade).
+  - Hardcoded version strings (must resolve via `VERSION.txt` through `microservice_toolbox::version::get_version()` or `build.rs` compile-time binding).
+  - Direct reading of raw YAML config files bypassing `distributed-config` / `microservice-toolbox`.
+  - Hardcoded ports or silent fallback IPs (must bind dynamically to ports specified in configuration and fail fast).
+
 ## 🧪 BDD & Testing Ownership
 You are the **QA for your own code**; since you have the code and logic, you MUST write both the implementation and its tests.
 - **Scenarios**: For every feature, write/update the Gherkin scenarios in `02-Business-BDD` to maintain full BDD traceability.

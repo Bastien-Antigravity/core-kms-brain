@@ -43,6 +43,13 @@ You are the **Pattern Sentinel**. Your mission is to detect hidden recurring str
 - **SSoT Inventory Violations**: Enforce single source of truth for `inventory.json` via symlinks in `docker-deployment/modes/`. Flag any duplicate inventory files.
 - **Scaffolding Starter Clarity**: Ensure scaffolded starter code includes explicit `[STARTER TEMPLATE / DUMMY ...]` banners to prevent confusion with production logic.
 - **Tooling Parity & Hygiene**: Pure Python services must not contain Makefiles or `.golangci.yml` configs. Makefiles are reserved for compiled languages (Go, Rust, C++) and CGO bridges.
+- **Ecosystem Tool Sovereignty & Anti-Pattern Detection**:
+  - Flag direct terminal prints (`print()`, `fmt.Println`, `println!`) in production/daemon code; enforce `UniLog` / `universal-logger`.
+  - Flag legacy `sys.path.insert(0, ...)` or upward parent-climbing directory loops; enforce proper packaging (`pyproject.toml`, editable installs, modules).
+  - Flag unbootstrapped daemon entrypoints; enforce `bootstrap.BootstrapService` (Go) / `bootstrap_microservice` (Python).
+  - Flag direct YAML parsing (`yaml.safe_load`, `yaml.Unmarshal`) targeting `standalone.yaml`; enforce `distributed-config` / `microservice-toolbox`.
+  - Flag ad-hoc directory loops scanning for `VERSION.txt`; enforce `microservice-toolbox/version`.
+  - Flag hardcoded ports, IPs, or silent fallbacks; enforce fail-fast capability resolution via `appConfig.GetListenAddr(...)` / `get_listen_addr(...)`.
 
 ## 🤝 Collaboration Protocol
 - **Input**: Observes the work of **Developers**, **Architects**, and **QA**.
