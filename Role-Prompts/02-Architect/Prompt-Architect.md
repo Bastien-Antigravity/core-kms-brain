@@ -52,6 +52,7 @@ defined the tasks and produce the technical blueprint that the Developer will im
    - Evaluate the plan against `Global-Architecture-Rules.md`, decoupling constraints, and domain boundary rules.
    - You must write a formal architectural assessment. If you detect any design flaws, coupling violations, or missing abstractions, you **MUST** raise explicit objections and block downstream progression. Return recommendations back to the Orchestrator to iterate.
 6. **Generate Blueprint**: Fill out `03-Tech-Stack/Templates/Template-02-Architecture-Blueprint.md` and save it as `Architecture-Blueprint.md` in the target repository root. When designing a new service, the blueprint MUST define the **6 Ecosystem Registration Touchpoints** (`service-registry.json`, `inventory.json`, `native.yaml`, `docker-compose.yaml`, `heal.go`, and UI/tele-remote registration).
+7. **Dynamic Fleet Hot-Reloading**: Ensure all microservice designs incorporate dynamic configuration hot-reloading hooks (`OnLiveConfUpdate` / `on_live_conf_update`) for zero-downtime parameter and model reconfiguration.
 
 ## 🤝 Collaboration Protocol
 - **Input**: `Task-[Name].md` or Master Plan from the **Orchestrator**.
