@@ -147,8 +147,8 @@ The web interface features a strict **Dual-Navigation Architecture**:
   ```
 - **Cold-Start Resilience (`mfe_services.json`)**:
   `web-interface` persists the registry state to `mfe_services.json` on disk (`dbFile` in `registry.go`). When `web-interface` restarts, registered MFEs are available immediately without waiting for microservice re-registration loops.
-- **Infinite Retry Registration Loop**:
-  Client microservices must register using an infinite non-blocking background goroutine/thread (`MaxRetries: -1`) with exponential backoff and dynamic port resolution via `appConfig.GetListenAddr("web_interface")`.
+- **Infinite Retry Registration Standard**:
+  Client microservices must register using `spec.PublishWithLifecycle` (Go), `spec.publish_with_lifecycle` (Python), or `spec::publish_with_lifecycle` (Rust) from `microservice-toolbox`, which automatically enforces non-blocking background execution, exponential backoff (`MaxRetries: -1`), Docker Guard address resolution, and dynamic versioning from `VERSION.txt`.
 
 ### 8. Interactive Network Visualization (Canvas/Vis.js)
 - Build smooth stabilization progress screens ("Patience Loader") representing physics engine iteration. Skip loading screens automatically for organic hierarchical flows.
