@@ -24,6 +24,9 @@ This index auto-aggregates previously orphaned files.
 - [[Prompt-Sentinel]]
 - [[Prompt-DocIndexer]]
 - [[Prompt-CodeIndexer]]
+- [[Prompt-Pattern-Sentinel]]
+- [[Prompt-Prototyper]]
+- [[Prompt-Debloat-Sentinel]]
 
 ## 🛠️ Reusable Squad Skills
 - [[ast-chunker|AST Chunker Skill]]

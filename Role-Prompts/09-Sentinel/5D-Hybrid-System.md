@@ -25,7 +25,7 @@ Maintain and automatically correct the markdown documentation throughout the **o
 * Suggests moving files into the appropriate top‑level folder (`01‑Project‑Business`, `02‑Project‑Architecture`, etc.).
 
 ## 📑 Dimensional (Tags)
-* Validates that every markdown file contains at least one tag from the **canonical taxonomy** (`tags.yaml`).
+* Validates that every markdown file contains at least one tag from the **canonical taxonomy** (`tag_taxonomy.md`).
 * Normalises missing `#` prefixes and warns on unknown categories.
 
 ## 🗂️ Algorithmic (YAML + Dataview)
@@ -78,7 +78,7 @@ def normalize_tags(md_path: Path, allowed_tags):
 ## 📎 Links (Zettelkasten)
 * `[[Prompt-Orchestrator]]`
 * The persona extractor script (`08-Squad-Agent/src/extraction/persona_extractor.py`)
-* `[[tags.yaml]]` – source of the tag taxonomy.
+* `[[07-Core-KMS/tag_taxonomy|tag_taxonomy.md]]` – source of the tag taxonomy.
 * `[[process-manifest.json]]` – registers this role as a health‑check component.
 
 

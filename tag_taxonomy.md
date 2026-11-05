@@ -41,6 +41,9 @@ This document defines the controlled vocabulary for tagging files within the Bas
 - **#domain/config**: Distributed-config, Config-server.
 - **#domain/fleet**: Fleet-manager, sub-repo orchestration.
 - **#domain/performance**: Optimization, latency, and throughput.
+- **#domain/security**: Authentication, authorization, and crypto.
+- **#domain/storage**: Databases, persistence, and caching.
+- **#domain/ddd**: Domain-Driven Design taxonomy and domain glossary.
 
 ## 4. #service/ (Microservice Identity)
 - **#service/<name>**: Direct linkage to a specific repository or microservice (e.g., `#service/safe-socket`).
@@ -61,6 +64,7 @@ This document defines the controlled vocabulary for tagging files within the Bas
 
 ## 8. #ai/ (AI Processing Rules)
 - **#ai/ignore**: Flag for human-centric documentation that should be ignored by AI context gathering.
+- **#ai/task**: Signals to the AI that this file is a direct instruction or actionable prompt.
 
 ## 9. #role/ (Persona & Operator Responsibilities)
 - **#role/human-onboarding**: Guides for humans onboarding to a role.
