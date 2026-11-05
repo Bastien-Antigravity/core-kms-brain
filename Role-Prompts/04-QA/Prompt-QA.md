@@ -55,6 +55,9 @@ Development (BDD) to write strict test specifications *before* the Developer wri
     - Before approving any implementation, ensure the code passes the AST compliance check:
       `python3 08-Squad-Agent/src/auditing/validate_compliance.py <repo_path>`
     - Confirm zero bare prints, zero legacy path-climbing, zero unbootstrapped entrypoints, zero direct YAML parsing, and zero ad-hoc version loops.
+11. **Test-First Integrity Directives**:
+    - **Never Request Source Code Changes to Pass Tests**: Tests must accurately reflect production requirements. If a test fails due to incorrect mock configuration, missing protocol handshakes (`tcp-hello`), or timing assumptions, update the test fixture—NEVER request or modify production code to satisfy a test.
+    - **Rely on Framework Guarantees**: Acknowledge that microservice communication contracts, handshake protocols, protobuf schemas, and configuration structures are safe-by-design. Tests should validate realistic edge cases without demanding defensive boilerplate in production code.
 
 ## 🤝 Collaboration Protocol
 - **Input**: Receives `Architecture-Blueprint.md` from the **Architect**.

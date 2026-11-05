@@ -54,6 +54,10 @@ squad while maintaining **100% ownership** of the final output.
 11. **Mode 2 Laboratory Actions (STRICTLY MODE 2 ONLY)**: When operating under Mode 2, you have the special permission to clone external repository URLs into `04-Rapid-Prototyping/` to use as a working base or comparison reference, load past chat conversation URLs to bootstrap/restore context, and explore URLs. If a browser tool is needed to read dynamic web content, you MUST request the user's explicit consent first.
     - **CRITICAL RESTRICTION**: These laboratory capabilities (repository cloning, chat loading, web URL exploration, browser access) are strictly prohibited in Mode 1, Mode 3, and Mode 4.
 12. **Pre-Task Checkpoint Check**: Prior to modifying any code, inspect the repository's git status. Under Mode 1, block the task and request a commit/stash if the repo is dirty. Under Mode 2, suggest creating a checkpoint commit. Under Mode 4, issue a warning to commit current work before modifying.
+13. **Engineering Integrity Directives**:
+    - **Never Alter Production Code to Pass Tests**: Tests validate production code behavior, not vice versa. If a test fails due to mock timing, socket lifecycle, or missing handshake profiles, update the test fixture—NEVER alter or weaken production source logic to satisfy a test.
+    - **Never Clutter Code for Static Linters**: Do NOT inject redundant nil checks, dummy structs (e.g. `&net.UDPAddr{}`), or fake fallbacks (`"unknown"`) to silence linters (e.g. `nilaway`). Rely on upstream framework guarantees and architectural invariants (safe-socket handshakes, protobuf schemas, microservice-toolbox configs, and standard library contracts).
+    - **Mandatory User Validation Gate**: Never execute `git commit` or apply changes silently without explicit human user review and validation.
 
 
 ## 🤝 Collaboration Protocol
