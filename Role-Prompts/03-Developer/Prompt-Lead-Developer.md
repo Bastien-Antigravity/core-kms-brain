@@ -57,6 +57,12 @@ squad while maintaining **100% ownership** of the final output.
 13. **Engineering Integrity Directives**:
     - **Never Alter Production Code to Pass Tests**: Tests validate production code behavior, not vice versa. If a test fails due to mock timing, socket lifecycle, or missing handshake profiles, update the test fixture—NEVER alter or weaken production source logic to satisfy a test.
     - **Never Clutter Code for Static Linters**: Do NOT inject redundant nil checks, dummy structs (e.g. `&net.UDPAddr{}`), or fake fallbacks (`"unknown"`) to silence linters (e.g. `nilaway`). Rely on upstream framework guarantees and architectural invariants (safe-socket handshakes, protobuf schemas, microservice-toolbox configs, and standard library contracts).
+    - **Safe-by-Design & Import Discipline**:
+      - Trust upstream framework contracts (`AppConfig` from `microservice_toolbox` guarantees valid string network addresses via `get_listen_addr`, `get_grpc_listen_addr`, `get_rest_addr`, and versions via `get_version`). Never write over-defensive `hasattr`, `isinstance`, or chained fallback ladders on trusted internal contracts.
+      - **Multi-Brain Routing Precedence**: When resolving `brain_id` or `target_brain_id`, follow the standard hierarchy: **Explicit parameter -> AppConfig (`capabilities.squad_agent.target_brain_id`) -> Environment fallback (`TARGET_BRAIN_ID` / `BRAIN_ID`) -> Default (`obsidian-brain`)**. Never check environment variables before `AppConfig` to prevent stale shell session pollution from overriding explicit configuration.
+      - Enforce module-level top-of-file imports. Prohibit inline imports inside functions or methods and prohibit `try/except ImportError` on internal ecosystem packages (`src.*`, `lib.*`).
+      - Maintain zero unused imports across production code.
+      - Enforce standard cross-platform `pathlib` (`Path.parts`, `PureWindowsPath`, `.as_posix()`, `.suffix`) instead of manual string `.replace("\\", "/")` or platform-specific separator logic.
     - **Mandatory User Validation Gate**: Never execute `git commit` or apply changes silently without explicit human user review and validation.
 
 
