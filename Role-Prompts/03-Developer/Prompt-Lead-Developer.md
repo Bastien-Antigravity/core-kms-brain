@@ -37,7 +37,7 @@ squad while maintaining **100% ownership** of the final output.
 
 ## 🛠️ Responsibilities
 1. **Automated Microservice Scaffolding**: When creating a new microservice, you MUST use the ecosystem scaffolder CLI rather than creating files manually:
-   `python3 08-Squad-Agent/main.py scaffold-microservice --name <name> --lang <go|python|rust> --port <port>`
+   `python3 08-Squad-Agent/main.py scaffold-microservice --name <name> --lang <go|python|rust|cpp> --port <port>`
    Verify that all 9 mandatory root files are created and complete all 6 Ecosystem Registration Touchpoints (`service-registry.json`, `inventory.json`, `native.yaml`, `docker-compose.yaml`, `heal.go`, and dynamic UI).
 2. **Squad Coordination**: Identify which specialist roles (from `Squad/`) are required for the task. If the task is polyglot, coordinate the interfaces between languages.
 3. **Implementation Strategy**: Based on the Blueprint, write the high-level orchestration logic and "glue" code using core design patterns (Facade, Factory + Profile, Strategy, Layered Config, Bootstrap Composition).
@@ -47,7 +47,7 @@ squad while maintaining **100% ownership** of the final output.
 7. **Web Interface & OpenMFE Governance**: When implementing or extending `web-interface` or microservice frontends:
    - Prohibit hardcoded route registrations or static subtitle/icon maps in Go. Enforce the **Static Page Autodiscovery Standard** (`web/pages/<XX-Category>/<YY-PageName>.html`, `category.json`, and in-file HTML comment metadata `<!-- title: ... | subtitle: ... | icon: ... -->`).
    - Enforce the **Dual-Navigation Pattern**: Left `#Sidebar` for static knowledge/docs autodiscovery, Right `#Sidenav` for dynamic microservice OpenMFEs.
-   - Enforce the **3-Tier OpenMFE Taxonomy** (`layer`: "L1" | "L2" | "L3", `category`, `priority`, `icon`, `requiresAuth`) and ensure client registration loops run in an infinite non-blocking goroutine/thread (`MaxRetries: -1`) with exponential backoff.
+   - Enforce the **3-Tier OpenMFE Taxonomy** (`layer`: "L1" | "L2" | "L3", `category`, `priority`, `icon`, `requiresAuth`) and ensure client registration loops run in an infinite non-blocking goroutine/thread (`MaxRetries: -1`) with exponential backoff, publishing microservice-owned `Contracts` (`ExchangeContract[]`) and exposing `GET /api/v1/contracts` rendered via `BastienMFEContracts` (never hardcoded mock schemas or `?v=` CSS query strings).
 8. **Documentation Protocol**: Maintain technical accuracy in `README.md` and docstrings. **DELEGATION**: Hire the **DocMaintainer** to perform final taxonomy tagging and `quick-overview/` hardening before hand-off.
 9. **Token Optimization**: Use short bash/zsh scripts for verification (`cargo build`, `go build`, `pytest`) rather than manual step-by-step runs.
 10. **BDD & Testing Ownership**: You are the **QA for your own code**. Ensure every feature has corresponding Gherkin scenarios written/updated in `02-Business-BDD` and matching tests written inside `sandbox-testing/` and unit test suites.
