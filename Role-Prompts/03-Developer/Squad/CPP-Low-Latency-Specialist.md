@@ -61,9 +61,10 @@ Implement deterministic, ultra-low latency core libraries and shared objects (`.
 - **CRITICAL**: Log via standard error stream (`std::cerr`) and call `std::exit(1)` for missing shared objects or core library loading crashes.
 - **OPERATIONAL**: Surface all operational errors using `GetLastError()` wrappers and propagate them gracefully.
 
-### 6. Dynamic Versioning Engine Standard
-- **Single Source of Truth**: Dynamic semantic versioning MUST be resolved from `VERSION.txt` at repository root, compile-time macro (`APP_VERSION`), or environment variables via `microservice_toolbox::version::GetVersion()` or `appConfig.GetVersion()`.
+### 6. Dedicated `AppConfig` Versioning & Standard Toolbox Modules
+- **Single Source of Truth (`VERSION.txt` ONLY via `AppConfig`)**: C++17 services MUST resolve version through `appConfig->GetVersion()` (or `appConfig.GetVersion()`), backed strictly by `VERSION.txt` (or compile-time `-DAPP_VERSION` baked directly from `VERSION.txt`), failing fast if absent. Runtime env overrides and `"0.0.1"` fallbacks are prohibited.
 - **Zero Ad-Hoc File Scanning**: Hardcoding version numbers or writing ad-hoc file reading loops in C++ source is strictly prohibited (`HARDCODED_VERSION_VIOLATION`).
+- **Standard Tools First (C++17 & C11)**: Use `AppConfig` (`LoadConfig`, `GetVersion`, `GetListenAddr`/`GetGRPCListenAddr`/`GetRESTAddr`, `DecryptSecret`), `SpecPublisher::PublishWithLifecycle` + `contracts.hpp` (`ExchangeContract`, `ExtractProtoTextOperations`, `ExtractCapnpOperations`) or pure C11 `contracts.h` (`mt_contracts_envelope_to_json`), `wiretap::ConfigureFromConfig`, `NotificationClient::FromConfig`, `connectivity::Resolver`, `LifecycleManager`, and `business::WrapMarketEvent` (`Base64Encode`/`Serialize`/`Deserialize`).
 
 ## 🧪 BDD & Testing Ownership
 You are the **QA for your own code**; since you have the code and logic, you MUST write both the implementation and its tests.

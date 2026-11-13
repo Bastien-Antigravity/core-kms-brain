@@ -85,7 +85,7 @@ flowchart TD
 ### Level 3: Component & Package Boundaries
 - **Single-Implementation Interface Elimination**: In Go, interfaces belong in the *consumer* package for decoupling or mocking, not upfront in the implementation package. If an interface has exactly 1 struct implementation in the same module, **delete the interface and expose the concrete struct directly**.
 - **Internal Stack Paranoia**: If an entrypoint function validates `if config == nil { return err }`, downstream internal private methods (`s.loadInternal(config)`) in the same package must NOT repeat `if config == nil`.
-- **Fail-Fast vs Silent Fallback**: Never use silent placeholder defaults (`fallback = "127.0.0.1:9010"` or dummy zero values) to avoid handling errors. Fail fast with immediate fatal logs so misconfigurations surface instantaneously.
+- **Cold-Path Fail-Fast vs. Hot-Path Paranoia & Silent Fallbacks**: Validate required config, `VERSION.txt`, and inputs once at cold-path startup/ingress and fail fast immediately. Never repeat config/type/nil validation inside hot paths, never re-parse or quote-trim trusted pre-validated `AppConfig` strings (except checking genuinely optional params), never inspect runtime `APP_VERSION`/`SERVICE_VERSION` env overrides, and never use silent placeholder defaults (`"0.0.1"`, `"127.0.0.1:9010"`, `"0.0.0.0"`) to hide missing config or errors.
 
 ### Level 4: Fleet & Network Boundaries
 - **Strongly-Typed Binary Wire Schemas**: Cap'n Proto and Protobuf deserializers validate structural boundaries, field types, and message lengths at the wire boundary. Downstream handlers must not write secondary string-length or number-range parsers for fields guaranteed by the schema.

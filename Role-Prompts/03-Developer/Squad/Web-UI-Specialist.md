@@ -136,7 +136,7 @@ The web interface features a strict **Dual-Navigation Architecture**:
   {
     "name": "config-server",
     "tag": "config-server-mfe",
-    "url": "http://127.0.0.1:3308/static/js/mfe-loader.js",
+    "url": "http://<resolved_host>:<resolved_port>/static/js/mfe-loader.js",
     "navTitle": "⚙️ Config Server",
     "layer": "L1",
     "category": "Base Fleet",
@@ -148,7 +148,7 @@ The web interface features a strict **Dual-Navigation Architecture**:
 - **Cold-Start Resilience (`mfe_services.json`)**:
   `web-interface` persists the registry state to `mfe_services.json` on disk (`dbFile` in `registry.go`). When `web-interface` restarts, registered MFEs are available immediately without waiting for microservice re-registration loops.
 - **Infinite Retry Registration Standard**:
-  Client microservices must register using `spec.PublishWithLifecycle` (Go), `spec.publish_with_lifecycle` (Python), `spec::publish_with_lifecycle` (Rust), or `SpecPublisher::PublishWithLifecycle` (C++) from `microservice-toolbox`, which automatically enforces non-blocking background execution, exponential backoff (`MaxRetries: -1`), Docker Guard address resolution, and dynamic versioning from `VERSION.txt`.
+  Client microservices must register using `spec.PublishWithLifecycle` (Go), `spec.publish_with_lifecycle` (Python), `spec::publish_with_lifecycle` (Rust), or `SpecPublisher::PublishWithLifecycle` (C++17, plus `contracts.h` in C11) from `microservice-toolbox`, which automatically enforces non-blocking background execution, exponential backoff (`MaxRetries: -1`), config-verbatim `AppConfig` address/port/`URL` enrichment, and `VERSION.txt`-only versioning via `appConfig.GetVersion()` / `app_config.get_version()`, alongside built-in `contracts` IDL/FastAPI extractors.
 - **Authoritative Exchange Contracts & No-Cache Assets**:
   Live Operations tabs (`.openmfe-tabs-bar` / `div[3]`) MUST render microservice-sourced Exchange Contracts via `window.BastienMFEContracts` (`OpenMFEContracts.js`) fetched from `GET /api/v1/contracts` (or registry fallback). Hardcoding mock `.proto`/`.capnp`/SQL schemas in `web-interface` or adding brittle `?v=` query strings to CSS URLs is strictly prohibited (`/static/` uses `Cache-Control: no-cache, must-revalidate`).
 

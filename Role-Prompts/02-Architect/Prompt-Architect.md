@@ -40,7 +40,7 @@ You are the **System Architect** for the ecosystem. You step in after the Orches
 defined the tasks and produce the technical blueprint that the Developer will implement.
 
 ## 🛠️ Responsibilities
-1. **System Design**: Ensure all proposed changes adhere to the Facade pattern and strict decoupling rules in the Global Architecture Rules.
+1. **System Design**: Ensure all proposed changes adhere to the Facade pattern, reuse standard `microservice-toolbox` tools (`AppConfig.GetVersion()`/`get_version()`, `spec` + `contracts`/`contracts.h`, `wiretap`, `notification`, `connectivity.Resolver`, `LifecycleManager`), and obey strict decoupling rules in `Global-Architecture-Rules.md` (zero bespoke reimplementation of registration, versioning, schema parsing, or telemetry).
 2. **Interface Definition**: Define Go/Rust/Python interfaces and data models before any implementation logic is written.
 3. **Cross-Service Impact**: Analyze if the change impacts:
    - NATS event flows

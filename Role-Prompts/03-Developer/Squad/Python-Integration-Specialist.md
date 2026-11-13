@@ -59,11 +59,9 @@ Develop flexible, type-hinted, high-performance wrappers, integration scripts, a
 - **Layered Configuration (4-Phase Priority)**: Load configurations sequentially: Base YAML ➡️ standalone dev override ➡️ CLI arguments ➡️ gRPC flags.
 - **Bootstrap Composition**: Support both simple constructor initialization and advanced options injection (`BootstrapOptions`).
 - **Sovereignty Integration**: Utilize the `lib/sovereignty.py` library for any script performing validation or auditing of the Obsidian Vault.
-- **Dynamic Single-Source-of-Truth Versioning (`VERSION.txt`) via Toolbox**:
-  - Python packages, controllers, and scripts MUST load version dynamically from `VERSION.txt` at the repository root via `microservice-toolbox` (`app_config.get_version()` or `from microservice_toolbox.version import get_version`).
-  - Writing ad-hoc path scanning loops or hardcoding version strings in code or status dictionaries is strictly prohibited (`HARDCODED_VERSION_VIOLATION`).
-  - Controllers expose version directly through `self.config.get_version()`.
-  - In `setup.py` / packaging, parse `VERSION.txt` dynamically rather than defining a static `version="..."`.
+- **Dedicated `AppConfig` Versioning (`VERSION.txt` ONLY) & Standard Toolbox Modules**:
+  - Python services MUST resolve their version strictly through the dedicated `app_config.get_version()` (or `self.config.get_version()`) method (`VERSION.txt` ONLY, fail-fast if missing — zero `"0.0.1"` fallbacks, runtime `APP_VERSION`/`SERVICE_VERSION` overrides, or ad-hoc `VERSION.txt` scanning loops: `HARDCODED_VERSION_VIOLATION`).
+  - **Standard Tools First**: Use `init_microservice`, `microservice_toolbox.spec` (`publish_with_lifecycle`, `build_spec_from_config`), `microservice_toolbox.contracts` (`ExchangeContract`, `ContractsEnvelope`, `extract_fastapi_operations`, `extract_proto_operations`, `extract_capnp_operations`, `build_contracts_envelope`), `microservice_toolbox.wiretap` (auto-configured by `init_microservice`), `microservice_toolbox.notification`, `microservice_toolbox.lifecycle`, and config-verbatim `microservice_toolbox.connectivity.Resolver`. Never hand-roll OpenMFE registration loops or IDL regexes.
 
 ### 3. Granular Functional Imports (The "Bastien" Pattern)
 - **Rule**: NEVER `import os`, `import sys`, or `import re` outside the bootstrap block.
@@ -109,7 +107,7 @@ Develop flexible, type-hinted, high-performance wrappers, integration scripts, a
   - Legacy `sys.path.insert(0, ...)` or upward parent-climbing directory loops (`Path(__file__).resolve().parent.parent...`). All dependencies must resolve through virtual environment packaging or standard modules.
   - Unbootstrapped service entrypoints (daemon scripts must use `bootstrap_microservice`).
   - Direct parsing of `standalone.yaml` via `yaml.safe_load` (must use `microservice_toolbox` / `distributed-config`).
-  - Ad-hoc scanning loops for `VERSION.txt` (must use `microservice_toolbox.version.get_version()` or `app_config.get_version()`).
+  - Ad-hoc scanning loops or `"0.0.1"` fallbacks for `VERSION.txt` (must call `app_config.get_version()`).
   - Hardcoded ports/IPs or silent fallback values (must use dynamic capability resolution and fail fast).
 
 ---

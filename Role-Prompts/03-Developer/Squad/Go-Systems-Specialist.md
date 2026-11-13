@@ -62,14 +62,10 @@ Provide high-performance, concurrent, and memory-safe Go code for core infrastru
   2. Standalone/Test Dev Override
   3. CLI Flags (higher priority)
   4. gRPC Overrides
-- **Dynamic Single-Source-of-Truth Versioning (`VERSION.txt`) via Toolbox**:
-  - Microservices and core components MUST derive their version dynamically from `VERSION.txt` at the repository root via `microservice-toolbox` (`appConfig.GetVersion()` or `toolbox_version.Get()`).
-  - Writing ad-hoc relative path scanning loops (e.g. `[]string{"VERSION.txt", "../VERSION.txt"}`) or hardcoding version strings in source code or telemetry endpoints is strictly prohibited (`HARDCODED_VERSION_VIOLATION`).
-  - Controllers expose version directly through `appConfig.GetVersion()` or `toolbox_version.Get()`.
-  - The `Makefile` can optionally inject `BuildVersion` at link time via:
-    `LDFLAGS := -s -w -X 'github.com/Bastien-Antigravity/microservice-toolbox/go/pkg/version.BuildVersion=$(VERSION)'`
-    and build with `go build -ldflags="$(LDFLAGS)" -o bin/<service> ./cmd/<service>`.
-  - All status responses (REST `/api/v1/status`, gRPC `GetStatus`) must report the version from `appConfig.GetVersion()`.
+- **Dedicated `AppConfig` Versioning (`VERSION.txt` ONLY) & Standard Toolbox Modules**:
+  - Microservices MUST derive their version exclusively through the dedicated `appConfig.GetVersion()` method (`VERSION.txt` ONLY, fail-fast if missing). Writing ad-hoc `VERSION.txt` scanning loops, direct low-level version lookups when `appConfig` exists, runtime `APP_VERSION`/`SERVICE_VERSION` overrides, `"0.0.1"` fallbacks, or hardcoded version strings is strictly prohibited (`HARDCODED_VERSION_VIOLATION`).
+  - All status responses (`/api/v1/status`, `/api/v1/contracts`, gRPC `GetStatus`) expose `appConfig.GetVersion()`.
+  - **Use Built-In Toolbox Tools (`spec`, `contracts`, `wiretap`, `notification`, `connectivity`, `lifecycle`)**: Use `spec.PublishWithLifecycle` (`BuildSpecFromConfig` auto-populates `URL`, `%s` `Framing` ports, `DataStructure` with `version`/`ports`/`node`, `Health`), `contracts.go` extractors (`ExtractProtoTextOperations`, `ExtractCapnpOperations`, `RenderProtoIDL`, `NewContractsEnvelope`), `go/pkg/wiretap` (auto-initialized by `BootstrapService`), and `go/pkg/notification` rather than hand-rolling HTTP loops or parsers.
 
 ### 3. Unified Comment Standards & Execution Flow
 - **Triple-Block Header**: Every source file MUST begin with a standardized header block immediately following package declaration:
@@ -121,7 +117,7 @@ Provide high-performance, concurrent, and memory-safe Go code for core infrastru
 ### 6. Mandatory Ecosystem Tooling & Anti-Pattern Prohibition
 - **Strictly Prohibited**:
   - `fmt.Println`, `println`, `log.Print` in production/daemon code (must use `universal-logger` / `microservice-toolbox/go/pkg/logger`).
-  - Ad-hoc directory scanning loops for `VERSION.txt` (must use `appConfig.GetVersion()` or `toolbox_version.Get()`).
+  - Ad-hoc directory scanning loops or fallback strings for `VERSION.txt` (must call `appConfig.GetVersion()`).
   - Unbootstrapped service entrypoints (daemon `main()` must start with `toolbox_bootstrap.BootstrapService(...)`).
   - Direct parsing of `standalone.yaml` via `yaml.Unmarshal` (must use `toolbox_config.LoadConfig`).
   - Hardcoded ports/IPs or silent fallback values (must use dynamic capability resolution e.g. `appConfig.GetListenAddr(...)` and fail fast).

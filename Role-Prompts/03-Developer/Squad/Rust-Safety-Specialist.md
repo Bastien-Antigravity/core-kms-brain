@@ -46,12 +46,9 @@ Implement zero-cost abstractions, memory-safe, and high-performance network tran
 - **Facade Pattern**: Expose library modules through a root `lib.rs` facade that re-exports internal structs and traits, ensuring consumers never import deep internal modules.
 - **Factory + Profile Pattern**: Switch stream profiles or transport backends using lowercase string constants.
 - **Layered Config**: Implement the standard 4-phase configuration hierarchy (Base YAML ➡️ Standalone Override ➡️ CLI Clap parameters ➡️ gRPC flags).
-- **Dynamic Single-Source-of-Truth Versioning (`VERSION.txt`) via Toolbox**:
-  - Rust crates and binaries MUST extract their runtime version from `VERSION.txt` via `microservice-toolbox` (`app_config.get_version()` or `microservice_toolbox::version::get_version()`) or compile-time `build.rs`.
-  - Hardcoding version constants in source files is strictly prohibited (`HARDCODED_VERSION_VIOLATION`).
-  - In `build.rs`, set `cargo:rustc-env=APP_VERSION=<version>` and `cargo:rerun-if-changed=VERSION.txt`.
-  - In `Cargo.toml`, set `build = "build.rs"`.
-  - In `src/main.rs`, bind `pub const VERSION: &str = env!("APP_VERSION");` or access via `config.get_version()`.
+- **Dedicated `AppConfig` Versioning (`VERSION.txt` ONLY) & Standard Toolbox Modules**:
+  - Rust microservices MUST extract their version exclusively via `app_config.get_version()` (`VERSION.txt` ONLY, fail-fast if missing). Hardcoding version strings, `"0.0.1"` fallbacks, runtime `APP_VERSION`/`SERVICE_VERSION` env overrides, or ad-hoc file scanners is strictly prohibited (`HARDCODED_VERSION_VIOLATION`). (If a standalone binary needs compile-time `build.rs`, fail fast via `.expect(...)` without `CARGO_PKG_VERSION` fallback.)
+  - **Built-In Standard Tools**: Use `microservice_toolbox::spec` (`publish_with_lifecycle`, `build_spec_from_config`), `microservice_toolbox::contracts` (`ExchangeContract`, `ContractsEnvelope`, `extract_proto_operations`, `extract_capnp_operations`, `build_contracts_envelope`), `microservice_toolbox::wiretap`, `microservice_toolbox::notification`, `microservice_toolbox::lifecycle`, `microservice_toolbox::connectivity`, and `microservice_toolbox::business` instead of hand-rolling registration, IDL parsers, or telemetry clients.
 
 ### 3. Unified Comment Standards & Execution Flow
 - **Triple-Block Header**: Every file must start with module-level `//!` comments matching the standard structure:
@@ -104,7 +101,7 @@ Implement zero-cost abstractions, memory-safe, and high-performance network tran
 ### 8. Mandatory Ecosystem Tooling & Anti-Pattern Prohibition
 - **Strictly Prohibited**:
   - `println!`, `eprintln!` in daemon logic (must use `universal-logger` / `microservice-toolbox` logger facade).
-  - Hardcoded version strings (must resolve via `VERSION.txt` through `microservice_toolbox::version::get_version()` or `build.rs` compile-time binding).
+  - Hardcoded version strings or fallback `VERSION.txt` readers (must call `app_config.get_version()`).
   - Direct reading of raw YAML config files bypassing `distributed-config` / `microservice-toolbox`.
   - Hardcoded ports or silent fallback IPs (must bind dynamically to ports specified in configuration and fail fast).
 

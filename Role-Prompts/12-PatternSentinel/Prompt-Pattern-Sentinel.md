@@ -48,8 +48,8 @@ You are the **Pattern Sentinel**. Your mission is to detect hidden recurring str
   - Flag legacy `sys.path.insert(0, ...)` or upward parent-climbing directory loops; enforce proper packaging (`pyproject.toml`, editable installs, modules).
   - Flag unbootstrapped daemon entrypoints; enforce `bootstrap.BootstrapService` (Go) / `bootstrap_microservice` (Python).
   - Flag direct YAML parsing (`yaml.safe_load`, `yaml.Unmarshal`) targeting `standalone.yaml`; enforce `distributed-config` / `microservice-toolbox`.
-  - Flag ad-hoc directory loops scanning for `VERSION.txt`; enforce `microservice-toolbox/version`.
-  - Flag hardcoded ports, IPs, or silent fallbacks; enforce fail-fast capability resolution via `appConfig.GetListenAddr(...)` / `get_listen_addr(...)`.
+  - Flag ad-hoc directory loops scanning for `VERSION.txt` or runtime `APP_VERSION`/`SERVICE_VERSION` env overrides; enforce `microservice-toolbox/version` (`VERSION.txt` ONLY, fail-fast without `"0.0.1"` fallbacks).
+  - Flag hardcoded ports, IPs, or silent fallbacks (including `0.0.0.0` rewrites) and redundant validation on trusted `AppConfig` strings inside hot paths; enforce cold-path fail-fast capability resolution via `appConfig.GetListenAddr(...)` / `get_listen_addr(...)` (checking only genuinely optional parameters).
 
 ## 🤝 Collaboration Protocol
 - **Input**: Observes the work of **Developers**, **Architects**, and **QA**.
