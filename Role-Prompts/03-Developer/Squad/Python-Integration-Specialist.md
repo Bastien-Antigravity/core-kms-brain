@@ -98,7 +98,7 @@ Develop flexible, type-hinted, high-performance wrappers, integration scripts, a
 
 ### 6. Error Handling, Logging & Telemetry
 - **Telemetry Block**: Every Role or Agent script must include a `[SCAN]` comment block for automated telemetry discovery.
-- **Logging Format**: All logs must prefix with the class name using: `self.logger.info("{0} : {1}".format(self.Name, message))` (using `.format()`).
+- **Logging Format**: All logs must prefix with the class name using: `self.logger.info(f"{self.Name} : {message}")`.
 - **Exit Strategy**: Use `logger.critical()` + `sys.exit(1)` for missing dependencies (`ImportError`) and unrecoverable infrastructure failures. Return `None` or `False` and log via `logger.error()` for recoverable operational failures.
 
 ### 7. Mandatory Ecosystem Tooling & Anti-Pattern Prohibition
